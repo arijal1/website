@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects | Anup Rijal</title>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+  }
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark-mode { background-color: #1a202c; color: white; }
+  </style>
+</head>
+<body id="page-body" class="bg-white text-gray-900 transition-colors duration-500">
+<header class="bg-gradient-to-r from-indigo-700 to-purple-700 text-white sticky top-0 z-50 shadow">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">Anup Rijal</h1>
+    <nav class="space-x-4">
+      
+      </nav>
+    <button onclick="toggleDarkMode()" class="ml-4 bg-white text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100 transition">Toggle Dark Mode</button>
+  </div>
+</header>
+
+<section class="py-20 max-w-6xl mx-auto px-4 bg-indigo-50">
+  <h2 class="text-3xl font-bold mb-10 text-center" data-aos="fade-up">Projects</h2>
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="bg-white  rounded-2xl shadow-md hover:shadow-lg transition p-6" data-aos="fade-up" data-aos-delay="100">
+      <h4 class="text-xl font-semibold mb-2">IT Asset Management System</h4>
+      <p class="text-gray-700 mb-4">Created a system for tracking hardware/software assets and reimaging devices using SCCM and PDQ Deploy.</p>
+    </div>
+    <div class="bg-white  rounded-2xl shadow-md hover:shadow-lg transition p-6" data-aos="fade-up" data-aos-delay="200">
+      <h4 class="text-xl font-semibold mb-2">Help Desk Automation</h4>
+      <p class="text-gray-700 mb-4">Automated ticket routing and reporting using ServiceNow, improving response time and resolution metrics.</p>
+    </div>
+    <div class="bg-white  rounded-2xl shadow-md hover:shadow-lg transition p-6" data-aos="fade-up" data-aos-delay="300">
+      <h4 class="text-xl font-semibold mb-2">Virtual Lab Setup</h4>
+      <p class="text-gray-700 mb-4">Built a multi-OS virtual environment using VMware and VirtualBox for training and testing IT operations.</p>
+    </div>
+  </div>
+
+    <div class="text-center py-10">
+      <a href="index.html" class="inline-block px-6 py-3 bg-indigo-700 text-white rounded hover:bg-indigo-800 transition">
+        ← Back to Home
+      </a>
+    </div></section>
+
+<footer
+     class="text-center py-6 text-sm text-white bg-gradient-to-r from-indigo-700 to-purple-700">
+  &copy; 2025 Anup Rijal. All rights reserved.
+</footer>
+
+<script>
+  AOS.init();
+  function toggleDarkMode() { document.body.classList.toggle('dark-mode'); }
+</script>
+</body>
+</html>
