@@ -61,7 +61,24 @@
 
 <script>
   AOS.init();
-  function toggleDarkMode() { document.body.classList.toggle('dark-mode'); }
+  function toggleDarkMode() { document.getElementById("page-body").classList.toggle("dark"); }
+  function showSuccessMessage(event) {
+    event.preventDefault();
+    const form = event.target;
+    fetch(form.action, {
+      method: form.method,
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        document.getElementById('form-success').classList.remove('hidden');
+        form.reset();
+      } else {
+        alert('There was a problem submitting your form.');
+      }
+    }).catch(() => alert('There was an error.'));
+    return false;
+  }
 </script>
 </body>
 </html>
