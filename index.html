@@ -49,6 +49,11 @@
     body { font-family: 'Urbanist', sans-serif; }
     .dark-mode { background-color: #1a202c; color: white; }
     .nav-link.active { font-weight: bold; text-decoration: underline; }
+    .nav-link.active {
+  font-weight: bold;
+  border-bottom: 2px solid currentColor;
+  text-decoration: underline;
+}
   </style>
 </head>
 <body id="page-body" class="bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:text-white dark:text-white dark:text-white dark:text-indigo-200 transition-colors duration-500">
@@ -260,7 +265,33 @@
 <footer class="text-center py-6 text-sm text-white bg-indigo-800 dark:bg-gray-950">
   &copy; 2025 Anup Rijal. All rights reserved.
 </footer>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll(".nav-link");
 
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          const id = entry.target.id;
+          const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
+          if (entry.isIntersecting) {
+            navLinks.forEach(link => link.classList.remove("active"));
+            navLink?.classList.add("active");
+          }
+        });
+      },
+      {
+        rootMargin: "-30% 0px -60% 0px",
+        threshold: 0.1,
+      }
+    );
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  });
+</script>
 
 <script>
   AOS.init();
