@@ -132,10 +132,15 @@
   </div>
 </header>
 
-<section class="text-center py-12 bg-gray-100 dark:bg-gray-900" class="rounded-2xl p-6 sm:p-12 shadow-sm">
-  <h2 class="text-4xl md:text-5xl font-bold mb-4 text-blue-700 dark:text-blue-300" data-aos="fade-up">Hi, I'm Anup Rijal</h2>
-  <p class="text-lg md:text-xl mb-8" data-aos="fade-up" >IT Professional | Network & Systems Support | Tech Enthusiast</p>
+<section class="text-center py-12 bg-gray-100 dark:bg-gray-900 rounded-2xl p-6 sm:p-12 shadow-sm">
+  <h2 class="text-4xl md:text-5xl font-bold mb-4 text-blue-700 dark:text-blue-300" data-aos="fade-up">
+    Hi, I'm Anup Rijal
+  </h2>
+  <p class="text-lg md:text-xl mb-8 text-sky-700 dark:text-sky-300" data-aos="fade-up">
+    <span id="typed-text"></span>
+  </p>
 </section>
+
 
 <section id="about" class="py-12 max-w-4xl mx-auto px-4 bg-white dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm">
   <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-10 text-center md:text-left">
@@ -653,6 +658,22 @@
     });
   });
 </script>
-  
+ <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Typed("#typed-text", {
+      strings: [
+        "IT Professional",
+        "Network & Systems Support",
+        "Tech Enthusiast"
+      ],
+      typeSpeed: 50,
+      backSpeed: 25,
+      backDelay: 1500,
+      loop: true
+    });
+  });
+</script>
+
 </body>
 </html>
