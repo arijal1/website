@@ -394,6 +394,17 @@ html {
     document.getElementById('nav-links').classList.remove('opacity-0', 'translate-y-4');
   });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    once: true,
+    duration: 800,
+    easing: 'ease-in-out',
+    offset: 100,
+    mirror: false,
+    disable: false // enable on all devices
+  });
+</script>
 
 </body>
 </html>
