@@ -50,7 +50,34 @@
   border-bottom: 2px solid currentColor;
   text-decoration: underline;
     }
-    </style>
+.nav-link {
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.3s;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: #6366f1; /* Indigo-500 */
+}
+html {
+  scroll-behavior: smooth;
+}
+          </style>
 
 </head>
 <body id="page-body" class="bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:text-white dark:text-white dark:text-white dark:text-indigo-200 transition-colors duration-500">
@@ -259,9 +286,6 @@
 </section>
 
 
-<footer class="text-center py-6 text-sm text-white bg-indigo-800 dark:bg-gray-950">
-  &copy; 2025 Anup Rijal. All rights reserved.
-</footer>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll("section[id]");
@@ -270,8 +294,8 @@
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          const id = entry.target.id;
-          const navLink = document.querySelector(.nav-link[href="#${id}"]);
+          const id = entry.target.getAttribute('id');
+          const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
           if (entry.isIntersecting) {
             navLinks.forEach(link => link.classList.remove("active"));
             navLink?.classList.add("active");
@@ -279,14 +303,13 @@
         });
       },
       {
-        rootMargin: "-30% 0px -60% 0px",
-        threshold: 0.1,
+        root: null,
+        rootMargin: "0px 0px -70% 0px",
+        threshold: 0.3,
       }
     );
 
-    sections.forEach(section => {
-      observer.observe(section);
-    });
+    sections.forEach(section => observer.observe(section));
   });
 </script>
 
