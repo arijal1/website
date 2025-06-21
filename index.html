@@ -37,12 +37,18 @@
 
 </head>
 <body class="bg-white dark:bg-black text-black dark:text-white font-sans">
+<div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    once: true, // Animate once per element
+    disable: 'mobile' // optional: disable on very old phones
+  });
+</script>
 
 </body>
 </html>
-
 </script>
-
 <script>
   tailwind.config = {
     darkMode: 'class',
@@ -86,14 +92,40 @@
 html {
   scroll-behavior: smooth;
 }
-          </style>
+@media (prefers-reduced-motion: reduce) {
+  [data-aos] {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+  </style>
 
 </head>
 <body id="page-body" class="bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:text-white dark:text-white dark:text-white dark:text-indigo-200 transition-colors duration-500">
 <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
  <header class="bg-white/70 dark:bg-black/60 backdrop-blur-md shadow-md sticky top-0 z-50 transition-all duration-300">
   <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-    <a href="/" class="text-xl font-bold hover:underline hover:text-indigo-300 transition opacity-0 translate-y-4" id="logo">Anup Rijal</a>
+ <a
+  href="/"
+  class="text-xl font-bold hover:underline hover:text-indigo-300 transition"
+  id="logo"
+  data-aos="fade-down"
+  data-aos-duration="800"
+>
+  Anup Rijal
+</a>
+
+<nav
+  class="space-x-3 transition"
+  id="nav-links"
+  data-aos="fade-down"
+  data-aos-duration="800"
+  data-aos-delay="150"
+>
+  ...
+</nav>
+
 
 <nav class="space-x-3 opacity-0 translate-y-4" id="nav-links">
 </nav>
