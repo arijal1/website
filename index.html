@@ -452,6 +452,17 @@ html {
     disable: false // enable on all devices
   });
 </script>
+<style>
+  html {
+    filter: brightness(0.96);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html {
+      filter: none;
+    }
+  }
+</style>
 
 </body>
 </html>
