@@ -12,107 +12,109 @@
     }
   </script>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .dark-mode {
-      background-color: #1a202c;
-      color: white;
-    }
+    body { font-family: 'Inter', sans-serif; }
+    .dark-mode { background-color: #1a202c; color: white; }
   </style>
 </head>
-<body id="page-body" class="text-gray-900 dark:bg-gray-900 dark:text-indigo-200 transition-colors duration-500" style="background: linear-gradient(to bottom right, #F96167, #F9E795);">
+<body id="page-body" class="bg-[#F9E795] text-gray-900 dark:bg-gray-900 dark:text-indigo-200 transition-colors duration-500">
 
-  <header class="bg-gradient-to-r from-indigo-700 to-purple-700 text-white sticky top-0 z-50 shadow">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-      <a href="index.html" class="block" id="logo" data-aos="fade-down" data-aos-duration="800">
-        <img src="images/logo.png.png" alt="Anup Rijal Logo" class="w-8 h-8 sm:w-10 sm:h-10" />
-      </a>
-      <nav class="space-x-4"></nav>
-      <button onclick="toggleDarkMode()" class="ml-4 bg-white text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100 transition">Toggle Dark Mode</button>
-    </div>
-  </header>
+<!-- ✅ Updated Navbar -->
+<header class="bg-gradient-to-r from-[#F96167] via-[#F9A97C] to-[#F9E795] text-white sticky top-0 z-50 shadow">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <a href="index.html" class="block" id="logo" data-aos="fade-down" data-aos-duration="800">
+      <img src="images/logo.png.png" alt="Anup Rijal Logo" class="w-8 h-8 sm:w-10 sm:h-10" />
+    </a>
+    <nav class="space-x-4 text-white font-semibold">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="projects.html" class="hover:underline">Projects</a>
+      <a href="contact.html" class="hover:underline">Contact</a>
+    </nav>
+    <button onclick="toggleDarkMode()" class="ml-4 bg-white text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100 transition">
+      Toggle Dark Mode
+    </button>
+  </div>
+</header>
 
-  <section class="py-20 max-w-6xl mx-auto px-4" style="background-color: #F9E795;">
-    <h2 class="text-3xl font-bold mb-10 text-center" data-aos="fade-up">Projects</h2>
+<!-- ✅ Projects Section -->
+<section class="py-20 max-w-6xl mx-auto px-4">
+  <h2 class="text-3xl font-bold mb-10 text-center" data-aos="fade-up">Projects</h2>
 
-    <!-- Project 1 -->
-    <section id="home-lab" class="dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm mb-12" style="background-color: #fff4ec;" data-aos="fade-up">
-      <h3 class="text-3xl font-extrabold text-blue-700 dark:text-blue-300 mb-6 text-center">
-        IT Transaction Project at Opal Healthcare
-      </h3>
-      <p class="text-gray-700 dark:text-indigo-300 mb-4">
-        Led the successful IT infrastructure transition during Opal Healthcare’s acquisition of a care community, managing the complete technical decommissioning and reimplementation within a tight 6-week timeline. Decommissioned 100% of existing hardware and network connections, implemented a new network architecture, and configured 50+ devices. Achieved zero downtime and improved performance by 30%.
-      </p>
-      <img src="images/IMG_0698.jpeg" alt="Opal Healthcare network setup" style="width: 260px;" class="rounded-md mb-4 mx-auto" />
-    </section>
-
-    <!-- Project 2 -->
-    <section id="home-lab" class="dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm mb-12" style="background-color: #fff4ec;" data-aos="fade-up">
-      <h3 class="text-3xl font-extrabold text-blue-700 dark:text-blue-300 mb-6 text-center">
-        Help Desk Automation
-      </h3>
-      <p class="text-gray-700 dark:text-indigo-300 mb-4">
-        Implemented help desk automation using Freshservice to streamline IT support. Ticket routing, auto-escalation workflows, and integrated knowledge base articles improved efficiency by 25% and increased first-contact resolution by 30%.
-      </p>
-    </section>
-
-    <!-- Project 3 -->
-    <section id="home-lab" class="dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm" style="background-color: #fff4ec;" data-aos="fade-up">
-      <h3 class="text-3xl font-extrabold text-blue-700 dark:text-blue-300 mb-6 text-center">
-        My Home Lab Setup
-      </h3>
-      <p class="text-lg leading-relaxed mb-10 text-sky-800 dark:text-sky-300">
-        As a tech enthusiast, I’ve built a fully functional <strong>self-hosted home lab</strong> to experiment with open-source technologies and sharpen my system administration skills. It features:
-      </p>
-      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 text-sky-800 dark:text-sky-300">
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.656 0 3-1.567 3-3.5S13.656 4 12 4s-3 1.567-3 3.5S10.344 11 12 11z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11c0 1.5-2 2-3 2s-3-.5-3-2 2-4 3-4 3 2.5 3 4z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 19c0-3 3-7 8-7s8 4 8 7v2H4v-2z"/></svg>
-          <span><strong>Bitwarden</strong> - Self-hosted password manager</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-          <span><strong>Nginx Proxy Manager</strong> - Reverse proxy with SSL</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"/></svg>
-          <span><strong>Nextcloud</strong> - Cloud file and sync platform</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2a3 3 0 00-3-3H5a3 3 0 00-3 3v2"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 17v-2a3 3 0 013-3h1a3 3 0 013 3v2"/></svg>
-          <span><strong>RustDesk</strong> - Remote desktop server</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
-          <span>Headless <strong>RustDesk on Pi</strong> - Remote access anytime</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18"/></svg>
-          <span><strong>Pi-hole</strong> - Ad blocker + DNS filtering</span>
-        </li>
-      </ul>
-      <p class="text-lg leading-relaxed text-sky-800 dark:text-sky-300">
-        This setup helps me maintain privacy, control, and experiment with modern IT solutions from home.
-      </p>
-    </section>
+  <!-- Project 1 -->
+  <section class="bg-white dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
+    <h3 class="text-3xl font-extrabold text-blue-700 dark:text-blue-300 mb-6 text-center">IT Transaction Project at Opal Healthcare</h3>
+    <p class="text-gray-700 dark:text-indigo-300 mb-4">
+      Led the successful IT infrastructure transition during Opal Healthcare’s acquisition of a care community, managing the complete technical decommissioning and reimplementation within a tight 6-week timeline. Decommissioned 100% of existing hardware and network connections from the previous provider, designed and implemented a new floor plan and network architecture tailored to the site’s needs. Installed and configured over 50 devices, including switches, workstations, printers, and phones. Patched and terminated all network cables to ensure 100% site-wide connectivity. Established new internet and internal network services from the ground up, resulting in zero downtime during the transition and improved network performance by 30%.
+    </p>
+    <img src="images/IMG_0698.jpeg" alt="Opal Healthcare network setup" style="width: 300px;" class="rounded-md mb-4 mx-auto" />
   </section>
 
-  <div class="text-center py-10">
-    <a href="index.html" class="inline-block px-6 py-3 bg-indigo-700 text-white rounded hover:bg-indigo-800 transition">
-      ← Back to Home
-    </a>
-  </div>
+  <!-- Project 2 -->
+  <section class="bg-white dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
+    <h3 class="text-3xl font-extrabold text-blue-700 dark:text-blue-300 mb-6 text-center">Help Desk Automation</h3>
+    <p class="text-gray-700 dark:text-indigo-300 mb-4">
+      Implemented help desk automation using Freshservice to streamline IT support operations. Automated ticket routing based on issue categories and priority levels, enabling faster assignment to the right teams. Developed workflows for auto-escalation of unresolved tickets, automated email notifications for status updates, and integration with knowledge base articles to reduce resolution times. This resulted in a 25% improvement in response times and a 30% increase in first-contact resolution rates.
+    </p>
+  </section>
 
-  <footer class="text-center py-6 text-sm text-white bg-gradient-to-r from-indigo-700 to-purple-700">
-    &copy; 2025 Anup Rijal. All rights reserved.
-  </footer>
+  <!-- Project 3: Home Lab -->
+  <section id="home-lab" class="bg-white dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm" data-aos="fade-up">
+    <h3 class="text-3xl font-extrabold text-blue-700 dark:text-blue-300 mb-6 text-center">My Home Lab Setup</h3>
+    <p class="text-lg leading-relaxed mb-10 text-sky-800 dark:text-sky-300">
+      As a tech enthusiast, I’ve built a fully functional <strong>self-hosted home lab</strong> to experiment with open-source technologies and sharpen my system administration skills. It features:
+    </p>
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 text-sky-800 dark:text-sky-300">
+      <li class="flex items-center gap-3">
+        <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.656 0 3-1.567 3-3.5S13.656 4 12 4s-3 1.567-3 3.5S10.344 11 12 11z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11c0 1.5-2 2-3 2s-3-.5-3-2 2-4 3-4 3 2.5 3 4z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 19c0-3 3-7 8-7s8 4 8 7v2H4v-2z"/></svg>
+        <span><strong>Bitwarden</strong> - Self-hosted password management</span>
+      </li>
+      <li class="flex items-center gap-3">
+        <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        <span><strong>Nginx Proxy Manager</strong> - Easy reverse proxy and SSL setup</span>
+      </li>
+      <li class="flex items-center gap-3">
+        <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"/></svg>
+        <span><strong>Nextcloud</strong> - Private cloud for files and collaboration</span>
+      </li>
+      <li class="flex items-center gap-3">
+        <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2a3 3 0 00-3-3H5a3 3 0 00-3 3v2"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 17v-2a3 3 0 013-3h1a3 3 0 013 3v2"/></svg>
+        <span><strong>RustDesk</strong> - Open-source remote desktop server and client</span>
+      </li>
+      <li class="flex items-center gap-3">
+        <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
+        <span>Headless <strong>RustDesk on Raspberry Pi</strong> for anytime remote access</span>
+      </li>
+      <li class="flex items-center gap-3">
+        <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18"/></svg>
+        <span><strong>Pi-hole</strong> - Network-wide ad blocker and home security tool</span>
+      </li>
+    </ul>
+    <p class="text-lg leading-relaxed text-sky-800 dark:text-sky-300">
+      This setup allows me to maintain privacy, control, and remote access while learning about network security, system administration, and open-source cloud technologies.
+    </p>
+  </section>
+</section>
 
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init();
-    function toggleDarkMode() {
-      document.getElementById("page-body").classList.toggle("dark");
-    }
-  </script>
+<!-- Back to Home Button -->
+<div class="text-center py-10">
+  <a href="index.html" class="inline-block px-6 py-3 bg-indigo-700 text-white rounded hover:bg-indigo-800 transition">
+    ← Back to Home
+  </a>
+</div>
+
+<!-- Footer -->
+<footer class="text-center py-6 text-sm text-white bg-gradient-to-r from-[#F96167] via-[#F9A97C] to-[#F9E795]">
+  &copy; 2025 Anup Rijal. All rights reserved.
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+  function toggleDarkMode() {
+    document.getElementById("page-body").classList.toggle("dark");
+  }
+</script>
+
 </body>
 </html>
+
