@@ -1,31 +1,125 @@
-Hex codes: #F96167, #F9E795 can you use this pallates to replace my website background colour.  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projects | Anup Rijal</title>
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <link rel="icon" href="/favicon.ico" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Urbanist', 'sans-serif'],
+          },
+        },
+      },
     }
   </script>
+  <script>
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const scrolled = (scrollTop / docHeight) * 100;
+    document.getElementById('scroll-progress').style.width = `${scrolled}%`;
+  });
+</script>
+
+</head>
+<body class="bg-white dark:bg-black text-black dark:text-white font-sans">
+<div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    once: true, // Animate once per element
+    disable: 'mobile' // optional: disable on very old phones
+  });
+</script>
+
+</body>
+</html>
+</script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+  }
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init({ once: true });</script>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
+    body { font-family: 'Urbanist', sans-serif; }
+    .dark-mode { background-color: #1a202c; color: white; }
+    .nav-link.active { font-weight: bold; text-decoration: underline; }
+    .nav-link.active {
+  font-weight: bold;
+  border-bottom: 2px solid currentColor;
+  text-decoration: underline;
+    }
+.nav-link {
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.3s;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: #6366f1; /* Indigo-500 */
+}
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-aos] {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+  </style>
+
+</head>
+<body id="page-body" class="bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:text-white dark:text-white dark:text-white dark:text-indigo-200 transition-colors duration-500">
+<div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
+ <header class="bg-white/70 dark:bg-black/60 backdrop-blur-md shadow-md sticky top-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+ <a
+<a href="/" 
+   class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-indigo-300 transition" 
+   id="logo" 
+   data-aos="fade-down" 
+   data-aos-duration="800"
+>
+  <img src="images/logo.png.png" alt="Anup Rijal Logo" class="w-8 h-8 sm:w-10 sm:h-10" />
+</a>
+
+<nav 
+  class="space-x-3 transition" 
+  id="nav-links" 
+  data-aos="fade-down" 
+  data-aos-duration="800" 
+  data-aos-delay="150"
+>
   <!-- Your nav links here -->
 </nav>
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    .dark-mode { background-color: #1a202c; color: white; }
-  </style>
-</head>
-<body id="page-body" class="bg-white text-gray-900 dark:bg-gray-900 dark:text-indigo-200 transition-colors duration-500">
-<header class="bg-gradient-to-r from-indigo-700 to-purple-700 text-white sticky top-0 z-50 shadow">
-  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-    <a href="index.html" class="block" id="logo" data-aos="fade-down" data-aos-duration="800">
-    <img src="images/logo.png.png" alt="Anup Rijal Logo" class="w-8 h-8 sm:w-10 sm:h-10" />
-</a>
-    <nav class="space-x-4">
       
     </nav>
     <button onclick="toggleDarkMode()" class="ml-4 bg-white text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100 transition">Toggle Dark Mode</button>
