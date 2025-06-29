@@ -11,142 +11,103 @@
   <script>
     tailwind.config = {
       darkMode: 'class',
+      safelist: [
+        'bg-lightBg', 'text-lightText',
+        'dark:bg-darkBg', 'dark:text-darkText',
+        'bg-primary', 'text-primary'
+      ],
       theme: {
         extend: {
           fontFamily: {
             sans: ['Urbanist', 'sans-serif'],
           },
-        },
-      },
+          colors: {
+            primary: '#6366f1',
+            secondary: '#a855f7',
+            lightBg: '#f3f4f6',
+            darkBg: '#1e1e2f',
+            lightText: '#1f2937',
+            darkText: '#e0e7ff'
+          }
+        }
+      }
     }
   </script>
-  <script>
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.body.scrollHeight - window.innerHeight;
-    const scrolled = (scrollTop / docHeight) * 100;
-    document.getElementById('scroll-progress').style.width = `${scrolled}%`;
-  });
-</script>
-
-</head>
-<body class="bg-white dark:bg-black text-black dark:text-white font-sans">
-<div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>
-  AOS.init({
-    once: true, // Animate once per element
-    disable: 'mobile' // optional: disable on very old phones
-  });
-</script>
-
-</body>
-</html>
-</script>
-<script>
-  tailwind.config = {
-    darkMode: 'class',
-  }
-</script>
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>AOS.init({ once: true });</script>
   <style>
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
     body { font-family: 'Urbanist', sans-serif; }
-    .dark-mode { background-color: #1a202c; color: white; }
-    .nav-link.active { font-weight: bold; text-decoration: underline; }
-    .nav-link.active {
-  font-weight: bold;
-  border-bottom: 2px solid currentColor;
-  text-decoration: underline;
+    html { scroll-behavior: smooth; }
+    .nav-link {
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s;
     }
-.nav-link {
-  position: relative;
-  padding-bottom: 4px;
-  transition: color 0.3s;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: currentColor;
-  transition: width 0.3s ease-in-out;
-}
-
-.nav-link.active::after {
-  width: 100%;
-}
-
-.nav-link.active {
-  color: #6366f1; /* Indigo-500 */
-}
-html {
-  scroll-behavior: smooth;
-}
-@media (prefers-reduced-motion: reduce) {
-  [data-aos] {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: currentColor;
+      transition: width 0.3s ease-in-out;
+    }
+    .nav-link.active::after {
+      width: 100%;
+    }
+    .nav-link.active {
+      color: #6366f1;
+      font-weight: bold;
+      border-bottom: 2px solid currentColor;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      [data-aos] {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
   </style>
-
 </head>
-<body id="page-body" class="bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:text-white dark:text-white dark:text-white dark:text-indigo-200 transition-colors duration-500">
-<div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
- <header class="bg-white/70 dark:bg-black/60 backdrop-blur-md shadow-md sticky top-0 z-50 transition-all duration-300">
-  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
- <a
-<a href="/" 
-   class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-indigo-300 transition" 
-   id="logo" 
-   data-aos="fade-down" 
-   data-aos-duration="800"
->
-  <img src="images/logo.png.png" alt="Anup Rijal Logo" class="w-8 h-8 sm:w-10 sm:h-10" />
-</a>
+<body id="page-body" class="bg-lightBg text-lightText dark:bg-darkBg dark:text-darkText transition-colors duration-500 font-sans">
+  <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-primary z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
 
-<nav 
-  class="space-x-3 transition" 
-  id="nav-links" 
-  data-aos="fade-down" 
-  data-aos-duration="800" 
-  data-aos-delay="150"
->
-  <!-- Your nav links here -->
-</nav>
-      
-    </nav>
-    <button onclick="toggleDarkMode()" class="ml-4 bg-white text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100 transition">Toggle Dark Mode</button>
-  </div>
-</header>
+  <header class="bg-white/80 dark:bg-black/60 backdrop-blur-md shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="/" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-primary transition">
+        <img src="images/logo.png.png" alt="Anup Rijal Logo" class="w-8 h-8 sm:w-10 sm:h-10" />
+      </a>
+      <nav class="space-x-6">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/projects.html" class="nav-link active">Projects</a>
+      </nav>
+      <button onclick="toggleDarkMode()" class="ml-4 bg-primary text-white px-3 py-1 rounded hover:bg-indigo-600 transition">Toggle Dark Mode</button>
+    </div>
+  </header>
 
-<section class="py-20 max-w-6xl mx-auto px-4 bg-indigo-50 dark:bg-gray-800">
-  <h2 class="text-3xl font-bold mb-10 text-center" data-aos="fade-up">Projects</h2>
-<section id="home-lab" class="bg-white dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm" data-aos="fade-up">
+  <main class="py-20 max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-10 text-center" data-aos="fade-up">Projects</h2>
+
+    <section id="home-lab" class="bg-white dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
       <h3 class="text-3xl font-extrabold text-blue-700 dark:text-blue-300 mb-6 text-center">
         IT Transaction Project at Opal Healthcare
       </h3>
       <p class="text-gray-700 dark:text-indigo-300 mb-4">
         Led the successful IT infrastructure transition during Opal Healthcare’s acquisition of a care community, managing the complete technical decommissioning and reimplementation within a tight 6-week timeline. Decommissioned 100% of existing hardware and network connections from the previous provider, designed and implemented a new floor plan and network architecture tailored to the site’s needs. Installed and configured over 50 devices, including switches, workstations, printers, and phones. Patched and terminated all network cables to ensure 100% site-wide connectivity. Established new internet and internal network services from the ground up, resulting in zero downtime during the transition and improved network performance by 30%.
       </p>
-      <img src="images/IMG_0698.jpeg" alt="Opal Healthcare network setup" style="width: 300px;" class="rounded-md mb-4" />
-    </div>
-<section id="home-lab" class="bg-white dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm" data-aos="fade-up">
+      <img src="images/IMG_0698.jpeg" alt="Opal Healthcare network setup" class="w-80 rounded-md mb-4 mx-auto" />
+    </section>
+
+    <section class="bg-white dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
       <h3 class="text-3xl font-extrabold text-blue-700 dark:text-blue-300 mb-6 text-center">
         Help Desk Automation
       </h3>
       <p class="text-gray-700 dark:text-indigo-300 mb-4">
         Implemented help desk automation using Freshservice to streamline IT support operations. Automated ticket routing based on issue categories and priority levels, enabling faster assignment to the right teams. Developed workflows for auto-escalation of unresolved tickets, automated email notifications for status updates, and integration with knowledge base articles to reduce resolution times. This resulted in a 25% improvement in response times and a 30% increase in first-contact resolution rates.
       </p>
-    </div>
+    </section>
 
-    <section id="home-lab" class="bg-white dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm" data-aos="fade-up">
+    <section class="bg-white dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm" data-aos="fade-up">
       <h3 class="text-3xl font-extrabold text-blue-700 dark:text-blue-300 mb-6 text-center">
         My Home Lab Setup
       </h3>
@@ -154,59 +115,41 @@ html {
         As a tech enthusiast, I’ve built a fully functional <strong>self-hosted home lab</strong> to experiment with open-source technologies and sharpen my system administration skills. It features:
       </p>
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 text-sky-800 dark:text-sky-300">
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.656 0 3-1.567 3-3.5S13.656 4 12 4s-3 1.567-3 3.5S10.344 11 12 11z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11c0 1.5-2 2-3 2s-3-.5-3-2 2-4 3-4 3 2.5 3 4z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 19c0-3 3-7 8-7s8 4 8 7v2H4v-2z"/></svg>
-          <span><strong>Bitwarden</strong> - Self-hosted password management</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-          <span><strong>Nginx Proxy Manager</strong> - Easy reverse proxy and SSL setup</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"/></svg>
-          <span><strong>Nextcloud</strong> - Private cloud for files and collaboration</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2a3 3 0 00-3-3H5a3 3 0 00-3 3v2"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 17v-2a3 3 0 013-3h1a3 3 0 013 3v2"/></svg>
-          <span><strong>RustDesk</strong> - Open-source remote desktop server and client</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
-          <span>Headless <strong>RustDesk on Raspberry Pi</strong> for anytime remote access</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18"/></svg>
-          <span><strong>Pi-hole</strong> - Network-wide ad blocker and home security tool</span>
-        </li>
+        <li class="flex items-center gap-3">Bitwarden - Self-hosted password management</li>
+        <li class="flex items-center gap-3">Nginx Proxy Manager - Easy reverse proxy and SSL setup</li>
+        <li class="flex items-center gap-3">Nextcloud - Private cloud for files and collaboration</li>
+        <li class="flex items-center gap-3">RustDesk - Open-source remote desktop server and client</li>
+        <li class="flex items-center gap-3">Headless RustDesk on Raspberry Pi for anytime remote access</li>
+        <li class="flex items-center gap-3">Pi-hole - Network-wide ad blocker and home security tool</li>
       </ul>
       <p class="text-lg leading-relaxed text-sky-800 dark:text-sky-300">
         This setup allows me to maintain privacy, control, and remote access while learning about network security, system administration, and open-source cloud technologies.
       </p>
     </section>
-  </div>
-</section>
-
-
+  </main>
 
   <div class="text-center py-10">
-    <a href="index.html" class="inline-block px-6 py-3 bg-indigo-700 text-white rounded hover:bg-indigo-800 transition">
+    <a href="index.html" class="inline-block px-6 py-3 bg-primary text-white rounded hover:bg-indigo-800 transition">
       ← Back to Home
     </a>
   </div>
-</section>
 
-<footer class="text-center py-6 text-sm text-white bg-gradient-to-r from-indigo-700 to-purple-700">
-  &copy; 2025 Anup Rijal. All rights reserved.
-</footer>
+  <footer class="text-center py-6 text-sm text-white bg-gradient-to-r from-indigo-700 to-purple-700">
+    &copy; 2025 Anup Rijal. All rights reserved.
+  </footer>
 
-<script>
-  AOS.init();
-  function toggleDarkMode() {
-    document.getElementById("page-body").classList.toggle("dark");
-  }
-</script>
+  <script>
+    AOS.init();
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrolled = (scrollTop / docHeight) * 100;
+      document.getElementById('scroll-progress').style.width = `${scrolled}%`;
+    });
 
-</script>
-
+    function toggleDarkMode() {
+      document.getElementById("page-body").classList.toggle("dark");
+    }
+  </script>
 </body>
 </html>
