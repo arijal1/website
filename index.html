@@ -11,18 +11,84 @@
   <link rel="icon" href="/favicon.ico" />
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Urbanist', 'sans-serif'],
-          },
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          sunsetOrange: '#FF5E5B',
+          warmGold: '#FFC371',
+          softPeach: '#FFD6A5',
+          deepPlum: '#6B2737',
+          darkCharcoal: '#2E2E2E',
+        },
+        fontFamily: {
+          sans: ['Urbanist', 'sans-serif'],
         },
       },
-    };
-  </script>
+    },
+  };
+</script>
+
+<style>
+  body {
+    font-family: 'Urbanist', sans-serif;
+    /* Light mode background */
+    background-color: #FFD6A5; /* softPeach */
+    color: #6B2737; /* deepPlum */
+  }
+  html.dark body {
+    /* Dark mode background */
+    background-color: #2E2E2E; /* darkCharcoal */
+    color: #FFC371; /* warmGold */
+  }
+  header {
+    background-color: #FFC371; /* warmGold */
+  }
+  html.dark header {
+    background-color: #6B2737; /* deepPlum */
+  }
+  nav a.nav-link {
+    color: #6B2737; /* deepPlum */
+  }
+  html.dark nav a.nav-link {
+    color: #FFD6A5; /* softPeach */
+  }
+  nav a.nav-link.active {
+    color: #FF5E5B; /* sunsetOrange */
+    border-bottom-color: #FF5E5B;
+  }
+  html.dark nav a.nav-link.active {
+    color: #FFC371; /* warmGold */
+    border-bottom-color: #FFC371;
+  }
+  #scroll-progress {
+    background-color: #FF5E5B; /* sunsetOrange */
+  }
+  .floating-btn-container a {
+    background: linear-gradient(45deg, #FF5E5B, #FFC371);
+    color: #2E2E2E;
+  }
+  html.dark .floating-btn-container a {
+    background: linear-gradient(45deg, #6B2737, #FFD6A5);
+    color: #2E2E2E;
+  }
+  h1, h2, h3, h4 {
+    color: #6B2737; /* deepPlum */
+  }
+  html.dark h1, html.dark h2, html.dark h3, html.dark h4 {
+    color: #FFC371; /* warmGold */
+  }
+  /* Links */
+  a {
+    color: #FF5E5B;
+  }
+  html.dark a {
+    color: #FFD6A5;
+  }
+</style>
+
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
@@ -100,8 +166,7 @@
 
       <nav class="space-x-3" id="nav-links" data-aos="fade-down" data-aos-duration="800" data-aos-delay="150">
         <a href="#about" class="nav-link hover:underline hover:text-indigo-500 dark:hover:text-indigo-300 transition">About</a>
-        <a href="#skills" class="nav-link hover:underline hover:text-indigo-500 dark:hover:text-indigo-300 transition">Skills</a>
-        <a href="#experience" class="nav-link hover:underline hover:text-indigo-500 dark:hover:text-indigo-300 transition">Experience</a>
+        <a href="#skills" class="nav-link hover:underline hover:text-indigo-500 dark:hover:text-indigo-300 transition">Professional Experience</a>
         <a href="#education" class="nav-link hover:underline hover:text-indigo-500 dark:hover:text-indigo-300 transition">Education</a>
         <a href="#hobbies" class="nav-link hover:underline hover:text-indigo-500 dark:hover:text-indigo-300 transition">Hobbies & Interests</a>
         <a href="#contact" class="nav-link hover:underline hover:text-indigo-500 dark:hover:text-indigo-300 transition">Contact</a>
@@ -176,95 +241,6 @@
           Always learning. Always building. Always ready for the next challenge.
         </p>
       </div>
-    </div>
-  </section>
-
-  <!-- Experience Section -->
-  <section id="experience" class="py-12 max-w-6xl mx-auto px-4 bg-white dark:bg-gray-900 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm">
-    <h3 class="text-3xl font-extrabold text-blue-700 dark:text-blue-300 mb-10 text-center" data-aos="fade-up">Professional Experience</h3>
-    <div class="space-y-8 text-sky-800 dark:text-sky-100 max-w-3xl mx-auto">
-
-      <article class="mb-10" data-aos="fade-up">
-        <h4 class="text-xl font-semibold text-sky-800 dark:text-sky-300 mb-2">Service Desk Analyst LVL 1/2 – Opal Healthcare</h4>
-        <p class="text-sm text-emerald-700 dark:text-emerald-400 mb-4">Dec 2024 – Present</p>
-        <ul class="space-y-3 text-sky-800 dark:text-sky-100">
-          <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 mt-1 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Fix technical issues and assist users across devices
-          </li>
-          <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 mt-1 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Manage IT equipment, licenses, and device imaging
-          </li>
-          <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 mt-1 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Support enterprise mobile and enforce security policies
-          </li>
-          <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 mt-1 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Level 2 tasks: incident escalation, root cause analysis, patching
-          </li>
-          <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 mt-1 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Use ITSM tools for logging and troubleshooting
-          </li>
-        </ul>
-      </article>
-
-      <article class="mb-10" data-aos="fade-up">
-        <h4 class="text-xl font-semibold text-sky-800 dark:text-sky-300 mb-2">Technical Specialist – Apple</h4>
-        <p class="text-sm text-emerald-700 dark:text-emerald-400 mb-4">May 2024 – Dec 2024</p>
-        <ul class="space-y-3 text-sky-800 dark:text-sky-100">
-          <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 mt-1 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Device support and troubleshooting
-          </li>
-          <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 mt-1 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Customer service under pressure
-          </li>
-          <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 mt-1 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Product setup and issue escalation
-          </li>
-        </ul>
-      </article>
-
-      <article data-aos="fade-up">
-        <h4 class="text-xl font-semibold text-sky-800 dark:text-sky-300 mb-2">IT Support Officer (Intern) – Rebb Tech</h4>
-        <p class="text-sm text-emerald-700 dark:text-emerald-400 mb-4">Dec 2021 – May 2022</p>
-        <ul class="space-y-3 text-sky-800 dark:text-sky-100">
-          <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 mt-1 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Remote/onsite support and hardware rollout
-          </li>
-          <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 mt-1 text-indigo-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            SCCM deployment
-          </li>
-        </ul>
-      </article>
-
     </div>
   </section>
 
