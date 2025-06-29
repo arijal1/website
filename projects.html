@@ -5,31 +5,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projects | Anup Rijal</title>
 
+ <html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <link rel="icon" href="/favicon.ico" />
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Urbanist', 'sans-serif'],
-          },
-          colors: {
-            primary: '#6366f1',
-            secondary: '#a855f7',
-            lightBg: '#f3f4f6',
-            lightText: '#1f2937',
-          }
-        }
-      }
-    }
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+ tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          sunsetOrange: '#FF5E5B',
+          warmGold: '#FFC371',
+          softPeach: '#FFD6A5',
+          deepPlum: '#6B2737',
+          darkCharcoal: '#2E2E2E',
+        },
+        fontFamily: {
+          sans: ['Urbanist', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  body {
+    font-family: 'Urbanist', sans-serif;
+    /* Light mode background */
+    background-color: #FFD6A5; /* softPeach */
+    color: #6B2737; /* deepPlum */
+  }
+  html.dark body {
+    /* Dark mode background */
+    background-color: #2E2E2E; /* darkCharcoal */
+    color: #FFC371; /* warmGold */
+  }
+  header {
+    background-color: #FFC371; /* warmGold */
+  }
+  html.dark header {
+    background-color: #6B2737; /* deepPlum */
+  }
+  nav a.nav-link {
+    color: #6B2737; /* deepPlum */
+  }
+  html.dark nav a.nav-link {
+    color: #FFD6A5; /* softPeach */
+  }
+  nav a.nav-link.active {
+    color: #FF5E5B; /* sunsetOrange */
+    border-bottom-color: #FF5E5B;
+  }
+  html.dark nav a.nav-link.active {
+    color: #FFC371; /* warmGold */
+    border-bottom-color: #FFC371;
+  }
+  #scroll-progress {
+    background-color: #FF5E5B; /* sunsetOrange */
+  }
+  .floating-btn-container a {
+    background: linear-gradient(45deg, #FF5E5B, #FFC371);
+    color: #2E2E2E;
+  }
+  html.dark .floating-btn-container a {
+    background: linear-gradient(45deg, #6B2737, #FFD6A5);
+    color: #2E2E2E;
+  }
+  h1, h2, h3, h4 {
+    color: #6B2737; /* deepPlum */
+  }
+  html.dark h1, html.dark h2, html.dark h3, html.dark h4 {
+    color: #FFC371; /* warmGold */
+  }
+  /* Links */
+  a {
+    color: #FF5E5B;
+  }
+  html.dark a {
+    color: #FFD6A5;
+  }
+</style>
+
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
-    body { font-family: 'Urbanist', sans-serif; }
-    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Urbanist', sans-serif;
+    }
+    .nav-link.active {
+      font-weight: bold;
+      border-bottom: 2px solid currentColor;
+      text-decoration: underline;
+      color: #6366f1; /* Indigo-500 */
+    }
     .nav-link {
       position: relative;
       padding-bottom: 4px;
@@ -48,14 +121,38 @@
     .nav-link.active::after {
       width: 100%;
     }
-    .nav-link.active {
-      color: #6366f1;
-      font-weight: bold;
-      border-bottom: 2px solid currentColor;
+    html {
+      scroll-behavior: smooth;
+      filter: brightness(0.96);
+    }
+    @media (prefers-color-scheme: dark) {
+      html {
+        filter: none;
+      }
+    }
+    .floating-btn-container {
+      position: fixed;
+      top: 120px;
+      right: 40px;
+      z-index: 1000;
+      animation: floatUpDown 4s ease-in-out infinite;
+    }
+    @keyframes floatUpDown {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      [data-aos] {
+        transition: none !important;
+        animation: none !important;
+      }
     }
   </style>
 </head>
-
 <body id="page-body" class="bg-lightBg text-lightText font-sans">
   <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-primary z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
 
