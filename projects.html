@@ -135,7 +135,6 @@
         <a href="/" class="nav-link">Home</a>
         <a href="/projects.html" class="nav-link active">Projects</a>
       </nav>
-      <button onclick="toggleDarkMode()" class="ml-4 bg-primary text-white px-3 py-1 rounded hover:bg-indigo-600 transition">Toggle Dark Mode</button>
     </div>
   </header>
 
@@ -212,18 +211,6 @@
     <p>&copy; 2025 Anup Rijal. All rights reserved.</p>
   </footer>
 
-  <script>
-    AOS.init();
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      const scrolled = (scrollTop / docHeight) * 100;
-      document.getElementById('scroll-progress').style.width = `${scrolled}%`;
-    });
 
-    function toggleDarkMode() {
-      document.getElementById("page-body").classList.toggle("dark");
-    }
-  </script>
 </body>
 </html>
