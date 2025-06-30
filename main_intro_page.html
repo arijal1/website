@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Anup Rijal's main landing page with intro and animated entry." />
+  <meta name="author" content="Anup Rijal" />
+  <title>Welcome | Anup Rijal</title>
+
+  <link rel="icon" href="/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            sunsetOrange: '#FF5E5B',
+            warmGold: '#FFC371',
+            softPeach: '#FFD6A5',
+            deepPlum: '#6B2737',
+            darkCharcoal: '#2E2E2E',
+          },
+          fontFamily: {
+            sans: ['Urbanist', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Urbanist', sans-serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="bg-softPeach text-deepPlum dark:bg-darkCharcoal dark:text-warmGold transition duration-500">
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col items-center justify-center text-center px-4">
+    <div data-aos="fade-up" data-aos-duration="1000">
+      <img src="images/your-image.jpg" alt="Anup Rijal" class="w-40 h-40 rounded-full object-cover mx-auto mb-6 shadow-lg hover:scale-105 transition-transform duration-500" />
+      <h1 class="text-5xl sm:text-6xl font-extrabold mb-6 text-deepPlum dark:text-warmGold">Hi, I'm Anup Rijal</h1>
+      <p class="text-lg sm:text-xl max-w-2xl mx-auto mb-8 text-deepPlum dark:text-softPeach">
+        Passionate IT professional with experience across healthcare, tech, and retail. I love blending systems, people, and purpose. Welcome to my digital space.
+      </p>
+      <a href="portfolio.html" class="inline-block px-6 py-3 bg-sunsetOrange text-white font-medium rounded-xl shadow-lg hover:bg-warmGold hover:text-darkCharcoal transition duration-300">
+        Enter Portfolio &rarr;
+      </a>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="py-6 bg-white dark:bg-gray-800 text-center mt-[-1.5rem]">
+    <h2 class="text-3xl font-bold mb-6 text-deepPlum dark:text-warmGold">Contact</h2>
+    <div class="flex justify-center space-x-6">
+      <a href="mailto:rejalanop55@gmail.com" class="flex items-center space-x-2 px-4 py-2 bg-sunsetOrange text-white rounded-xl shadow hover:bg-warmGold hover:text-darkCharcoal transition">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24">
+          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        <span>Email</span>
+      </a>
+      <a href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" class="flex items-center space-x-2 px-4 py-2 bg-sunsetOrange text-white rounded-xl shadow hover:bg-warmGold hover:text-darkCharcoal transition">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24">
+          <path d="M4.98 3.5A2.5 2.5 0 002.5 6v12a2.5 2.5 0 002.48 2.5h14.04a2.5 2.5 0 002.48-2.5V6a2.5 2.5 0 00-2.48-2.5H4.98zM8.75 18.5H6.25v-7.25h2.5v7.25zm-1.25-8.32a1.44 1.44 0 110-2.88 1.44 1.44 0 010 2.88zm12 8.32h-2.5v-3.6c0-.86-.3-1.45-1.04-1.45-.57 0-.91.39-1.06.76-.05.12-.06.28-.06.44v3.85h-2.5v-7.25h2.5v1c.33-.5.89-1.21 2.18-1.21 1.59 0 2.79 1.04 2.79 3.28v3.18z"/>
+        </svg>
+        <span>LinkedIn</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Quick Insight Section -->
+  <section class="py-16 bg-white dark:bg-darkCharcoal text-center">
+    <div class="max-w-5xl mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-8 text-deepPlum dark:text-warmGold" data-aos="fade-up">Quick Insight About Me</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up" data-aos-delay="150">
+        <div class="p-6 rounded-lg bg-softPeach dark:bg-deepPlum shadow">
+          <h3 class="text-xl font-semibold mb-2 text-sunsetOrange">Tech Background</h3>
+          <p>Experienced in IT support, systems administration, Microsoft 365, Azure, and endpoint management.</p>
+        </div>
+        <div class="p-6 rounded-lg bg-softPeach dark:bg-deepPlum shadow">
+          <h3 class="text-xl font-semibold mb-2 text-sunsetOrange">People-Centered</h3>
+          <p>Believer in empathetic support and communication-driven IT solutions.</p>
+        </div>
+        <div class="p-6 rounded-lg bg-softPeach dark:bg-deepPlum shadow">
+          <h3 class="text-xl font-semibold mb-2 text-sunsetOrange">Explorer</h3>
+          <p>Outside work, I enjoy trekking, sports, coffee, and travel — always staying curious and balanced.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-6 text-center text-sm text-deepPlum dark:text-softPeach">
+    &copy; 2025 Anup Rijal. All rights reserved.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+</html>
