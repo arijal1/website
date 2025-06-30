@@ -33,17 +33,47 @@
 
     body {
       font-family: 'Urbanist', sans-serif;
-      /* Gradient background - orange to gold to red */
-      background: linear-gradient(135deg, #FF5E5B, #FFC371, #FF3D00);
-      color: #6B2737; /* deep plum text */
       margin: 0;
       min-height: 100vh;
+      color: #6B2737; /* deep plum */
     }
     html.dark body {
-      /* Dark mode gradient background */
-      background: linear-gradient(135deg, #8B1E00, #B87333, #4B0000);
-      color: #FFD6A5; /* soft peach text */
+      color: #FFD6A5; /* soft peach */
     }
+
+    /* Everest Background */
+    .everest-background {
+      position: relative;
+      overflow: visible; /* allow background to move */
+      min-height: 100vh;
+    }
+    .everest-bg-image {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('images/everest_line_art_darker.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -1;
+      pointer-events: none;
+      will-change: transform;
+    }
+    .everest-background::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85), rgba(255, 214, 165, 0.9));
+      pointer-events: none;
+      z-index: 0;
+      mix-blend-mode: multiply;
+    }
+    html.dark .everest-background::after {
+      background: linear-gradient(to bottom, rgba(46, 46, 46, 0.9), rgba(0, 0, 0, 0.85));
+    }
+
+    /* Your existing styles */
     header {
       background-color: #FFC371; /* warmGold */
     }
@@ -92,8 +122,6 @@
     html.dark a {
       color: #FFD6A5;
     }
-
-    /* Nav link styles */
     .nav-link.active {
       font-weight: bold;
       border-bottom: 2px solid currentColor;
@@ -118,7 +146,6 @@
     .nav-link.active::after {
       width: 100%;
     }
-
     html {
       scroll-behavior: smooth;
       filter: brightness(0.96);
@@ -128,7 +155,6 @@
         filter: none;
       }
     }
-
     .floating-btn-container {
       position: fixed;
       top: 120px;
@@ -154,105 +180,118 @@
 </head>
 <body id="page-body" class="transition-colors duration-500 font-sans">
 
-  <!-- Scroll progress bar -->
-  <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
+  <div class="everest-background">
+    <div class="everest-bg-image"></div>
 
-  <!-- Header -->
-  <header class="bg-white backdrop-blur-md shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-      <a href="/" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-primary transition">
-        <img src="images/logo.png.png" alt="Anup Rijal Logo" class="w-8 h-8 sm:w-10 sm:h-10" />
+    <!-- Scroll progress bar -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
+
+    <!-- Header -->
+    <header class="bg-white backdrop-blur-md shadow-md sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="/" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-primary transition">
+          <img src="images/logo.png.png" alt="Anup Rijal Logo" class="w-8 h-8 sm:w-10 sm:h-10" />
+        </a>
+
+        <nav class="flex-1 flex justify-center space-x-6">
+          <a href="/projects.html" class="nav-link active">Projects</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Projects Sections -->
+    <section class="bg-white rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
+      <div class="max-w-3xl mx-auto text-center">
+        <h3 class="text-3xl font-extrabold text-blue-700 mb-6">
+          IT Transaction Project at Opal Healthcare
+        </h3>
+        <p class="text-gray-700 mb-4 text-left">
+          Led the successful IT infrastructure transition during Opal Healthcare’s acquisition of a care community, completing the full technical decommissioning and reimplementation within a tight 6-week timeline. Decommissioned all legacy hardware and network connections, then designed and implemented a new floor plan and network architecture tailored to the site’s requirements. Installed and configured over 50 devices, including switches, workstations, printers, and phones. Patched and terminated all network cables to ensure seamless, site-wide connectivity. Established new internet and internal network services from the ground up, delivering a smooth transition with zero downtime and enhanced system reliability.
+        </p>
+        <img src="images/IMG_0698.jpeg" alt="Opal Healthcare network setup" class="w-80 rounded-md mb-4 mx-auto" />
+      </div>
+    </section>
+
+    <section class="bg-white rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
+      <div class="max-w-3xl mx-auto text-center">
+        <h3 class="text-3xl font-extrabold text-blue-700 mb-6">
+          Help Desk Automation
+        </h3>
+        <p class="text-gray-700 mb-4 text-left">
+          Implemented help desk automation using Freshservice to streamline IT support operations. Automated ticket routing based on issue categories and priority levels, enabling faster assignment to the right teams. Developed workflows for auto-escalation of unresolved tickets, automated email notifications for status updates, and integration with knowledge base articles to reduce resolution times. This resulted in a 25% improvement in response times and a 30% increase in first-contact resolution rates.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
+      <div class="max-w-4xl mx-auto">
+        <h3 class="text-3xl font-extrabold text-blue-700 mb-6 text-center">
+          My Home Lab Setup
+        </h3>
+        <p class="text-lg leading-relaxed mb-10 text-sky-800 dark:text-sky-300 text-center">
+          As a tech enthusiast, I’ve built a fully functional <strong>self-hosted home lab</strong> to experiment with open-source technologies and sharpen my system administration skills. It features:
+        </p>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 text-sky-800 dark:text-sky-300">
+          <li class="flex items-center gap-3">
+            <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.656 0 3-1.567 3-3.5S13.656 4 12 4s-3 1.567-3 3.5S10.344 11 12 11z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11c0 1.5-2 2-3 2s-3-.5-3-2 2-4 3-4 3 2.5 3 4z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 19c0-3 3-7 8-7s8 4 8 7v2H4v-2z"/></svg>
+            <span><strong>Bitwarden</strong> - Self-hosted password management</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+            <span><strong>Nginx Proxy Manager</strong> - Easy reverse proxy and SSL setup</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"/></svg>
+            <span><strong>Nextcloud</strong> - Private cloud for files and collaboration</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2a3 3 0 00-3-3H5a3 3 0 00-3 3v2"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 17v-2a3 3 0 013-3h1a3 3 0 013 3v2"/></svg>
+            <span><strong>RustDesk</strong> - Open-source remote desktop server and client</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
+            <span>Headless <strong>RustDesk on Raspberry Pi</strong> for anytime remote access</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18"/></svg>
+            <span><strong>Pi-hole</strong> - Network-wide ad blocker and home security tool</span>
+          </li>
+        </ul>
+        <p class="text-lg leading-relaxed text-sky-800 dark:text-sky-300 text-center">
+          This setup allows me to maintain privacy, control, and remote access while learning about network security, system administration, and open-source cloud technologies.
+        </p>
+      </div>
+    </section>
+
+    <div class="text-center py-10">
+      <a href="index.html" class="inline-block px-6 py-3 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition">
+        ← Back to Home
       </a>
-
-      <nav class="flex-1 flex justify-center space-x-6">
-        <a href="/projects.html" class="nav-link active">Projects</a>
-      </nav>
     </div>
-  </header>
 
-  <!-- Projects Sections -->
-  <section class="bg-white rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
-    <div class="max-w-3xl mx-auto text-center">
-      <h3 class="text-3xl font-extrabold text-blue-700 mb-6">
-        IT Transaction Project at Opal Healthcare
-      </h3>
-      <p class="text-gray-700 mb-4 text-left">
-        Led the successful IT infrastructure transition during Opal Healthcare’s acquisition of a care community, completing the full technical decommissioning and reimplementation within a tight 6-week timeline. Decommissioned all legacy hardware and network connections, then designed and implemented a new floor plan and network architecture tailored to the site’s requirements. Installed and configured over 50 devices, including switches, workstations, printers, and phones. Patched and terminated all network cables to ensure seamless, site-wide connectivity. Established new internet and internal network services from the ground up, delivering a smooth transition with zero downtime and enhanced system reliability.
-      <img src="images/IMG_0698.jpeg" alt="Opal Healthcare network setup" class="w-80 rounded-md mb-4 mx-auto" />
-    </div>
-  </section>
-
-  <section class="bg-white rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
-    <div class="max-w-3xl mx-auto text-center">
-      <h3 class="text-3xl font-extrabold text-blue-700 mb-6">
-        Help Desk Automation
-      </h3>
-      <p class="text-gray-700 mb-4 text-left">
-        Implemented help desk automation using Freshservice to streamline IT support operations. Automated ticket routing based on issue categories and priority levels, enabling faster assignment to the right teams. Developed workflows for auto-escalation of unresolved tickets, automated email notifications for status updates, and integration with knowledge base articles to reduce resolution times. This resulted in a 25% improvement in response times and a 30% increase in first-contact resolution rates.
-      </p>
-    </div>
-  </section>
-
-  <section class="bg-white rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
-    <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl font-extrabold text-blue-700 mb-6 text-center">
-        My Home Lab Setup
-      </h3>
-      <p class="text-lg leading-relaxed mb-10 text-sky-800 dark:text-sky-300 text-center">
-        As a tech enthusiast, I’ve built a fully functional <strong>self-hosted home lab</strong> to experiment with open-source technologies and sharpen my system administration skills. It features:
-      </p>
-      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 text-sky-800 dark:text-sky-300">
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.656 0 3-1.567 3-3.5S13.656 4 12 4s-3 1.567-3 3.5S10.344 11 12 11z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11c0 1.5-2 2-3 2s-3-.5-3-2 2-4 3-4 3 2.5 3 4z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 19c0-3 3-7 8-7s8 4 8 7v2H4v-2z"/></svg>
-          <span><strong>Bitwarden</strong> - Self-hosted password management</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-          <span><strong>Nginx Proxy Manager</strong> - Easy reverse proxy and SSL setup</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"/></svg>
-          <span><strong>Nextcloud</strong> - Private cloud for files and collaboration</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2a3 3 0 00-3-3H5a3 3 0 00-3 3v2"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 17v-2a3 3 0 013-3h1a3 3 0 013 3v2"/></svg>
-          <span><strong>RustDesk</strong> - Open-source remote desktop server and client</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
-          <span>Headless <strong>RustDesk on Raspberry Pi</strong> for anytime remote access</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18"/></svg>
-          <span><strong>Pi-hole</strong> - Network-wide ad blocker and home security tool</span>
-        </li>
-      </ul>
-      <p class="text-lg leading-relaxed text-sky-800 dark:text-sky-300 text-center">
-        This setup allows me to maintain privacy, control, and remote access while learning about network security, system administration, and open-source cloud technologies.
-      </p>
-    </div>
-  </section>
-
-  <div class="text-center py-10">
-    <a href="index.html" class="inline-block px-6 py-3 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition">
-      ← Back to Home
-    </a>
-  </div>
-
-  <!-- Footer -->
-  <footer class="text-center py-6 text-sm text-white bg-gradient-to-r from-indigo-700 to-purple-700">
-    &copy; 2025 Anup Rijal. All rights reserved.
-  </footer>
+    <!-- Footer -->
+    <footer class="text-center py-6 text-sm text-white bg-gradient-to-r from-indigo-700 to-purple-700">
+      &copy; 2025 Anup Rijal. All rights reserved.
+    </footer>
+  </div> <!-- /.everest-background -->
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init();
+
+    // Scroll progress bar
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
       const docHeight = document.body.scrollHeight - window.innerHeight;
       const scrolled = (scrollTop / docHeight) * 100;
       document.getElementById('scroll-progress').style.width = `${scrolled}%`;
+
+      // Parallax scroll for Everest background
+      const bg = document.querySelector('.everest-bg-image');
+      if (bg) {
+        bg.style.transform = `translateY(${scrollTop * 0.5}px)`;
+      }
     });
   </script>
 </body>
