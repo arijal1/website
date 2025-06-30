@@ -30,116 +30,28 @@
       },
     };
   </script>
-   
-<style>
-  /* Pulse animation for timeline dots */
-  @keyframes pulse {
-    0%, 100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.3);
-      opacity: 0.7;
-    }
-  }
-  .timeline-dot {
-    animation: pulse 3s ease-in-out infinite;
-  }
-</style>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
     body {
       font-family: 'Urbanist', sans-serif;
-      /* Light mode background */
-      background-color: #FFD6A5; /* softPeach */
-      color: #6B2737; /* deepPlum */
+      background-color: #FFD6A5;
+      color: #6B2737;
       margin: 0;
     }
     html.dark body {
-      /* Dark mode background */
-      background-color: #2E2E2E; /* darkCharcoal */
-      color: #FFC371; /* warmGold */
+      background-color: #2E2E2E;
+      color: #FFC371;
     }
-    header {
-      background-color: #FFC371; /* warmGold */
-    }
-    html.dark header {
-      background-color: #6B2737; /* deepPlum */
-    }
-    nav a.nav-link {
-      color: #6B2737; /* deepPlum */
-    }
-    html.dark nav a.nav-link {
-      color: #FFD6A5; /* softPeach */
-    }
-    nav a.nav-link.active {
-      color: #FF5E5B; /* sunsetOrange */
-      border-bottom-color: #FF5E5B;
-    }
-    html.dark nav a.nav-link.active {
-      color: #FFC371; /* warmGold */
-      border-bottom-color: #FFC371;
-    }
-    #scroll-progress {
-      background-color: #FF5E5B; /* sunsetOrange */
-    }
-    .floating-btn-container a {
-      background: linear-gradient(45deg, #FF5E5B, #FFC371);
-      color: #2E2E2E;
-    }
-    html.dark .floating-btn-container a {
-      background: linear-gradient(45deg, #6B2737, #FFD6A5);
-      color: #2E2E2E;
-    }
-    h1, h2, h3, h4 {
-      color: #6B2737; /* deepPlum */
-    }
-    html.dark h1, html.dark h2, html.dark h3, html.dark h4 {
-      color: #FFC371; /* warmGold */
-    }
-    /* Links */
-    a {
-      color: #FF5E5B;
-    }
-    html.dark a {
-      color: #FFD6A5;
-    }
-
-    /* Nav link styles */
-    .nav-link.active {
-      font-weight: bold;
-      border-bottom: 2px solid currentColor;
-      text-decoration: underline;
-      color: #6366f1; /* Indigo-500 */
-    }
-    .nav-link {
-      position: relative;
-      padding-bottom: 4px;
-      transition: color 0.3s;
-    }
-    .nav-link::after {
+    .everest-background::after {
       content: '';
-      position: absolute;
-      width: 0%;
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background-color: currentColor;
-      transition: width 0.3s ease-in-out;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 214, 165, 0.35));
+      z-index: 0;
+      pointer-events: none;
     }
-    .nav-link.active::after {
-      width: 100%;
-    }
-    html {
-      scroll-behavior: smooth;
-      /* Removed brightness filter for better background visibility */
-      filter: none;
-    }
-    @media (prefers-color-scheme: dark) {
-      html {
-        filter: none;
-      }
+    html.dark .everest-background::after {
+      background: linear-gradient(to bottom, rgba(46, 46, 46, 0.7), rgba(0, 0, 0, 0.6));
     }
     .floating-btn-container {
       position: fixed;
@@ -149,61 +61,8 @@
       animation: floatUpDown 4s ease-in-out infinite;
     }
     @keyframes floatUpDown {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-8px);
-      }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      [data-aos] {
-        transition: none !important;
-        animation: none !important;
-      }
-    }
-
-    /* Everest Background styles */
-    .everest-background {
-      position: relative;
-      overflow: visible; /* Keep overflow visible */
-      z-index: 0;
-    }
-
-    /* Background image div */
-    .everest-bg-image {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-image: url('images/IMG_2566.JPG');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      will-change: transform;
-      z-index: -1; /* behind all content */
-      pointer-events: none;
-      transition: transform 0.3s ease-out;
-    }
-
-    /* Overlay on top of background */
-    .everest-background::after {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      /* Reduced opacity for better visibility */
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 214, 165, 0.35));
-      z-index: 0;
-      pointer-events: none;
-      /* Removed mix-blend-mode for simpler overlay */
-    }
-    html.dark .everest-background::after {
-      background: linear-gradient(to bottom, rgba(46, 46, 46, 0.7), rgba(0, 0, 0, 0.6));
-    }
-    /* Ensure your content is above background and overlay */
-    .content {
-      position: relative;
-      z-index: 1;
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
   </style>
 </head>
@@ -211,19 +70,16 @@
 
   <div class="everest-background relative">
     <div class="everest-bg-image"></div>
-
     <div class="content">
 
       <!-- Scroll progress bar -->
       <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
 
-      <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between sticky top-0 z-50 bg-white/70 backdrop-blur-md shadow-md dark:bg-gray-900/80 transition-all duration-300">
-        <!-- Logo (Left) -->
+      <!-- Navbar -->
+      <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between sticky top-0 z-50 bg-white/70 backdrop-blur-md shadow-md dark:bg-gray-900/80 transition-all duration-300">
         <a href="/" id="logo" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-indigo-300 transition" data-aos="fade-down" data-aos-duration="800">
           <img src="images/logo.png.png" alt="Anup Rijal Logo" class="w-8 h-8 sm:w-10 sm:h-10" />
         </a>
-
-        <!-- Nav (Center) -->
         <nav class="flex-1 flex justify-center space-x-6" id="nav-links" data-aos="fade-down" data-aos-duration="800" data-aos-delay="150">
           <a href="#about" class="nav-link hover:underline hover:text-indigo-500 transition">About</a>
           <a href="#skills" class="nav-link hover:underline hover:text-indigo-500 transition">Experience</a>
@@ -233,22 +89,20 @@
         </nav>
       </div>
 
+      <!-- Floating Button -->
+      <div class="floating-btn-container" data-aos="fade-up">
+        <a href="projects.html" class="inline-block px-6 py-3 bg-indigo-600 text-white rounded-xl shadow hover:from-purple-700 hover:to-indigo-700 transition-all duration-300">
+          See My Work →
+        </a>
+      </div>
+
       <!-- Hero Section -->
-      <section class="text-center py-12 bg-gray-100 bg-opacity-80 dark:bg-gray-900 dark:bg-opacity-70 rounded-2xl p-6 sm:p-12 shadow-sm">
+      <section class="text-center py-10 bg-white dark:bg-gray-900 rounded-2xl px-6 sm:px-12 shadow-sm">
         <h1 class="text-4xl md:text-5xl font-bold mb-4 text-blue-700 dark:text-blue-300" data-aos="fade-up">Anup Rijal</h1>
       </section>
 
-      <!-- See My Work Button -->
-      <section class="py-10 bg-gray-100 bg-opacity-80 dark:bg-gray-800 dark:bg-opacity-70 rounded-2xl p-6 sm:p-12 shadow-sm">
-        <div class="floating-btn-container" data-aos="fade-up">
-          <a href="projects.html" class="inline-block px-6 py-3 bg-indigo-600 text-white rounded-xl shadow hover:from-purple-700 hover:to-indigo-700 transition-all duration-300">
-            See My Work →
-          </a>
-        </div>
-      </section>
-
       <!-- About Section -->
-      <section id="about" class="py-12 max-w-4xl mx-auto px-4 bg-white bg-opacity-80 dark:bg-gray-900 dark:bg-opacity-70 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm mb-16">
+      <section id="about" class="py-10 max-w-4xl mx-auto px-4 bg-white dark:bg-gray-900 dark:text-indigo-200 rounded-2xl shadow-sm mb-16">
         <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-10 text-center md:text-left">
           <div data-aos="fade-up">
             <img src="images/your-image.jpg" alt="Anup Rijal" class="w-40 h-42 rounded-full object-cover mx-auto md:mx-0 shadow-lg" />
@@ -262,6 +116,8 @@
         </div>
       </section>
 
+    </div>
+  </div>
       
          <!DOCTYPE html>
 <html lang="en">
