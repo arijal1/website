@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Journey | Anup Rijal</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            sunsetOrange: '#FF5E5B',
+            warmGold: '#FFC371',
+            softPeach: '#FFD6A5',
+            deepPlum: '#6B2737',
+            darkCharcoal: '#2E2E2E',
+          },
+          fontFamily: {
+            sans: ['Urbanist', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Urbanist', sans-serif;
+      background-color: #FFD6A5;
+      color: #6B2737;
+      margin: 0;
+    }
+    html.dark body {
+      background-color: #2E2E2E;
+      color: #FFC371;
+    }
+    .everest-background {
+      position: relative;
+      overflow: visible;
+      z-index: 0;
+    }
+    .everest-bg-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('images/IMG_2566.JPG');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      will-change: transform;
+      z-index: -1;
+      pointer-events: none;
+      transition: transform 0.3s ease-out;
+    }
+    .everest-background::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 214, 165, 0.35));
+      z-index: 0;
+      pointer-events: none;
+    }
+    html.dark .everest-background::after {
+      background: linear-gradient(to bottom, rgba(46, 46, 46, 0.7), rgba(0, 0, 0, 0.6));
+    }
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body class="transition-colors duration-500 font-sans">
+  <!-- Navigation Bar -->
+  <nav class="w-full fixed top-0 left-0 bg-white/80 dark:bg-darkCharcoal/80 backdrop-blur z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-xl font-bold text-sunsetOrange">Anup Rijal</a>
+      <div class="space-x-6">
+        <a href="index.html" class="text-deepPlum hover:text-sunsetOrange">Home</a>
+        <a href="#" class="text-deepPlum font-semibold underline">My Journey</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="everest-background pt-24">
+    <div class="everest-bg-image"></div>
+    <div class="content max-w-3xl mx-auto px-6 py-16 bg-white/70 dark:bg-darkCharcoal/60 rounded-2xl shadow-xl backdrop-blur-md">
+      <article class="prose prose-lg lg:prose-xl dark:prose-invert">
+        <h1 class="text-center text-4xl font-bold mb-10">From Sankarpokhari to Sydney: A Journey of Dreams, Sacrifice, and Growth</h1>
+
+        <p>I was born in Sankarpokhari, a small, remote village nestled in the hills of the Kusma District in Nepal. Life there was peaceful—but far from easy. We had no road access, no electricity, and the nearest city was a two-hour walk away. Opportunity felt far off, and dreams had to climb hills of reality to even feel possible.</p>
+
+        <p>My father, a proud Gurkha serving in the Indian Army, worked tirelessly to support us. His sacrifice was our stepping stone.</p>
+
+        <p>When I was five years old, our family moved to Kusma city so I could attend a better school. That was a major shift in my life. It was the beginning of something greater—though, at the time, I didn’t fully understand it. I studied in Kusma for two years while my father continued to work hard to give us a better future.</p>
+
+        <p>Eventually, we were able to buy land in Chitwan, a more developed area of Nepal, and we moved there permanently when I was eight years old. I completed my schooling in Chitwan, and it was during those years that I began to dream more boldly. I knew I wanted to go further—for myself, and for the family who believed in me.</p>
+
+        <p>After high school, I took a leap into the unknown and moved to Sydney, Australia to study a Bachelor of Information Technology. I had no roadmap—just the motivation to do something bigger. I came not only for education, but to fulfill my family’s dream, and to seek the kind of opportunity that didn’t exist where I came from.</p>
+
+        <p>Even though I had a good grasp of English, moving to a new country came with its own struggles. Homesickness was constant in the beginning. Adjusting to a new culture, people, and environment took time. Starting from zero—in a place where no one knew me—was humbling. But over time, I adapted. I learned. I grew.</p>
+
+        <p>Looking back, I’m proud of what I’ve been able to achieve. I have finished my studies in IT, worked with some of the world’s most iconic companies, including Apple and Nike, and grown both personally and professionally beyond what I ever imagined. This journey has taught me more than any textbook ever could.</p>
+
+        <p>Here’s what I’ve learned along the way:</p>
+        <ul>
+          <li>Your past does not define your future.</li>
+          <li>Small beginnings can lead to extraordinary places.</li>
+          <li>The journey might be hard—but it’s always worth it.</li>
+        </ul>
+
+        <p>I carry with me the values of my village, the dreams of my family, and the resilience that life in Nepal gave me. I’m still learning, still growing, and still moving forward.</p>
+
+        <blockquote class="italic border-l-4 border-sunsetOrange pl-4">
+          "Where you begin doesn't matter nearly as much as how far you're willing to go."
+        </blockquote>
+
+        <p>If my journey resonates with you, know this: you’re not alone. And you can do it too.</p>
+
+        <p class="mt-12 text-center">👋 Thank you for reading my story.<br />
+        <a href="index.html" class="text-sunsetOrange underline">← Back to Home</a></p>
+      </article>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 800, easing: 'ease-in-out' });
+    const bg = document.querySelector('.everest-bg-image');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const maxTranslate = 100;
+      const translateY = Math.min(scrollTop * 0.3, maxTranslate);
+      bg.style.transform = `translateY(${translateY}px)`;
+    });
+  </script>
+</body>
+</html>
