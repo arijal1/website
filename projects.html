@@ -31,19 +31,40 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
 
-    body {
-      font-family: 'Urbanist', sans-serif;
-      /* Gradient background - orange to gold to red */
-      background: linear-gradient(135deg, #FF5E5B, #FFC371, #FF3D00);
-      color: #6B2737; /* deep plum text */
+    html, body {
       margin: 0;
       min-height: 100vh;
+      font-family: 'Urbanist', sans-serif;
+      color: #6B2737; /* deep plum text */
+      scroll-behavior: smooth;
+      filter: brightness(0.96);
+      background: url('images/everest-background.jpg') no-repeat center center fixed;
+      background-size: cover;
     }
     html.dark body {
-      /* Dark mode gradient background */
-      background: linear-gradient(135deg, #8B1E00, #B87333, #4B0000);
       color: #FFD6A5; /* soft peach text */
+      filter: none;
+      background: url('images/everest-background.jpg') no-repeat center center fixed;
+      background-size: cover;
     }
+
+    /* Content container translucent backgrounds */
+    .bg-white {
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      border-radius: 1rem;
+      padding: 1.5rem 3rem;
+      margin-bottom: 2.5rem;
+    }
+    html.dark .bg-white {
+      background-color: rgba(30, 30, 30, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+
     header {
       background-color: #FFC371; /* warmGold */
     }
@@ -119,16 +140,6 @@
       width: 100%;
     }
 
-    html {
-      scroll-behavior: smooth;
-      filter: brightness(0.96);
-    }
-    @media (prefers-color-scheme: dark) {
-      html {
-        filter: none;
-      }
-    }
-
     .floating-btn-container {
       position: fixed;
       top: 120px;
@@ -149,16 +160,6 @@
         transition: none !important;
         animation: none !important;
       }
-    }
-
-    /* Make content sections semi-transparent to show background */
-    section.bg-white {
-      background-color: rgba(255, 255, 255, 0.85);
-      backdrop-filter: saturate(180%) blur(10px);
-      -webkit-backdrop-filter: saturate(180%) blur(10px);
-    }
-    html.dark section.bg-white {
-      background-color: rgba(50, 40, 40, 0.8);
     }
   </style>
 </head>
@@ -181,7 +182,7 @@
   </header>
 
   <!-- Projects Sections -->
-  <section class="bg-white rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
+  <section class="bg-white" data-aos="fade-up">
     <div class="max-w-3xl mx-auto text-center">
       <h3 class="text-3xl font-extrabold text-blue-700 mb-6">
         IT Transaction Project at Opal Healthcare
@@ -193,7 +194,7 @@
     </div>
   </section>
 
-  <section class="bg-white rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
+  <section class="bg-white" data-aos="fade-up">
     <div class="max-w-3xl mx-auto text-center">
       <h3 class="text-3xl font-extrabold text-blue-700 mb-6">
         Help Desk Automation
@@ -204,7 +205,7 @@
     </div>
   </section>
 
-  <section class="bg-white rounded-2xl p-6 sm:p-12 shadow-sm mb-10" data-aos="fade-up">
+  <section class="bg-white" data-aos="fade-up">
     <div class="max-w-4xl mx-auto">
       <h3 class="text-3xl font-extrabold text-blue-700 mb-6 text-center">
         My Home Lab Setup
