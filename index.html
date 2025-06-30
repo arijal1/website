@@ -155,8 +155,22 @@
       }
     }
   </style>
+  <style>
+  .everest-background {
+    background-image: url('images/mount_everest_outline.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0.08; /* subtle background effect */
+  }
+  html.dark .everest-background {
+    opacity: 0.1;
+  }
+</style>
+
 </head>
-<body id="page-body" class="bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:bg-black transition-colors duration-500 font-sans">
+<body class="everest-background bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:bg-black transition-colors duration-500 font-sans">
 
   <!-- Scroll progress bar -->
   <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
