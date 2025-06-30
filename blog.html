@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Anup Rijal's personal portfolio showcasing skills, projects, and experience." />
-  <meta name="keywords" content="Anup Rijal, Portfolio, Developer, Projects, Resume" />
-  <meta name="author" content="Anup Rijal" />
-  <title>Anup Rijal</title>
+  <title>Projects | Anup Rijal</title>
 
   <link rel="icon" href="/favicon.ico" />
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
@@ -30,43 +27,32 @@
       },
     };
   </script>
-   
-<style>
-  /* Pulse animation for timeline dots */
-  @keyframes pulse {
-    0%, 100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.3);
-      opacity: 0.7;
-    }
-  }
-  .timeline-dot {
-    animation: pulse 3s ease-in-out infinite;
-  }
-</style>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
+
+    /* Base colors & fonts from main page */
     body {
       font-family: 'Urbanist', sans-serif;
-      /* Light mode background */
       background-color: #FFD6A5; /* softPeach */
       color: #6B2737; /* deepPlum */
       margin: 0;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
     }
     html.dark body {
-      /* Dark mode background */
       background-color: #2E2E2E; /* darkCharcoal */
       color: #FFC371; /* warmGold */
     }
+
     header {
       background-color: #FFC371; /* warmGold */
     }
     html.dark header {
       background-color: #6B2737; /* deepPlum */
     }
+
     nav a.nav-link {
       color: #6B2737; /* deepPlum */
     }
@@ -81,6 +67,7 @@
       color: #FFC371; /* warmGold */
       border-bottom-color: #FFC371;
     }
+
     #scroll-progress {
       background-color: #FF5E5B; /* sunsetOrange */
     }
@@ -92,15 +79,21 @@
       background: linear-gradient(45deg, #6B2737, #FFD6A5);
       color: #2E2E2E;
     }
+
     h1, h2, h3, h4 {
       color: #6B2737; /* deepPlum */
     }
     html.dark h1, html.dark h2, html.dark h3, html.dark h4 {
       color: #FFC371; /* warmGold */
     }
-    /* Links */
+
     a {
       color: #FF5E5B;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    a:hover {
+      color: #FFC371;
     }
     html.dark a {
       color: #FFD6A5;
@@ -131,16 +124,18 @@
     .nav-link.active::after {
       width: 100%;
     }
+
     html {
       scroll-behavior: smooth;
-      /* Removed brightness filter for better background visibility */
-      filter: none;
+      filter: brightness(0.96);
     }
     @media (prefers-color-scheme: dark) {
       html {
         filter: none;
       }
     }
+
+    /* Floating button */
     .floating-btn-container {
       position: fixed;
       top: 120px;
@@ -163,14 +158,12 @@
       }
     }
 
-    /* Everest Background styles */
+    /* Everest Background */
     .everest-background {
       position: relative;
-      overflow: visible; /* Keep overflow visible */
+      overflow: visible;
       z-index: 0;
     }
-
-    /* Background image div */
     .everest-bg-image {
       position: fixed;
       top: 0; left: 0;
@@ -181,52 +174,61 @@
       background-position: center;
       background-repeat: no-repeat;
       will-change: transform;
-      z-index: -1; /* behind all content */
+      z-index: -1;
       pointer-events: none;
-      transition: transform 0.3s ease-out;
     }
-
-    /* Overlay on top of background */
     .everest-background::after {
       content: '';
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      /* Reduced opacity for better visibility */
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 214, 165, 0.35));
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85), rgba(255, 214, 165, 0.9));
       z-index: 0;
       pointer-events: none;
-      /* Removed mix-blend-mode for simpler overlay */
+      mix-blend-mode: multiply;
     }
     html.dark .everest-background::after {
-      background: linear-gradient(to bottom, rgba(46, 46, 46, 0.7), rgba(0, 0, 0, 0.6));
+      background: linear-gradient(to bottom, rgba(46, 46, 46, 0.9), rgba(0, 0, 0, 0.85));
     }
-    /* Ensure your content is above background and overlay */
-    .content {
+
+    /* Content sections translucent background */
+    .content-section {
       position: relative;
       z-index: 1;
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      border-radius: 1rem;
+      padding: 1.5rem 3rem;
+      margin-bottom: 2.5rem;
     }
+    html.dark .content-section {
+      background-color: rgba(30, 30, 30, 0.75);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+
   </style>
 </head>
-<body class="bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:bg-black transition-colors duration-500 font-sans">
+<body id="page-body" class="transition-colors duration-500 font-sans">
 
-  <div class="everest-background relative">
+  <div class="everest-background">
     <div class="everest-bg-image"></div>
 
-    <div class="content">
+    <!-- Scroll progress bar -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
 
-      <!-- Scroll progress bar -->
-      <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
-
-      <nav class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between sticky top-0 z-50 bg-white/70 backdrop-blur-md shadow-md dark:bg-gray-900/80 transition-all duration-300">
-        <!-- Logo (Left) -->
-        <a href="/" id="logo" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-indigo-300 transition" data-aos="fade-down" data-aos-duration="800">
+    <!-- Header -->
+    <header class="bg-white backdrop-blur-md shadow-md sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="/" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-primary transition">
           <img src="images/logo.png.png" alt="Anup Rijal Logo" class="w-8 h-8 sm:w-10 sm:h-10" />
         </a>
 
-        <div class="space-x-6">
-          <a href="#" class="text-deepPlum font-semibold underline">My Journey</a>
-        </div>
-      </nav>
+        <nav class="flex-1 flex justify-center space-x-6">
+          <a href="/blog.html" class="nav-link active">Blogs</a>
+        </nav>
+      </div>
+    </header>
 
       <div class="content max-w-6xl mx-auto px-8 py-16 bg-white/70 dark:bg-darkCharcoal/60 rounded-2xl shadow-xl backdrop-blur-md">
         <article class="prose prose-lg lg:prose-xl dark:prose-invert max-w-full">
