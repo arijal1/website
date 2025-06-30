@@ -156,29 +156,48 @@
     }
   </style>
 <style>
-  /* Everest Background Styling - Line Art Scroll */
-  .everest-background {
-    background-image: url('images/everest_line_art_darker.png'); /* ✅ Adjust path if needed */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: scroll; /* ✅ scrolling, not fixed */
-    position: relative;
-    z-index: 0;
-  }
+.everest-background {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
 
-  .everest-background::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 214, 165, 0.95));
-    z-index: -1;
-    pointer-events: none;
-  }
+/* Background image div */
+.everest-bg-image {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('images/everest_line_art_darker.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  will-change: transform;
+  z-index: -1; /* behind all content */
+  pointer-events: none;
+}
 
-  html.dark .everest-background::before {
-    background: linear-gradient(to bottom, rgba(46, 46, 46, 0.96), rgba(0, 0, 0, 0.92));
-  }
+/* Overlay on top of background */
+.everest-background::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85), rgba(255, 214, 165, 0.9));
+  z-index: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply; /* optional */
+}
+
+html.dark .everest-background::after {
+  background: linear-gradient(to bottom, rgba(46, 46, 46, 0.9), rgba(0, 0, 0, 0.85));
+}
+
+/* Ensure your content is above background and overlay */
+.content {
+  position: relative;
+  z-index: 1;
+}
+
 </style>
 </head>
 <body class="everest-background relative bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:bg-black transition-colors duration-500 font-sans">
@@ -408,7 +427,15 @@
     });
   });
 </script>
+  <script>
+window.addEventListener('scroll', () => {
+  const scrollY = window.pageYOffset;
+  const bg = document.querySelector('.everest-bg-image');
 
+  // Move background slower than scroll, change multiplier for speed (0.5 = half speed)
+  bg.style.transform = `translateY(${scrollY * 0.5}px)`;
+});
+</script>
   </script>
 </body>
 </html>
