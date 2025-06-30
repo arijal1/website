@@ -270,16 +270,60 @@
       </article>
     </div>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
-    AOS.init({ once: true, duration: 800, easing: 'ease-in-out' });
+    // Initialize AOS animations
+    AOS.init({
+      once: true,
+      duration: 800,
+      easing: 'ease-in-out',
+    });
+
+    // Scroll progress bar
+    const progressBar = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      progressBar.style.width = scrollPercent + '%';
+    });
+
+    // Parallax background effect with limit
     const bg = document.querySelector('.everest-bg-image');
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
-      const maxTranslate = 100;
+      const maxTranslate = 100; // max px to move down
       const translateY = Math.min(scrollTop * 0.3, maxTranslate);
       bg.style.transform = `translateY(${translateY}px)`;
+    });
+
+    // Navbar active link highlight on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let currentSection = '';
+      const scrollY = window.pageYOffset;
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (scrollY >= sectionTop) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSection) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Logo click goes to home
+    document.getElementById('logo').addEventListener('click', e => {
+      e.preventDefault();
+      window.location.href = 'index.html';
     });
   </script>
 </body>
