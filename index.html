@@ -155,22 +155,37 @@
       }
     }
   </style>
-  <style>
-  .everest-background {
-    background-image: url('images/mount_everest_outline.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    opacity: 0.08; /* subtle background effect */
-  }
-  html.dark .everest-background {
-    opacity: 0.1;
-  }
-</style>
 
+  /* Everest Background Styling */
+
+<style>
+  .everest-background {
+  background-image: url('images/mount_everest_outline.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+  z-index: 0;
+}
+
+/* Overlay Layer */
+.everest-background::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85), rgba(255, 214, 165, 0.9)); /* soft light tones */
+  z-index: -1;
+}
+
+/* Dark mode overlay */
+html.dark .everest-background::before {
+  background: linear-gradient(to bottom, rgba(46, 46, 46, 0.9), rgba(0, 0, 0, 0.85)); /* dark charcoal tones */
+}
+</style>
 </head>
-<body class="everest-background bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:bg-black transition-colors duration-500 font-sans">
+<body class="everest-background relative bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:bg-black transition-colors duration-500 font-sans">
+
 
   <!-- Scroll progress bar -->
   <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
