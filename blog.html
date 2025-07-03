@@ -206,6 +206,13 @@
       background-color: rgba(30, 30, 30, 0.75);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
     }
+.clip-hexagon {
+  clip-path: polygon(
+    25% 6.7%, 75% 6.7%,
+    100% 50%, 75% 93.3%,
+    25% 93.3%, 0% 50%
+  );
+}
 
   </style>
 </head>
@@ -266,16 +273,21 @@
           <p class="mt-12 text-center">👋 Thank you for reading my story.<br /></p>
         </article>
         <div class="hidden lg:flex gap-6 max-w-xl" data-aos="fade-left">
+<!-- Side-by-side image section (only on large screens) -->
+<div class="hidden lg:flex gap-6 max-w-4xl mx-auto mt-12" data-aos="fade-left">
   <!-- First Photo -->
   <div class="rounded-3xl overflow-hidden border-4 border-white dark:border-gray-700 shadow-xl w-1/2">
-    <img src="images/IMG_6223.jpeg" alt="Anup Rijal Portrait" class="w-full h-auto object-cover" />
+    <img src="images/img_6223.jpeg" alt="Anup Rijal Portrait" class="w-full h-auto object-cover" />
   </div>
 
-  <!-- Second Photo -->
-  <div class="relative rounded-xl overflow-hidden shadow-2xl border-4 border-white dark:border-gray-700 transform rotate-2 hover:rotate-0 transition duration-500 w-1/2">
-    <img src="images/IMG_6156.jpeg" alt="Anup Rijal Journey" class="w-full h-auto object-cover rounded-lg" />
+  <!-- Second Photo with Hexagon Clip -->
+  <div class="w-1/2">
+    <div class="clip-hexagon overflow-hidden shadow-2xl border-4 border-white dark:border-gray-700">
+      <img src="images/blog-photo.jpg" alt="Anup Rijal Journey" class="w-full h-auto object-cover" />
+    </div>
   </div>
-      </div>
+</div>
+
 
       <!-- Contact Section -->
       <section id="contact" class="py-12 max-w-3xl mx-auto px-4 bg-gray-100 dark:bg-gray-800 rounded-2xl p-6 sm:p-12 shadow-sm" data-aos="fade-up">
