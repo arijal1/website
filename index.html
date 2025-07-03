@@ -193,19 +193,33 @@
 
 
   <!-- About Section -->
-  <section id="about" class="py-12 max-w-4xl mx-auto px-4 bg-white bg-opacity-80 dark:bg-gray-900 dark:bg-opacity-70 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm mb-16">
-    <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-10 text-center md:text-left">
-      <div data-aos="fade-up">
-        <img src="images/your-image.jpg" alt="Anup Rijal" class="w-40 h-42 rounded-full object-cover mx-auto md:mx-0 shadow-lg" />
-      </div>
-      <div data-aos="fade-up" class="max-w-xl">
-        <h2 class="text-3xl font-extrabold text-blue-700 dark:text-blue-300">About Me</h2>
-        <p class="text-lg leading-relaxed text-sky-700 dark:text-sky-300 mt-4">
-          I am Anup Rijal, a passionate IT professional with experience across healthcare, technology, telecommunications, and retail sectors. I believe technology should be approachable and human-centered, and I bring empathy and clear communication to every role I take. Outside of work, I enjoy sports, coffee, travel, and outdoor adventures, which help me maintain balance and stay energized for new challenges.
-        </p>
-      </div>
+  <!-- Include AOS CSS in your <head> -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+<!-- About Section -->
+<section id="about" class="py-12 max-w-4xl mx-auto px-4 bg-white bg-opacity-80 dark:bg-gray-900 dark:bg-opacity-70 dark:text-indigo-200 rounded-2xl p-6 sm:p-12 shadow-sm mb-16">
+  <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-10 text-center md:text-left">
+    
+    <!-- Image with animation -->
+    <div data-aos="fade-right" data-aos-duration="1000">
+      <img src="images/your-image.jpg" alt="Anup Rijal"
+           class="w-40 h-42 rounded-full object-cover mx-auto md:mx-0 shadow-lg hover:scale-105 transition duration-300 ease-in-out" />
     </div>
-  </section>
+
+    <!-- Text with animation -->
+    <div data-aos="fade-left" data-aos-duration="1000" class="max-w-xl">
+      <h2 class="text-3xl font-extrabold text-blue-700 dark:text-blue-300 mb-2">About Me</h2>
+      <p class="text-lg leading-relaxed text-sky-700 dark:text-sky-300 mt-4">
+        I am Anup Rijal, a passionate IT professional with experience across healthcare, technology, telecommunications, and retail sectors.
+        I believe technology should be approachable and human-centered, and I bring empathy and clear communication to every role I take.
+        Outside of work, I enjoy sports, coffee, travel, and outdoor adventures, which help me maintain balance and stay energized for new challenges.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Include AOS JS at the end of body -->
+
 
   <!-- Skills Section -->
   <section id="skills" class="flex items-center justify-center py-12 px-4 bg-gradient-to-br from-white via-blue-50 to-blue-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 mb-16">
@@ -470,5 +484,9 @@
       window.location.href = 'index.html';
     });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
 </body>
 </html> 
