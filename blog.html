@@ -1,1 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Blog posts by Anup Rijal on technology, AI, and more." />
+  <meta name="author" content="Anup Rijal" />
+  <title>Blogs | Anup Rijal</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            sunsetOrange: '#FF5E5B',
+            warmGold: '#FFC371',
+            softPeach: '#FFD6A5',
+            deepPlum: '#6B2737',
+            darkCharcoal: '#2E2E2E',
+          },
+          fontFamily: {
+            sans: ['Urbanist', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Urbanist', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-softPeach text-deepPlum dark:bg-darkCharcoal dark:text-warmGold">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-warmGold dark:bg-deepPlum shadow-md">
+    <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+      <a href="index.html" class="text-xl font-bold hover:underline">Anup Rijal</a>
+      <nav class="space-x-6">
+        <a href="index.html" class="nav-link hover:underline">Home</a>
+        <a href="blogs.html" class="nav-link active font-bold underline">Blogs</a>
+        <a href="contact.html" class="nav-link hover:underline">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Blog Section -->
+  <section class="max-w-5xl mx-auto py-16 px-6">
+    <h1 class="text-4xl font-bold text-center mb-10">📚 My Blog Posts</h1>
+    <div class="space-y-12">
+
+      <!-- Blog Card -->
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6" data-aos="fade-up">
+        <h2 class="text-2xl font-semibold text-sunsetOrange dark:text-warmGold mb-2">The Rise of AI: How Technology is Shaping Our Future</h2>
+        <p class="text-lg mb-4">Explore how artificial intelligence is transforming industries, careers, and the way we live—from automation to deep learning, and what it means for the future of work.</p>
+        <a href="ai-rise.html" class="text-indigo-600 dark:text-indigo-300 hover:underline">Read More →</a>
+      </div>
+
+      <!-- Blog Card -->
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="text-2xl font-semibold text-sunsetOrange dark:text-warmGold mb-2">Tech Tools I Use Every Day as an IT Pro</h2>
+        <p class="text-lg mb-4">From VS Code to Notion and remote access platforms—discover the must-have tools that keep me productive and efficient.</p>
+        <a href="tech-tools.html" class="text-indigo-600 dark:text-indigo-300 hover:underline">Read More →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-deepPlum text-softPeach py-10 mt-16">
+    <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
+      <div class="flex justify-center gap-6">
+        <a href="mailto:rejalanop55@gmail.com" aria-label="Email" class="hover:text-sunsetOrange transition">📧</a>
+        <a href="https://github.com/arijal1" target="_blank" aria-label="GitHub" class="hover:text-sunsetOrange transition">🐱</a>
+        <a href="https://linkedin.com/in/anup-rijal-bb579a131" target="_blank" aria-label="LinkedIn" class="hover:text-sunsetOrange transition">💼</a>
+      </div>
+      <p class="text-sm text-warmGold">&copy; 2025 Anup Rijal. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 800, easing: 'ease-in-out' });
+  </script>
+</body>
+</html>
 
