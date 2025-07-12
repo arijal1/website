@@ -6,7 +6,7 @@
   <meta name="description" content="Anup Rijal's personal portfolio showcasing skills, projects, and experience." />
   <meta name="keywords" content="Anup Rijal, Portfolio, Developer, Projects, Resume" />
   <meta name="author" content="Anup Rijal" />
-  <title>Anup Rijal</title>
+  <title>The AI Boom & Tech Evolution</title>
 
   <link rel="icon" href="/favicon.ico" />
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
@@ -33,56 +33,86 @@
   </script>
    
   <style>
+    /* Pulse animation for timeline dots */
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+      }
+    }
+    .timeline-dot {
+      animation: pulse 3s ease-in-out infinite;
+    }
+  </style>
+  <style>
     @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
     body {
       font-family: 'Urbanist', sans-serif;
-      background-color: #FFD6A5;
-      color: #6B2737;
+      /* Light mode background */
+      background-color: #FFD6A5; /* softPeach */
+      color: #6B2737; /* deepPlum */
+      margin: 0;
     }
     html.dark body {
-      background-color: #2E2E2E;
-      color: #FFC371;
+      /* Dark mode background */
+      background-color: #2E2E2E; /* darkCharcoal */
+      color: #FFC371; /* warmGold */
     }
     header {
-      background-color: #FFC371;
+      background-color: #FFC371; /* warmGold */
     }
     html.dark header {
-      background-color: #6B2737;
+      background-color: #6B2737; /* deepPlum */
     }
     nav a.nav-link {
-      color: #6B2737;
+      color: #6B2737; /* deepPlum */
     }
     html.dark nav a.nav-link {
-      color: #FFD6A5;
+      color: #FFD6A5; /* softPeach */
     }
     nav a.nav-link.active {
-      color: #FF5E5B;
+      color: #FF5E5B; /* sunsetOrange */
       border-bottom-color: #FF5E5B;
     }
     html.dark nav a.nav-link.active {
-      color: #FFC371;
+      color: #FFC371; /* warmGold */
       border-bottom-color: #FFC371;
     }
     #scroll-progress {
-      background-color: #FF5E5B;
+      background-color: #FF5E5B; /* sunsetOrange */
+    }
+    .floating-btn-container a {
+      background: linear-gradient(45deg, #FF5E5B, #FFC371);
+      color: #2E2E2E;
+    }
+    html.dark .floating-btn-container a {
+      background: linear-gradient(45deg, #6B2737, #FFD6A5);
+      color: #2E2E2E;
     }
     h1, h2, h3, h4 {
-      color: #6B2737;
+      color: #6B2737; /* deepPlum */
     }
     html.dark h1, html.dark h2, html.dark h3, html.dark h4 {
-      color: #FFC371;
+      color: #FFC371; /* warmGold */
     }
+    /* Links */
     a {
       color: #FF5E5B;
     }
     html.dark a {
       color: #FFD6A5;
     }
+
+    /* Nav link styles */
     .nav-link.active {
       font-weight: bold;
       border-bottom: 2px solid currentColor;
       text-decoration: underline;
-      color: #6366f1;
+      color: #6366f1; /* Indigo-500 */
     }
     .nav-link {
       position: relative;
@@ -104,63 +134,129 @@
     }
     html {
       scroll-behavior: smooth;
+      /* Removed brightness filter for better background visibility */
+      filter: none;
+    }
+    @media (prefers-color-scheme: dark) {
+      html {
+        filter: none;
+      }
+    }
+    .floating-btn-container {
+      position: fixed;
+      top: 120px;
+      right: 40px;
+      z-index: 1000;
+      animation: floatUpDown 4s ease-in-out infinite;
+    }
+    @keyframes floatUpDown {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      [data-aos] {
+        transition: none !important;
+        animation: none !important;
+      }
     }
   </style>
 </head>
-<body class="bg-white text-deepPlum dark:text-warmGold dark:bg-darkCharcoal font-sans">
+<body class="bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:bg-black transition-colors duration-500 font-sans">
 
-  <!-- Scroll Progress Bar -->
-  <div id="scroll-progress" class="fixed top-0 left-0 h-1 z-50 transition-all duration-300 ease-out" style="width: 0%;"></div>
+  <!-- Removed Everest background wrapper and image -->
 
-  <!-- Header -->
+  <!-- Scroll progress bar -->
+  <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
+
   <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between sticky top-0 z-50 bg-white/70 backdrop-blur-md shadow-md dark:bg-gray-900/80 transition-all duration-300">
-    <a href="/" id="logo" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-indigo-300 transition">
-      <img src="images/logo.png" alt="Logo" class="w-14 h-14 sm:w-18 sm:h-18" />
-    </a>
+    <!-- Logo (Left) -->
+    <a href="/" id="logo" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-indigo-300 transition" data-aos="fade-down" data-aos-duration="800">
+  <img src="images/logo.png" alt="Logo" class="w-14 h-14 sm:w-18 sm:h-18" />
+</a>
+
+    <!-- Nav (Center) -->
+    <nav class="flex-1 flex justify-center space-x-6" id="nav-links" data-aos="fade-down" data-aos-duration="800" data-aos-delay="150">
+      <a href="#about" class="nav-link font-bold hover:underline hover:text-indigo-500 transition">Home</a>
+      <a href="projects.html" class="nav-link font-bold hover:underline hover:text-indigo-500 transition">Project</a>
+      <a href="blog.html" class="nav-link font-bold hover:underline hover:text-indigo-500 transition">Blogs</a>
+
+    </nav>
   </div>
 
-  <!-- Your Main Content Goes Here -->
+  <!-- Blog Section -->
+  <main class="max-w-4xl mx-auto px-6 py-16">
+    <article data-aos="fade-up">
+      <h1 class="text-4xl font-bold mb-6">The AI Boom & Tech Evolution</h1>
+      <p class="text-lg leading-relaxed mb-4">
+        In recent years, we’ve witnessed an extraordinary surge in the development and application of Artificial Intelligence (AI). From voice assistants and self-driving cars to advanced data analytics, AI is transforming every sector. But this evolution isn’t happening in isolation—it's part of a broader technological shift that's reshaping how we work, live, and interact with the world.
+      </p>
+      <p class="text-lg leading-relaxed mb-4">
+        The AI boom is being fueled by advances in computing power, access to massive datasets, and breakthroughs in machine learning. These innovations are empowering machines to not just analyze information but to learn from it and improve over time.
+      </p>
+      <p class="text-lg leading-relaxed mb-4">
+        In the workplace, AI is streamlining operations, predicting market trends, and personalizing customer experiences. In healthcare, it’s diagnosing diseases earlier and improving patient outcomes. In education, it’s enabling customized learning paths. Even in creative industries, AI is composing music, designing graphics, and writing articles.
+      </p>
+      <p class="text-lg leading-relaxed mb-4">
+        However, with this power comes responsibility. As we integrate AI into more aspects of our lives, we must address ethical concerns, data privacy, and the future of jobs. It’s crucial to strike a balance between innovation and integrity.
+      </p>
+      <p class="text-lg leading-relaxed mb-4">
+        The tech evolution is unstoppable, and AI is leading the charge. It’s an exciting time to be part of this transformation, whether you’re an engineer, a business leader, or a curious learner. The future is intelligent—and it's already here.
+      </p>
+    </article>
+  </main>
 
   <!-- Footer -->
   <footer class="bg-deepPlum text-softPeach py-10 mt-16">
-    <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
-      
-      <!-- Social Icons -->
-      <div class="flex justify-center gap-6">
-        <!-- Email -->
-        <a href="mailto:rejalanop55@gmail.com" aria-label="Email" class="hover:text-sunsetOrange transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12l-4-4-4 4m0 0l4 4 4-4" />
-          </svg>
-        </a>
+  <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
+    
+    <!-- Social Icons -->
+    <div class="flex justify-center gap-6">
+      <!-- Email -->
+      <a href="mailto:rejalanop55@gmail.com" aria-label="Email" class="hover:text-sunsetOrange transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12l-4-4-4 4m0 0l4 4 4-4" />
+        </svg>
+      </a>
 
-        <!-- GitHub -->
-        <a href="https://github.com/arijal1" target="_blank" aria-label="GitHub" class="hover:text-sunsetOrange transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-            <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.58 2 12.18c0 4.47 2.87 8.26 6.84 9.6.5.09.66-.22.66-.48v-1.68c-2.78.61-3.37-1.36-3.37-1.36-.45-1.19-1.12-1.51-1.12-1.51-.92-.64.07-.63.07-.63 1.02.08 1.56 1.08 1.56 1.08.9 1.57 2.36 1.12 2.94.85.09-.67.35-1.12.63-1.38-2.22-.25-4.55-1.16-4.55-5.15 0-1.14.39-2.07 1.02-2.8-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.04a9.49 9.49 0 015 0c1.91-1.31 2.75-1.04 2.75-1.04.55 1.4.2 2.44.1 2.7.64.73 1.02 1.66 1.02 2.8 0 4-2.33 4.9-4.56 5.15.36.32.68.95.68 1.93v2.86c0 .26.16.58.68.48A10.02 10.02 0 0022 12.18C22 6.58 17.52 2 12 2z" clip-rule="evenodd" />
-          </svg>
-        </a>
+      <!-- GitHub -->
+      <a href="https://github.com/arijal1" target="_blank" aria-label="GitHub" class="hover:text-sunsetOrange transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+          <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.58 2 12.18c0 4.47 2.87 8.26 6.84 9.6.5.09.66-.22.66-.48v-1.68c-2.78.61-3.37-1.36-3.37-1.36-.45-1.19-1.12-1.51-1.12-1.51-.92-.64.07-.63.07-.63 1.02.08 1.56 1.08 1.56 1.08.9 1.57 2.36 1.12 2.94.85.09-.67.35-1.12.63-1.38-2.22-.25-4.55-1.16-4.55-5.15 0-1.14.39-2.07 1.02-2.8-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.04a9.49 9.49 0 015 0c1.91-1.31 2.75-1.04 2.75-1.04.55 1.4.2 2.44.1 2.7.64.73 1.02 1.66 1.02 2.8 0 4-2.33 4.9-4.56 5.15.36.32.68.95.68 1.93v2.86c0 .26.16.58.68.48A10.02 10.02 0 0022 12.18C22 6.58 17.52 2 12 2z" clip-rule="evenodd" />
+        </svg>
+      </a>
 
-        <!-- LinkedIn -->
-        <a href="https://linkedin.com/in/anup-rijal-bb579a131" target="_blank" aria-label="LinkedIn" class="hover:text-sunsetOrange transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M4.98 3.5C3.33 3.5 2 4.84 2 6.5S3.33 9.5 4.98 9.5 8 8.16 8 6.5 6.63 3.5 4.98 3.5zM2.5 21h5V10h-5v11zM10 10h4.4v1.4h.1c.6-1 2.1-2 4.2-2 4.5 0 5.3 3 5.3 6.9V21h-5v-5.3c0-1.3 0-3-1.8-3s-2 1.4-2 2.9V21h-5V10z"/>
-          </svg>
-        </a>
-      </div>
-
-      <!-- Copyright -->
-      <p class="text-sm text-warmGold">
-        &copy; 2025 Anup Rijal. All rights reserved.
-      </p>
+      <!-- LinkedIn -->
+      <a href="https://linkedin.com/in/anup-rijal-bb579a131" target="_blank" aria-label="LinkedIn" class="hover:text-sunsetOrange transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M4.98 3.5C3.33 3.5 2 4.84 2 6.5S3.33 9.5 4.98 9.5 8 8.16 8 6.5 6.63 3.5 4.98 3.5zM2.5 21h5V10h-5v11zM10 10h4.4v1.4h.1c.6-1 2.1-2 4.2-2 4.5 0 5.3 3 5.3 6.9V21h-5v-5.3c0-1.3 0-3-1.8-3s-2 1.4-2 2.9V21h-5V10z"/>
+        </svg>
+      </a>
     </div>
-  </footer>
 
-  <!-- Scripts -->
+    <!-- Copyright -->
+    <p class="text-sm text-warmGold">
+      &copy; 2025 Anup Rijal. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+
+</div> <!-- everest-background -->
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
-    AOS.init({ once: true, duration: 800, easing: 'ease-in-out' });
+    // Initialize AOS animations
+    AOS.init({
+      once: true,
+      duration: 800,
+      easing: 'ease-in-out',
+    });
 
+    // Scroll progress bar
     const progressBar = document.getElementById('scroll-progress');
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
@@ -169,16 +265,16 @@
       progressBar.style.width = scrollPercent + '%';
     });
 
+    // Parallax background effect with limit
     const bg = document.querySelector('.everest-bg-image');
-    if (bg) {
-      window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const maxTranslate = 100;
-        const translateY = Math.min(scrollTop * 0.3, maxTranslate);
-        bg.style.transform = `translateY(${translateY}px)`;
-      });
-    }
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const maxTranslate = 100; // max px to move down
+      const translateY = Math.min(scrollTop * 0.3, maxTranslate);
+      bg.style.transform = `translateY(${translateY}px)`;
+    });
 
+    // Navbar active link highlight on scroll
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('nav a.nav-link');
 
@@ -201,10 +297,19 @@
       });
     });
 
+    // Logo click goes to home
     document.getElementById('logo').addEventListener('click', e => {
       e.preventDefault();
       window.location.href = 'index.html';
     });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
 </body>
-</html>
+</html> 
