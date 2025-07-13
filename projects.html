@@ -168,35 +168,36 @@
 <body class="bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:bg-black transition-colors duration-500 font-sans">
 
 <!-- Navbar Container -->
-  <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
+<div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
 
-  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between sticky top-0 z-50 bg-white/70 backdrop-blur-md shadow-md dark:bg-gray-900/80 transition-all duration-300">
-    <!-- Logo (Left) -->
-    <a href="/" id="logo" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-indigo-300 transition" data-aos="fade-down" data-aos-duration="800">
-  <img src="images/logo.png" alt="Logo" class="w-14 h-14 sm:w-18 sm:h-18" />
-</a>
+  <!-- 🌟 Navbar Section -->
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between sticky top-0 z-50 
+    bg-white/70 backdrop-blur-md shadow-md dark:bg-gray-900/80 transition-all duration-300">
+    
+    <!-- Logo -->
+    <a href="/" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-indigo-300 transition" data-aos="fade-down" data-aos-duration="800">
+      <img src="images/logo.png" alt="Logo" class="w-14 h-14 sm:w-18 sm:h-18" />
+    </a>
 
-  <!-- Hamburger Menu Button (shown only on mobile) -->
-  <button id="menu-toggle" class="md:hidden text-white text-3xl focus:outline-none">
-    ☰
-  </button>
+    <!-- Hamburger Menu Button -->
+    <button id="menu-toggle" class="md:hidden text-indigo-500 dark:text-indigo-300 text-3xl focus:outline-none">☰</button>
 
-  <!-- Desktop Nav Links -->
-         <nav class="flex-1 flex justify-center space-x-6">
-              <a href="index.html" class="nav-link font-bold hover:underline hover:text-indigo-500 transition">Home</a>
-              <a href="#projects" class="nav-link font-bold hover:underline hover:text-indigo-500 transition">Project</a>
-              <a href="blog.html" class="nav-link font-bold hover:underline hover:text-indigo-500 transition">Blogs</a>
-        </nav>
-      </div>
+    <!-- Desktop Nav Links -->
+    <nav class="hidden md:flex space-x-6 font-semibold text-indigo-700 dark:text-indigo-300">
+      <a href="index.html" class="hover:text-indigo-500 dark:hover:text-indigo-400 transition">Home</a>
+      <a href="#projects" class="hover:text-indigo-500 dark:hover:text-indigo-400 transition">Projects</a>
+      <a href="blog.html" class="hover:text-indigo-500 dark:hover:text-indigo-400 transition">Blogs</a>
+    </nav>
+  </div>
 
-<!-- Mobile Menu (initially hidden) -->
-<div id="mobile-menu" class="md:hidden hidden flex flex-col items-center space-y-4 
-  bg-white/70 backdrop-blur-md dark:bg-gray-900/80 text-indigo-900 dark:text-white py-4 shadow-md transition-all duration-300 ease-in-out">
-  <a href="index.html" class="hover:text-indigo-500 transition">Home</a>
-  <a href="#projects" class="hover:text-indigo-500 transition">Projects</a>
-  <a href="blog.html" class="hover:text-indigo-500 transition">Blogs</a>
-</div>
-
+  <!-- ✅ Mobile Menu (Goes right after navbar) -->
+  <div id="mobile-menu" class="md:hidden hidden flex flex-col items-center space-y-4 
+    bg-white/90 dark:bg-gray-900/90 text-indigo-700 dark:text-indigo-300 py-4 shadow-md transition-all duration-300 ease-in-out">
+    
+    <a href="index.html" class="hover:text-indigo-500 dark:hover:text-indigo-400 transition">Home</a>
+    <a href="#projects" class="hover:text-indigo-500 dark:hover:text-indigo-400 transition">Projects</a>
+    <a href="blog.html" class="hover:text-indigo-500 dark:hover:text-indigo-400 transition">Blogs</a>
+  </div>
     <!-- Projects Sections -->
     <section class="content-section" data-aos="fade-up">
       <div class="max-w-3xl mx-auto text-center">
