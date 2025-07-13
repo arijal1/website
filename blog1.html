@@ -227,17 +227,33 @@
     <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
 
     <!-- Header -->
-    <header class="bg-white backdrop-blur-md shadow-md sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <a href="/" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-primary transition">
-          <img src="images/logo.png" alt="Anup Rijal Logo" class="w-12 h-12 sm:w-16 sm:h-16" />
-        </a>
+   <!-- Overlay -->
+<div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
-        <nav class="flex-1 flex justify-center space-x-6">
-          <a href="/blog.html" class="nav-link active">Blogs</a>
-        </nav>
-      </div>
-    </header>
+<header class="bg-white dark:bg-gray-900 backdrop-blur-md shadow-md sticky top-0 z-50 relative">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+
+    <!-- Logo -->
+    <a href="/" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-primary transition">
+      <img src="images/logo.png" alt="Anup Rijal Logo" class="w-12 h-12 sm:w-16 sm:h-16" />
+    </a>
+
+    <!-- Desktop Nav (center) -->
+    <nav class="hidden md:flex flex-1 justify-center space-x-6 font-bold text-indigo-700 dark:text-warmGold">
+      <a href="/blog.html" class="nav-link hover:underline hover:text-indigo-500 transition">Blogs</a>
+    </nav>
+
+    <!-- Hamburger (Right) -->
+    <button id="menu-toggle" class="md:hidden text-3xl text-indigo-500 dark:text-warmGold focus:outline-none">
+      ☰
+    </button>
+  </div>
+
+  <!-- Mobile Dropdown Menu (below navbar) -->
+  <div id="mobile-menu" class="md:hidden hidden absolute top-full left-0 w-full bg-white dark:bg-gray-900 text-indigo-700 dark:text-warmGold z-50 shadow-lg">
+    <a href="/blog.html" class="block px-4 py-3 border-b border-gray-200 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-indigo-800">Blogs</a>
+  </div>
+</header>
 
       <div class="content max-w-6xl mx-auto px-8 py-16 bg-white/70 dark:bg-darkCharcoal/60 rounded-2xl shadow-xl backdrop-blur-md">
   <article class="prose prose-lg lg:prose-xl dark:prose-invert max-w-full">
@@ -385,6 +401,32 @@
     const docHeight = document.body.scrollHeight - window.innerHeight;
     const scrollPercent = (scrollTop / docHeight) * 100;
     scrollProgress.style.width = scrollPercent + '%';
+  });
+</script>
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const overlay = document.getElementById('overlay');
+
+  // Toggle menu + overlay
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    mobileMenu.classList.toggle('hidden');
+    overlay.classList.toggle('hidden');
+  });
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+      mobileMenu.classList.add('hidden');
+      overlay.classList.add('hidden');
+    }
+  });
+
+  // Close on scroll
+  window.addEventListener('scroll', () => {
+    mobileMenu.classList.add('hidden');
+    overlay.classList.add('hidden');
   });
 </script>
 
