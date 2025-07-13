@@ -463,23 +463,30 @@
 <script>
   AOS.init();
 </script>
-<script>
+ <script>
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
   const overlay = document.getElementById('overlay');
 
+  // Toggle menu
   menuToggle.addEventListener('click', (e) => {
-    e.stopPropagation(); // prevent immediate close
+    e.stopPropagation();
     mobileMenu.classList.toggle('hidden');
     overlay.classList.toggle('hidden');
   });
 
-  // Clicking the overlay or anywhere outside the menu closes it
+  // Close on outside click
   document.addEventListener('click', (e) => {
     if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
       mobileMenu.classList.add('hidden');
       overlay.classList.add('hidden');
     }
+  });
+
+  // Close on scroll
+  window.addEventListener('scroll', () => {
+    mobileMenu.classList.add('hidden');
+    overlay.classList.add('hidden');
   });
 </script>
 </body>
