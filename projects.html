@@ -169,7 +169,9 @@
 
 <!-- Navbar Container -->
 <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
-
+<!-- Overlay for background dimming -->
+  <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+  
 <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center sticky top-0 z-50
   bg-white/70 backdrop-blur-md shadow-md dark:bg-gray-900/80 transition-all duration-300 relative">
 
@@ -411,16 +413,22 @@
 <script>
   AOS.init();
 </script>
-  <script>
-  const toggleBtn = document.getElementById("menu-toggle");
-  const mobileMenu = document.getElementById("mobile-menu");
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const overlay = document.getElementById('overlay');
 
-  toggleBtn.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation(); // prevent immediate close
+    mobileMenu.classList.toggle('hidden');
+    overlay.classList.toggle('hidden');
   });
-    document.addEventListener('click', (e) => {
+
+  // Clicking the overlay or anywhere outside the menu closes it
+  document.addEventListener('click', (e) => {
     if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
       mobileMenu.classList.add('hidden');
+      overlay.classList.add('hidden');
     }
   });
 </script>
