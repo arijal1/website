@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,7 +6,7 @@
   <meta name="description" content="Anup Rijal's personal portfolio showcasing skills, projects, and experience." />
   <meta name="keywords" content="Anup Rijal, Portfolio, Developer, Projects, Resume" />
   <meta name="author" content="Anup Rijal" />
-  <title>Anup Rijal</title>
+  <title>Blogs</title>
 
   <link rel="icon" href="/favicon.ico" />
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
@@ -19,7 +19,7 @@
         extend: {
           colors: {
             sunsetOrange: '#FF5E5B',
-            warmGold: '#FFC371',
+            warmGold: '#FFBF69',
             softPeach: '#FFD6A5',
             deepPlum: '#6B2737',
             darkCharcoal: '#2E2E2E',
@@ -31,9 +31,8 @@
       },
     };
   </script>
-   
+
   <style>
-    /* Pulse animation for timeline dots */
     @keyframes pulse {
       0%, 100% {
         transform: scale(1);
@@ -47,46 +46,43 @@
     .timeline-dot {
       animation: pulse 3s ease-in-out infinite;
     }
-  </style>
-  <style>
+
     @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
     body {
       font-family: 'Urbanist', sans-serif;
-      /* Light mode background */
-      background-color: #FFD6A5; /* softPeach */
-      color: #6B2737; /* deepPlum */
+      background-color: #FFBF69 !important;
+      color: #6B2737;
       margin: 0;
     }
     html.dark body {
-      /* Dark mode background */
-      background-color: #2E2E2E; /* darkCharcoal */
-      color: #FFC371; /* warmGold */
+      background-color: #4A3C13 !important;
+      color: #FFBF69;
     }
     header {
-      background-color: #FFC371; /* warmGold */
+      background-color: #FFBF69;
     }
     html.dark header {
-      background-color: #6B2737; /* deepPlum */
+      background-color: #4A3C13;
     }
     nav a.nav-link {
-      color: #6B2737; /* deepPlum */
+      color: #FFBF69;
     }
     html.dark nav a.nav-link {
-      color: #FFD6A5; /* softPeach */
+      color: #FFD6A5;
     }
     nav a.nav-link.active {
-      color: #FF5E5B; /* sunsetOrange */
+      color: #FF5E5B;
       border-bottom-color: #FF5E5B;
     }
     html.dark nav a.nav-link.active {
-      color: #FFC371; /* warmGold */
-      border-bottom-color: #FFC371;
+      color: #FFBF69;
+      border-bottom-color: #FFBF69;
     }
     #scroll-progress {
-      background-color: #FF5E5B; /* sunsetOrange */
+      background-color: #FF5E5B;
     }
     .floating-btn-container a {
-      background: linear-gradient(45deg, #FF5E5B, #FFC371);
+      background: linear-gradient(45deg, #FF5E5B, #FFBF69);
       color: #2E2E2E;
     }
     html.dark .floating-btn-container a {
@@ -94,25 +90,22 @@
       color: #2E2E2E;
     }
     h1, h2, h3, h4 {
-      color: #6B2737; /* deepPlum */
+      color: #6B2737;
     }
     html.dark h1, html.dark h2, html.dark h3, html.dark h4 {
-      color: #FFC371; /* warmGold */
+      color: #FFBF69;
     }
-    /* Links */
     a {
       color: #FF5E5B;
     }
     html.dark a {
       color: #FFD6A5;
     }
-
-    /* Nav link styles */
     .nav-link.active {
       font-weight: bold;
       border-bottom: 2px solid currentColor;
       text-decoration: underline;
-      color: #6366f1; /* Indigo-500 */
+      color: #6366f1;
     }
     .nav-link {
       position: relative;
@@ -134,7 +127,6 @@
     }
     html {
       scroll-behavior: smooth;
-      /* Removed brightness filter for better background visibility */
       filter: none;
     }
     @media (prefers-color-scheme: dark) {
@@ -162,6 +154,26 @@
         transition: none !important;
         animation: none !important;
       }
+    }
+
+    /* Custom overrides for Tailwind background */
+    .bg-white {
+      background-color: #FFEFBB !important;
+    }
+    .bg-gray-100 {
+      background-color: #FFE9A0 !important;
+    }
+    .dark .bg-gray-800 {
+      background-color: #4A3C13 !important;
+    }
+    .bg-white\/80 {
+      background-color: rgba(255, 191, 105, 0.8) !important;
+    }
+    .dark .bg-gray-900 {
+      background-color: #3A2D0F !important;
+    }
+    .dark .bg-gray-900\/80 {
+      background-color: rgba(74, 60, 19, 0.8) !important;
     }
   </style>
 </head>
