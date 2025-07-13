@@ -202,7 +202,6 @@
 </div>
 
     <!-- Projects Sections -->
- <!-- Projects Section -->
 <section class="content-section py-12 px-4" data-aos="fade-up">
   <div class="max-w-5xl mx-auto md:flex md:items-start md:space-x-10 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
     
@@ -217,8 +216,10 @@
     </div>
 
     <!-- Image -->
-    <div class="md:w-1/2 mt-6 md:mt-0">
-      <img src="images/IMG_0698.jpeg" alt="Opal Healthcare network setup" class="rounded-xl w-full h-auto object-cover shadow-lg" />
+    <div class="md:w-1/2 mt-6 md:mt-0 flex justify-center" data-aos="zoom-in" data-aos-delay="200">
+      <div class="w-64 h-64 clip-pentagon shadow-lg">
+        <img src="images/IMG_0698.jpeg" alt="Opal Healthcare network setup" class="w-full h-full object-cover rounded-xl" />
+      </div>
     </div>
   </div>
 </section>
@@ -467,6 +468,17 @@
     }
   });
 </script>
-
+<style>
+  .clip-pentagon {
+    clip-path: polygon(
+      50% 0%, 
+      100% 38%, 
+      82% 100%, 
+      18% 100%, 
+      0% 38%
+    );
+    overflow: hidden;
+  }
+</style>
 </body>
 </html> 
