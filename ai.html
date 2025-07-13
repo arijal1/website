@@ -1,7 +1,183 @@
- </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Anup Rijal's personal portfolio showcasing skills, projects, and experience." />
+  <meta name="keywords" content="Anup Rijal, Portfolio, Developer, Projects, Resume" />
+  <meta name="author" content="Anup Rijal" />
+  <title>AI blog</title>
+
+  <link rel="icon" href="/favicon.ico" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            sunsetOrange: '#FF5E5B',
+            warmGold: '#FFBF69',
+            softPeach: '#FFD6A5',
+            deepPlum: '#6B2737',
+            darkCharcoal: '#2E2E2E',
+          },
+          fontFamily: {
+            sans: ['Urbanist', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+      }
+    }
+    .timeline-dot {
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Urbanist', sans-serif;
+      background-color: #FFBF69 !important;
+      color: #6B2737;
+      margin: 0;
+    }
+    html.dark body {
+      background-color: #4A3C13 !important;
+      color: #FFBF69;
+    }
+    header {
+      background-color: #FFBF69;
+    }
+    html.dark header {
+      background-color: #4A3C13;
+    }
+    nav a.nav-link {
+      color: #FFBF69;
+    }
+    html.dark nav a.nav-link {
+      color: #FFD6A5;
+    }
+    nav a.nav-link.active {
+      color: #FF5E5B;
+      border-bottom-color: #FF5E5B;
+    }
+    html.dark nav a.nav-link.active {
+      color: #FFBF69;
+      border-bottom-color: #FFBF69;
+    }
+    #scroll-progress {
+      background-color: #FF5E5B;
+    }
+    .floating-btn-container a {
+      background: linear-gradient(45deg, #FF5E5B, #FFBF69);
+      color: #2E2E2E;
+    }
+    html.dark .floating-btn-container a {
+      background: linear-gradient(45deg, #6B2737, #FFD6A5);
+      color: #2E2E2E;
+    }
+    h1, h2, h3, h4 {
+      color: #6B2737;
+    }
+    html.dark h1, html.dark h2, html.dark h3, html.dark h4 {
+      color: #FFBF69;
+    }
+    a {
+      color: #FF5E5B;
+    }
+    html.dark a {
+      color: #FFD6A5;
+    }
+    .nav-link.active {
+      font-weight: bold;
+      border-bottom: 2px solid currentColor;
+      text-decoration: underline;
+      color: #6366f1;
+    }
+    .nav-link {
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: currentColor;
+      transition: width 0.3s ease-in-out;
+    }
+    .nav-link.active::after {
+      width: 100%;
+    }
+    html {
+      scroll-behavior: smooth;
+      filter: none;
+    }
+    @media (prefers-color-scheme: dark) {
+      html {
+        filter: none;
+      }
+    }
+    .floating-btn-container {
+      position: fixed;
+      top: 120px;
+      right: 40px;
+      z-index: 1000;
+      animation: floatUpDown 4s ease-in-out infinite;
+    }
+    @keyframes floatUpDown {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      [data-aos] {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
+    /* Custom overrides for Tailwind background */
+    .bg-white {
+      background-color: #FFEFBB !important;
+    }
+    .bg-gray-100 {
+      background-color: #FFE9A0 !important;
+    }
+    .dark .bg-gray-800 {
+      background-color: #4A3C13 !important;
+    }
+    .bg-white\/80 {
+      background-color: rgba(255, 191, 105, 0.8) !important;
+    }
+    .dark .bg-gray-900 {
+      background-color: #3A2D0F !important;
+    }
+    .dark .bg-gray-900\/80 {
+      background-color: rgba(74, 60, 19, 0.8) !important;
+    }
+  </style>
 </head>
 <body class="bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:bg-black transition-colors duration-500 font-sans">
-  <!-- Removed Everest background wrapper and image -->
 
 <!-- Overlay -->
 <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
@@ -45,96 +221,87 @@
   <div class="text-center" data-aos="fade-up">
     <h1 class="text-4xl md:text-5xl font-bold mb-6">🔮 Evolving Technology and the AI Boom: A New Era Has Arrived</h1>
     <p class="text-lg leading-relaxed">
-      Technology is evolving faster than ever before. From dial-up modems to 5G, from floppy disks to quantum computing — our digital world is transforming at a pace that often feels like science fiction. But nothing has shifted the landscape quite like Artificial Intelligence (AI).
+      Technology is evolving faster than ever before... But nothing has shifted the landscape quite like Artificial Intelligence (AI).
     </p>
   </div>
 
-  <!-- Section 1 -->
+  <!-- Section 1 – Rounded Rectangle -->
   <div class="flex flex-col md:flex-row-reverse items-center gap-8" data-aos="fade-left">
-    <div class="md:w-1/2 w-full border-4 border-indigo-500 p-2 rounded-xl shadow-xl hover:scale-105 transition">
-      <img src="images/ai1.png" alt="AI Difference" class="w-full rounded-lg" />
+    <div class="md:w-1/2 w-full border-4 border-indigo-500 p-2 rounded-xl shadow-xl hover:scale-105 transition flex justify-center">
+      <img src="images/ai1.png" alt="AI Difference" class="w-4/5 rounded-3xl" />
     </div>
     <div class="md:w-1/2 w-full">
       <h2 class="text-2xl font-semibold mb-4">⚙️ The AI Boom: From Code to Consciousness?</h2>
-      <p class="text-lg leading-relaxed">
-        We’re in the middle of an AI explosion. Tools like ChatGPT, Midjourney, and Copilot are no longer just cool tech demos — they’re reshaping industries.
-      </p>
+      <p class="text-lg leading-relaxed">We’re in the middle of an AI explosion...</p>
       <ul class="list-disc list-inside mt-4 space-y-1">
         <li>Healthcare is using AI for diagnostics and drug discovery.</li>
         <li>Finance is automating fraud detection and risk assessment.</li>
-        <li>Education is becoming more personalized than ever through adaptive AI tutors.</li>
-        <li>Creative industries are redefining art, music, and storytelling using generative models.</li>
+        <li>Education is becoming more personalized than ever.</li>
+        <li>Creative industries are redefining art and storytelling.</li>
       </ul>
-      <p class="mt-4">And at the center of this? People like us — curious minds, tech lovers, problem solvers — who are learning how to work with AI instead of just on machines.</p>
+      <p class="mt-4">And at the center of this? People like us...</p>
     </div>
   </div>
 
-  <!-- Section 2 -->
+  <!-- Section 2 – Circle -->
   <div class="flex flex-col md:flex-row items-center gap-8" data-aos="fade-right">
-    <div class="md:w-1/2 w-full border-4 border-indigo-500 p-2 rounded-xl shadow-xl hover:scale-105 transition">
-      <img src="images/ai2.png" alt="AI Difference" class="w-full rounded-lg" />
+    <div class="md:w-1/2 w-full border-4 border-indigo-500 p-4 rounded-xl shadow-xl hover:scale-105 transition flex justify-center">
+      <img src="images/ai2.png" alt="AI Impact" class="w-4/5 rounded-full object-cover aspect-square" />
     </div>
     <div class="md:w-1/2 w-full">
       <h2 class="text-2xl font-semibold mb-4">🚀 Why It’s Different This Time</h2>
-      <p class="text-lg leading-relaxed">
-        We’ve seen tech booms before — the internet, smartphones, cloud computing — but AI feels different. Why?
-      </p>
-      <p class="mt-4">
-        Because AI isn’t just a tool; it’s a collaborator. It doesn’t just store or process information — it analyzes, predicts, generates, and sometimes surprises us. We're no longer telling machines what to do. We're asking them questions, having conversations, and watching them create.
-      </p>
-      <p class="mt-4">
-        And this collaborative shift will impact every job, every industry, and every future.
-      </p>
+      <p class="text-lg leading-relaxed">We’ve seen tech booms before... but AI feels different.</p>
+      <p class="mt-4">Because AI isn’t just a tool; it’s a collaborator...</p>
+      <p class="mt-4">And this collaborative shift will impact every job...</p>
     </div>
   </div>
 
-  <!-- Section 3 -->
+  <!-- Section 3 – Squircle -->
   <div class="flex flex-col md:flex-row-reverse items-center gap-8" data-aos="fade-left">
-    <div class="md:w-1/2 w-full border-4 border-indigo-500 p-2 rounded-xl shadow-xl hover:scale-105 transition">
-      <img src="images/ai3.png" alt="AI in IT" class="w-full rounded-lg" />
+    <div class="md:w-1/2 w-full border-4 border-indigo-500 p-2 rounded-xl shadow-xl hover:scale-105 transition flex justify-center">
+      <img src="images/ai3.png" alt="AI in IT" class="w-4/5" style="clip-path: url(#squircle);" />
+      <svg width="0" height="0">
+        <clipPath id="squircle" clipPathUnits="objectBoundingBox">
+          <path d="M0.075,0 C0.028,0,0,0.028,0,0.075 V0.925 C0,0.972,0.028,1,0.075,1 H0.925 C0.972,1,1,0.972,1,0.925 V0.075 C1,0.028,0.972,0,0.925,0 H0.075 Z"/>
+        </clipPath>
+      </svg>
     </div>
     <div class="md:w-1/2 w-full">
       <h2 class="text-2xl font-semibold mb-4">💡 What This Means for Us in IT</h2>
-      <p class="text-lg leading-relaxed">
-        As an IT professional, the rise of AI is both thrilling and a wake-up call.
-      </p>
+      <p class="text-lg leading-relaxed">As an IT professional, the rise of AI is both thrilling and a wake-up call.</p>
       <ul class="list-disc list-inside mt-4 space-y-1">
-        <li>Routine tasks are being automated — great for efficiency, but it means we need to upskill constantly.</li>
-        <li>AI integration is becoming a critical part of system design and architecture.</li>
-        <li>Ethical questions around bias, data privacy, and algorithmic responsibility are now part of our everyday conversations.</li>
+        <li>Routine tasks are being automated...</li>
+        <li>AI integration is becoming essential...</li>
+        <li>Ethical questions are now part of daily conversations.</li>
       </ul>
-      <p class="mt-4">If you’re in tech, it’s time to get comfortable with AI — not just using it, but understanding it deeply.</p>
+      <p class="mt-4">If you’re in tech, it’s time to get comfortable with AI.</p>
     </div>
   </div>
 
-  <!-- Section 4 -->
+  <!-- Section 4 – Hexagon -->
   <div class="flex flex-col md:flex-row items-center gap-8" data-aos="fade-right">
-    <div class="md:w-1/2 w-full border-4 border-indigo-500 p-2 rounded-xl shadow-xl hover:scale-105 transition">
-      <img src="images/ai4.png" alt="Human Touch" class="w-full rounded-lg" />
+    <div class="md:w-1/2 w-full border-4 border-indigo-500 p-2 rounded-xl shadow-xl hover:scale-105 transition flex justify-center">
+      <img src="images/ai4.png" alt="Human Touch" class="w-4/5" style="clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);" />
     </div>
     <div class="md:w-1/2 w-full">
       <h2 class="text-2xl font-semibold mb-4">🌱 The Human Touch Still Matters</h2>
-      <p class="text-lg leading-relaxed">
-        Despite all this automation, empathy, creativity, and critical thinking remain irreplaceable.
-      </p>
-      <p class="mt-4">
-        AI can write code, generate images, even simulate emotion — but it’s still our human touch that gives meaning to the solutions we build. People skills, ethical judgment, and adaptability will be more important than ever in this AI-augmented world.
-      </p>
+      <p class="text-lg leading-relaxed">Despite all this automation, empathy, creativity...</p>
+      <p class="mt-4">AI can simulate emotion — but our human touch gives meaning.</p>
     </div>
   </div>
 
-  <!-- Section 5 -->
+  <!-- Section 5 – Soft Blob -->
   <div class="flex flex-col md:flex-row-reverse items-center gap-8" data-aos="fade-left">
-    <div class="md:w-1/2 w-full border-4 border-indigo-500 p-2 rounded-xl shadow-xl hover:scale-105 transition">
-      <img src="images/ai5.png" alt="Future of AI" class="w-full rounded-lg" />
+    <div class="md:w-1/2 w-full border-4 border-indigo-500 p-2 rounded-xl shadow-xl hover:scale-105 transition flex justify-center">
+      <img src="images/ai5.png" alt="Future of AI" class="w-4/5" style="clip-path: path('M58.9,-64.8C74.2,-45.3,84.6,-22.6,81.2,-2.7C77.8,17.2,60.6,34.4,45.2,53.6C29.8,72.8,14.9,93.9,-2.1,96.5C-19.2,99.1,-38.3,83.2,-52.4,64.7C-66.5,46.2,-75.6,25.1,-76.7,3.5C-77.8,-18.2,-70.9,-39.3,-57.4,-60.3C-43.9,-81.2,-22,-102,-0.4,-101.4C21.3,-100.7,42.7,-78.7,58.9,-64.8Z');" />
     </div>
     <div class="md:w-1/2 w-full">
       <h2 class="text-2xl font-semibold mb-4">📍 So, Where Do We Go From Here?</h2>
       <p class="text-lg leading-relaxed">Here’s what I believe:</p>
       <ul class="list-disc list-inside mt-4 space-y-1">
-        <li>Stay curious. Tech is evolving rapidly — explore it, break it, rebuild it.</li>
-        <li>Keep learning. AI is not going away — embrace it as a lifelong learning companion.</li>
-        <li>Lead with empathy. Technology should solve real problems and serve real people.</li>
+        <li>Stay curious...</li>
+        <li>Keep learning...</li>
+        <li>Lead with empathy...</li>
       </ul>
       <p class="mt-4 font-semibold">🖥️ Let’s not just keep up with the future — let’s build it.</p>
     </div>
