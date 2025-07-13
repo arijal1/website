@@ -168,13 +168,13 @@
 <body class="bg-white text-fuchsia-800 dark:text-fuchsia-200 dark:bg-black transition-colors duration-500 font-sans">
 
 <!-- Navbar Container -->
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between sticky top-0 z-50 
-  bg-gradient-to-r from-[#FFD700] via-yellow-400 to-red-600 text-white shadow-md">
+  <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-indigo-500 z-[9999] transition-all duration-200 ease-out" style="width: 0%;"></div>
 
-  <!-- Logo -->
-  <a href="/" class="flex items-center space-x-2 text-xl font-bold">
-    <img src="images/logo.png" alt="Logo" class="w-14 h-14" />
-  </a>
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between sticky top-0 z-50 bg-white/70 backdrop-blur-md shadow-md dark:bg-gray-900/80 transition-all duration-300">
+    <!-- Logo (Left) -->
+    <a href="/" id="logo" class="flex items-center space-x-2 text-xl font-bold hover:underline hover:text-indigo-300 transition" data-aos="fade-down" data-aos-duration="800">
+  <img src="images/logo.png" alt="Logo" class="w-14 h-14 sm:w-18 sm:h-18" />
+</a>
 
   <!-- Hamburger Menu Button (shown only on mobile) -->
   <button id="menu-toggle" class="md:hidden text-white text-3xl focus:outline-none">
