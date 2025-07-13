@@ -6,7 +6,7 @@
   <meta name="description" content="Anup Rijal's personal portfolio showcasing skills, projects, and experience." />
   <meta name="keywords" content="Anup Rijal, Portfolio, Developer, Projects, Resume" />
   <meta name="author" content="Anup Rijal" />
-  <title>Blogs</title>
+  <title>My Journey</title>
 
   <link rel="icon" href="/favicon.ico" />
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
@@ -50,130 +50,29 @@
     @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
     body {
       font-family: 'Urbanist', sans-serif;
-      background-color: #FFBF69 !important;
+      background-color: #FFF8E7 !important;
       color: #6B2737;
       margin: 0;
     }
     html.dark body {
-      background-color: #4A3C13 !important;
+      background-color: #2E2E2E !important;
       color: #FFBF69;
-    }
-    header {
-      background-color: #FFBF69;
-    }
-    html.dark header {
-      background-color: #4A3C13;
-    }
-    nav a.nav-link {
-      color: #FFBF69;
-    }
-    html.dark nav a.nav-link {
-      color: #FFD6A5;
-    }
-    nav a.nav-link.active {
-      color: #FF5E5B;
-      border-bottom-color: #FF5E5B;
-    }
-    html.dark nav a.nav-link.active {
-      color: #FFBF69;
-      border-bottom-color: #FFBF69;
-    }
-    #scroll-progress {
-      background-color: #FF5E5B;
-    }
-    .floating-btn-container a {
-      background: linear-gradient(45deg, #FF5E5B, #FFBF69);
-      color: #2E2E2E;
-    }
-    html.dark .floating-btn-container a {
-      background: linear-gradient(45deg, #6B2737, #FFD6A5);
-      color: #2E2E2E;
-    }
-    h1, h2, h3, h4 {
-      color: #6B2737;
-    }
-    html.dark h1, html.dark h2, html.dark h3, html.dark h4 {
-      color: #FFBF69;
-    }
-    a {
-      color: #FF5E5B;
-    }
-    html.dark a {
-      color: #FFD6A5;
-    }
-    .nav-link.active {
-      font-weight: bold;
-      border-bottom: 2px solid currentColor;
-      text-decoration: underline;
-      color: #6366f1;
-    }
-    .nav-link {
-      position: relative;
-      padding-bottom: 4px;
-      transition: color 0.3s;
-    }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      width: 0%;
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background-color: currentColor;
-      transition: width 0.3s ease-in-out;
-    }
-    .nav-link.active::after {
-      width: 100%;
-    }
-    html {
-      scroll-behavior: smooth;
-      filter: none;
-    }
-    @media (prefers-color-scheme: dark) {
-      html {
-        filter: none;
-      }
-    }
-    .floating-btn-container {
-      position: fixed;
-      top: 120px;
-      right: 40px;
-      z-index: 1000;
-      animation: floatUpDown 4s ease-in-out infinite;
-    }
-    @keyframes floatUpDown {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-8px);
-      }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      [data-aos] {
-        transition: none !important;
-        animation: none !important;
-      }
     }
 
-    /* Custom overrides for Tailwind background */
-    .bg-white {
-      background-color: #FFEFBB !important;
+    .content-section {
+      position: relative;
+      z-index: 1;
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      border-radius: 1rem;
+      padding: 1.5rem 3rem;
+      margin-bottom: 2.5rem;
     }
-    .bg-gray-100 {
-      background-color: #FFE9A0 !important;
-    }
-    .dark .bg-gray-800 {
-      background-color: #4A3C13 !important;
-    }
-    .bg-white\/80 {
-      background-color: rgba(255, 191, 105, 0.8) !important;
-    }
-    .dark .bg-gray-900 {
-      background-color: #3A2D0F !important;
-    }
-    .dark .bg-gray-900\/80 {
-      background-color: rgba(74, 60, 19, 0.8) !important;
+    html.dark .content-section {
+      background-color: rgba(30, 30, 30, 0.75);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
     }
   </style>
 </head>
@@ -376,98 +275,52 @@
 </footer>
 
 
-</div> <!-- everest-background -->
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    // Initialize AOS animations
-    AOS.init({
-      once: true,
-      duration: 800,
-      easing: 'ease-in-out',
-    });
-
-    // Scroll progress bar
-    const progressBar = document.getElementById('scroll-progress');
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = (scrollTop / docHeight) * 100;
-      progressBar.style.width = scrollPercent + '%';
-    });
-
-    // Parallax background effect with limit
-    const bg = document.querySelector('.everest-bg-image');
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const maxTranslate = 100; // max px to move down
-      const translateY = Math.min(scrollTop * 0.3, maxTranslate);
-      bg.style.transform = `translateY(${translateY}px)`;
-    });
-
-    // Navbar active link highlight on scroll
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('nav a.nav-link');
-
-    window.addEventListener('scroll', () => {
-      let currentSection = '';
-      const scrollY = window.pageYOffset;
-
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100;
-        if (scrollY >= sectionTop) {
-          currentSection = section.getAttribute('id');
-        }
-      });
-
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + currentSection) {
-          link.classList.add('active');
-        }
-      });
-    });
-
-    // Logo click goes to home
-    document.getElementById('logo').addEventListener('click', e => {
-      e.preventDefault();
-      window.location.href = 'index.html';
-    });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
-  AOS.init();
-</script>
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>
-  AOS.init();
-</script>
-  <script>
+  // Initialize AOS
+  AOS.init({
+    once: true,
+    duration: 800,
+    easing: 'ease-in-out',
+  });
+
+  // Scroll progress bar
+  const progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    progressBar.style.width = scrollPercent + '%';
+  });
+
+  // Mobile menu toggle
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
   const overlay = document.getElementById('overlay');
 
-  // Toggle menu
-  menuToggle.addEventListener('click', (e) => {
+  menuToggle?.addEventListener('click', (e) => {
     e.stopPropagation();
-    mobileMenu.classList.toggle('hidden');
-    overlay.classList.toggle('hidden');
+    mobileMenu?.classList.toggle('hidden');
+    overlay?.classList.toggle('hidden');
   });
 
-  // Close on outside click
   document.addEventListener('click', (e) => {
-    if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-      mobileMenu.classList.add('hidden');
-      overlay.classList.add('hidden');
+    if (!mobileMenu?.contains(e.target) && !menuToggle?.contains(e.target)) {
+      mobileMenu?.classList.add('hidden');
+      overlay?.classList.add('hidden');
     }
   });
 
-  // Close on scroll
   window.addEventListener('scroll', () => {
-    mobileMenu.classList.add('hidden');
-    overlay.classList.add('hidden');
+    mobileMenu?.classList.add('hidden');
+    overlay?.classList.add('hidden');
+  });
+
+  // Logo click redirect to home
+  document.getElementById('logo')?.addEventListener('click', e => {
+    e.preventDefault();
+    window.location.href = 'index.html';
   });
 </script>
-
 </body>
-</html> 
+</html>
