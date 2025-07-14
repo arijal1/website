@@ -203,12 +203,16 @@
     </button>
   </div>
 
-  <!-- Mobile Dropdown Menu -->
-  <div id="mobile-menu" class="md:hidden hidden absolute top-full left-0 w-full bg-white dark:bg-gray-900 text-indigo-700 dark:text-indigo-300 z-50 shadow-lg">
-    <a href="index.html" class="block px-4 py-3 border-b border-gray-200 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-indigo-800">Home</a>
-    <a href="projects.html" class="block px-4 py-3 border-b border-gray-200 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-indigo-800">Project</a>
-    <a href="blog.html" class="block px-4 py-3 hover:bg-indigo-50 dark:hover:bg-indigo-800">Blogs</a>
-  </div>
+<!-- Mobile Dropdown Menu (Animated, No Borders, Centered Text) -->
+<div id="mobile-menu"
+     class="md:hidden absolute top-full left-0 w-full -translate-y-5 opacity-0 pointer-events-none transition-all duration-500 ease-in-out bg-white dark:bg-gray-900 text-indigo-700 dark:text-indigo-300 z-50 shadow-lg text-center rounded-b-xl">
+
+  <a href="index.html" class="block w-full py-4 hover:bg-indigo-50 dark:hover:bg-indigo-800 transition">Home</a>
+  <a href="projects.html" class="block w-full py-4 hover:bg-indigo-50 dark:hover:bg-indigo-800 transition">Project</a>
+  <a href="blog.html" class="block w-full py-4 hover:bg-indigo-50 dark:hover:bg-indigo-800 transition">Blogs</a>
+
+</div>
+
 </div>
 
  <div class="content max-w-6xl mx-auto px-8 py-16 rounded-2xl shadow-xl backdrop-blur-md">
@@ -389,5 +393,41 @@
     window.location.href = 'index.html';
   });
 </script>
+  const menuToggle = document.getElementById('menu-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
+const overlay = document.getElementById('overlay');
+
+let isOpen = false;
+
+menuToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  isOpen = !isOpen;
+
+  mobileMenu.classList.toggle('-translate-y-5', !isOpen);
+  mobileMenu.classList.toggle('translate-y-0', isOpen);
+  mobileMenu.classList.toggle('opacity-0', !isOpen);
+  mobileMenu.classList.toggle('opacity-100', isOpen);
+  mobileMenu.classList.toggle('pointer-events-none', !isOpen);
+
+  overlay.classList.toggle('hidden', !isOpen);
+});
+
+document.addEventListener('click', (e) => {
+  if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+    isOpen = false;
+
+    mobileMenu.classList.add('-translate-y-5', 'opacity-0', 'pointer-events-none');
+    mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+    overlay.classList.add('hidden');
+  }
+});
+
+window.addEventListener('scroll', () => {
+  isOpen = false;
+
+  mobileMenu.classList.add('-translate-y-5', 'opacity-0', 'pointer-events-none');
+  mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+  overlay.classList.add('hidden');
+});
 </body>
 </html>
