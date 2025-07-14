@@ -202,8 +202,9 @@
     </nav>
   </div>
 
-  <!-- Mobile Dropdown Menu: Appears BELOW the navbar -->
-<div id="mobile-menu" class="md:hidden absolute top-full left-0 w-full max-h-0 overflow-hidden opacity-0 pointer-events-none transition-all duration-500 ease-in-out bg-white dark:bg-gray-900 text-indigo-700 dark:text-indigo-300 z-50 shadow-lg">
+<!-- Mobile Dropdown Menu (Animated Slide + Fade) -->
+<div id="mobile-menu"
+     class="md:hidden absolute top-full left-0 w-full -translate-y-5 opacity-0 pointer-events-none transition-all duration-500 ease-in-out bg-white dark:bg-gray-900 text-indigo-700 dark:text-indigo-300 z-50 shadow-lg">
   <a href="index.html" class="block px-6 py-4 hover:bg-indigo-50 dark:hover:bg-indigo-800 transition">Home</a>
   <a href="projects.html" class="block px-6 py-4 hover:bg-indigo-50 dark:hover:bg-indigo-800 transition">Projects</a>
   <a href="testimoni.html" class="block px-6 py-4 hover:bg-indigo-50 dark:hover:bg-indigo-800 transition">Testimony</a>
@@ -350,34 +351,33 @@
 <script>
   AOS.init();
 </script>
-<script>
+ <script>
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
   const overlay = document.getElementById('overlay');
 
   let isOpen = false;
 
-  // Toggle menu on button click
   menuToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     isOpen = !isOpen;
 
     if (isOpen) {
-      mobileMenu.classList.remove('max-h-0', 'opacity-0', 'pointer-events-none');
-      mobileMenu.classList.add('max-h-96', 'opacity-100');
+      mobileMenu.classList.remove('-translate-y-5', 'opacity-0', 'pointer-events-none');
+      mobileMenu.classList.add('translate-y-0', 'opacity-100');
       overlay.classList.remove('hidden');
     } else {
-      mobileMenu.classList.add('max-h-0', 'opacity-0', 'pointer-events-none');
-      mobileMenu.classList.remove('max-h-96', 'opacity-100');
+      mobileMenu.classList.add('-translate-y-5', 'opacity-0', 'pointer-events-none');
+      mobileMenu.classList.remove('translate-y-0', 'opacity-100');
       overlay.classList.add('hidden');
     }
   });
 
-  // Close when clicking outside
+  // Click outside closes menu
   document.addEventListener('click', (e) => {
     if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-      mobileMenu.classList.add('max-h-0', 'opacity-0', 'pointer-events-none');
-      mobileMenu.classList.remove('max-h-96', 'opacity-100');
+      mobileMenu.classList.add('-translate-y-5', 'opacity-0', 'pointer-events-none');
+      mobileMenu.classList.remove('translate-y-0', 'opacity-100');
       overlay.classList.add('hidden');
       isOpen = false;
     }
@@ -385,13 +385,12 @@
 
   // Close on scroll
   window.addEventListener('scroll', () => {
-    mobileMenu.classList.add('max-h-0', 'opacity-0', 'pointer-events-none');
-    mobileMenu.classList.remove('max-h-96', 'opacity-100');
+    mobileMenu.classList.add('-translate-y-5', 'opacity-0', 'pointer-events-none');
+    mobileMenu.classList.remove('translate-y-0', 'opacity-100');
     overlay.classList.add('hidden');
     isOpen = false;
   });
 </script>
-
 
 </body>
 </html> 
