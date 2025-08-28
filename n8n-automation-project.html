@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automating AI Video Creation & Publishing with n8n</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+  <!-- Hero -->
+  <header class="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-800 dark:via-purple-800 dark:to-pink-800 py-20">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-white" data-aos="fade-up">
+        Automating AI Video Creation & Publishing with n8n
+      </h1>
+      <p class="mt-6 text-lg sm:text-xl text-indigo-100" data-aos="fade-up" data-aos-delay="200">
+        A self-hosted automation that generates AI-powered videos, uploads to YouTube, and sends instant updates across multiple platforms.
+      </p>
+    </div>
+  </header>
+
+  <!-- Article -->
+  <main class="max-w-4xl mx-auto px-6 py-16 space-y-20">
+
+    <!-- Intro -->
+    <section data-aos="fade-up">
+      <p class="text-lg leading-relaxed">
+        Content creation is exciting, but the repetitive process of editing, uploading, and sharing videos can be overwhelming. 
+        I wanted to see if I could take those steps off my plate by building a fully automated system. Using <strong>n8n</strong>, 
+        an open-source automation tool, I created a pipeline that takes a simple idea and transforms it into a published video with 
+        notifications sent everywhere I need them.
+      </p>
+    </section>
+
+    <!-- Workflow -->
+    <section class="space-y-8" data-aos="fade-right">
+      <h2 class="text-2xl font-bold flex items-center space-x-3">
+        <i class="fas fa-cogs text-indigo-500"></i>
+        <span>The Workflow</span>
+      </h2>
+      <p>
+        The automation stitches together AI and APIs into a seamless flow:
+      </p>
+      <ul class="list-disc list-inside space-y-2">
+        <li><strong>AI Video Creation</strong> – Using prompts, short videos are generated with visuals and background audio.</li>
+        <li><strong>YouTube Upload</strong> – Videos are automatically published with titles, descriptions, and tags for discoverability.</li>
+        <li><strong>Notifications</strong> – Updates are pushed instantly to <em>Telegram</em>, <em>Gmail</em>, and <em>Discord</em>.</li>
+      </ul>
+
+      <!-- Image placeholder -->
+      <div class="mt-8 flex justify-center">
+        <img src="/images/projects/n8n-workflow.png" alt="n8n Automation Workflow" 
+             class="rounded-xl shadow-lg border border-gray-200 dark:border-gray-700" data-aos="zoom-in">
+      </div>
+      <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-2">
+        Example: My n8n workflow pipeline for AI video automation
+      </p>
+    </section>
+
+    <!-- Why it matters -->
+    <section class="space-y-6" data-aos="fade-left">
+      <h2 class="text-2xl font-bold flex items-center space-x-3">
+        <i class="fas fa-lightbulb text-yellow-500"></i>
+        <span>Why This Project Matters</span>
+      </h2>
+      <p>
+        For creators, time is better spent on ideas than on repetitive publishing steps. 
+        This automation not only saves hours but also ensures consistency. 
+        Every video follows the same flow—creation, upload, and announcement—without me having to lift a finger. 
+        It’s like having a personal content manager running 24/7.
+      </p>
+    </section>
+
+    <!-- What I Learned -->
+    <section class="space-y-6" data-aos="fade-right">
+      <h2 class="text-2xl font-bold flex items-center space-x-3">
+        <i class="fas fa-graduation-cap text-green-500"></i>
+        <span>What I Learned</span>
+      </h2>
+      <ul class="list-disc list-inside space-y-2">
+        <li>How to host and configure <strong>n8n</strong> on-prem for complete control and security.</li>
+        <li>Integrating <strong>AI models</strong> with the <strong>YouTube API</strong> for automated publishing.</li>
+        <li>Setting up <strong>cross-platform notifications</strong> to stay updated across Gmail, Telegram, and Discord.</li>
+        <li>The importance of structured workflows in scaling creative projects efficiently.</li>
+      </ul>
+    </section>
+
+    <!-- Reflection -->
+    <section class="space-y-6" data-aos="fade-up">
+      <h2 class="text-2xl font-bold flex items-center space-x-3">
+        <i class="fas fa-pen-fancy text-pink-500"></i>
+        <span>Final Reflection</span>
+      </h2>
+      <p>
+        This project was more than a technical experiment—it was proof that automation can amplify creativity instead of replacing it. 
+        By building this system, I freed up mental space to focus on ideas and strategy rather than manual uploads. 
+        Moving forward, I plan to extend this workflow with analytics tracking and maybe even multi-platform publishing beyond YouTube.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-8 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 text-center">
+    <p class="text-gray-600 dark:text-gray-400">
+      &copy; 2025 Anup Rijal · Built with n8n, AI, and automation
+    </p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
+</body>
+</html>
