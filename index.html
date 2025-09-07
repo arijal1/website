@@ -472,14 +472,31 @@ Outside of work, I stay active through sports, travel, and time outdoors.
     </button>
   </form>
 </section>
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-<script type="module">
-	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+ <!-- n8n Chat CSS -->
+<link 
+  rel="stylesheet" 
+  href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" 
+/>
 
-	createChat({
-		webhookUrl: 'http://n8n.anuprijal.com.np:5678/webhook/9014a8cb-259d-41f7-8f1b-84c31a8a6f29/chat'
-	});
+<!-- n8n Chat Script -->
+<script type="module">
+  import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
+
+  createChat({
+    webhookUrl: "http://n8n.anuprijal.com.np:5678/webhook/a95d5c1b-60f1-4abc-a079-ab395769a88b/chat",
+    chatTitle: "💬 Chat with Anup’s Assistant",
+    theme: {
+      primary: "#f97316",   // orange accent
+      secondary: "#ffd700", // gold accent
+      text: "#333333",
+      background: "#ffffff",
+    },
+    initialMessage: "Hi 👋 I’m here to help! Ask me anything about Anup or this website.",
+    position: "bottom-right", // can also be "bottom-left"
+    expanded: false, // start minimized
+  });
 </script>
+
 
 
 <!-- MOVE FOOTER OUTSIDE LIMITED CONTAINER -->
