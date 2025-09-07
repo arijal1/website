@@ -472,39 +472,15 @@ Outside of work, I stay active through sports, travel, and time outdoors.
     </button>
   </form>
 </section>
- <!-- n8n Chat CSS -->
 
-<link 
-  rel="stylesheet" 
-  href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" 
-/>
-
-<!-- n8n Chat Script -->
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 <script type="module">
-  import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-  createChat({
-    webhookUrl: "http://n8n.anuprijal.com.np:5678/webhook/3b3f8dd7-2c9f-4d2a-9bff-19285949ffcb/chat",
-    
-    // UI Setup
-    chatTitle: "💬 Anup’s Assistant",
-    initialMessage: "Hi 👋 I’m here to help! Ask me anything about Anup or this website.",
-    position: "bottom-right", // you can also use "bottom-left"
-    expanded: false, // starts minimized
-    
-    // Theme (adjust colors to your branding)
-    theme: {
-      primary: "#f97316",   // orange
-      secondary: "#ffb703", // gold
-      text: "#333333",
-      background: "#ffffff",
-    },
-
-    // Input placeholder
-    placeholder: "Type your message...",
-  });
+	createChat({
+		webhookUrl: 'YOUR_PRODUCTION_WEBHOOK_URL'
+	});
 </script>
-
 
 
 <!-- MOVE FOOTER OUTSIDE LIMITED CONTAINER -->
