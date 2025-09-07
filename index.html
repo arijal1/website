@@ -473,44 +473,6 @@ Outside of work, I stay active through sports, travel, and time outdoors.
   </form>
 </section>
 
-<!-- n8n Chat CSS -->
-<link 
-  rel="stylesheet" 
-  href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" 
-/>
-
-<!-- n8n Chat Script -->
-<script type="module">
-  import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
-
-  createChat({
-    // 👇 Just replace this with your n8n webhook URL
-    webhookUrl: "http://n8n.anuprijal.com.np:5678/webhook/3b3f8dd7-2c9f-4d2a-9bff-19285949ffcb/chat",  
-
-    // Chat window title
-    chatTitle: "💬 Anup’s Assistant",
-
-    // First message that appears when opened
-    initialMessage: "Hi 👋 I’m here to help! Ask me anything about Anup or this website.",
-
-    // Popup position
-    position: "bottom-right", // or "bottom-left"
-    expanded: false, // starts minimized
-
-    // Look & Feel (you can tweak colors)
-    theme: {
-      primary: "#f97316",   // orange
-      secondary: "#ffb703", // gold
-      text: "#333333",
-      background: "#ffffff",
-    },
-
-    // Input box placeholder
-    placeholder: "Type your message...",
-  });
-</script>
-
-
 <!-- MOVE FOOTER OUTSIDE LIMITED CONTAINER -->
 <footer class="bg-[#1A1F36] text-[#FFBF69] py-10 mt-16 border-t-4 border-[#FFD166] w-full">
   <div class="max-w-7xl mx-auto px-4">
@@ -642,6 +604,41 @@ Outside of work, I stay active through sports, travel, and time outdoors.
     mobileMenu.classList.remove('translate-y-0', 'opacity-100');
     overlay.classList.add('hidden');
     isOpen = false;
+  });
+</script>
+<link 
+  rel="stylesheet" 
+  href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" 
+/>
+
+<!-- n8n Chat Script -->
+<script type="module">
+  import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
+
+  createChat({
+    // 👇 Just replace this with your n8n webhook URL
+    webhookUrl: "http://n8n.anuprijal.com.np:5678/webhook/3b3f8dd7-2c9f-4d2a-9bff-19285949ffcb/chat",  
+
+    // Chat window title
+    chatTitle: "💬 Anup’s Assistant",
+
+    // First message that appears when opened
+    initialMessage: "Hi 👋 I’m here to help! Ask me anything about Anup or this website.",
+
+    // Popup position
+    position: "bottom-right", // or "bottom-left"
+    expanded: false, // starts minimized
+
+    // Look & Feel (you can tweak colors)
+    theme: {
+      primary: "#f97316",   // orange
+      secondary: "#ffb703", // gold
+      text: "#333333",
+      background: "#ffffff",
+    },
+
+    // Input box placeholder
+    placeholder: "Type your message...",
   });
 </script>
 
