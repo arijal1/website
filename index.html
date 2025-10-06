@@ -612,35 +612,44 @@ Outside of work, I stay active through sports, travel, and time outdoors.
 />
 
 <!-- n8n Chat Script -->
-<script type="module">
-  import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
+<div id="chatbox" style="border:1px solid #ccc; padding:10px; width:300px; height:400px; overflow-y:auto;">
+  <div id="messages"></div>
+</div>
+<input id="userInput" type="text" placeholder="Type a message..." style="width:220px;" />
+<button onclick="sendMessage()">Send</button>
 
-  createChat({
-    // 👇 Just replace this with your n8n webhook URL
-    webhookUrl: "http://n8n.anuprijal.com.np:5678/webhook/3b3f8dd7-2c9f-4d2a-9bff-19285949ffcb/chat",  
+<script>
+const webhookUrl = "http://n8n.anuprijal.com.np:5678/webhook/d48f9e07-3c05-4be8-86ca-5cee4c27b78f/chat";
 
-    // Chat window title
-    chatTitle: "💬 Anup’s Assistant",
+async function sendMessage() {
+  const input = document.getElementById("userInput");
+  const message = input.value.trim();
+  if (!message) return;
 
-    // First message that appears when opened
-    initialMessage: "Hi 👋 I’m here to help! Ask me anything about Anup or this website.",
+  // Show user message
+  document.getElementById("messages").innerHTML += `<div><b>You:</b> ${message}</div>`;
+  input.value = "";
 
-    // Popup position
-    position: "bottom-right", // or "bottom-left"
-    expanded: false, // starts minimized
+  // Send to n8n webhook
+  try {
+    const res = await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
+    });
 
-    // Look & Feel (you can tweak colors)
-    theme: {
-      primary: "#f97316",   // orange
-      secondary: "#ffb703", // gold
-      text: "#333333",
-      background: "#ffffff",
-    },
+    const data = await res.json();
 
-    // Input box placeholder
-    placeholder: "Type your message...",
-  });
+    // Show bot reply
+    document.getElementById("messages").innerHTML += `<div><b>Bot:</b> ${data.reply || "..."}</div>`;
+    document.getElementById("chatbox").scrollTop = document.getElementById("chatbox").scrollHeight;
+  } catch (err) {
+    console.error(err);
+    document.getElementById("messages").innerHTML += `<div style="color:red;">Error connecting to chatbot.</div>`;
+  }
+}
 </script>
+
 
 </body>
 </html>
