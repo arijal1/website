@@ -129,31 +129,34 @@
 <!-- Particles canvas (lighter than index for freshness) -->
 <canvas aria-hidden="true" id="particles"></canvas>
 <!-- Header -->
-<header>
-<div aria-label="Primary" class="container nav" role="navigation">
-<div class="brand">
-<img alt="Anup Rijal logo" id="brandLogo" onload="this.style.display='block';document.getElementById('brandFallback').style.display='none'" src="assets/logo.png"/>
-<svg aria-hidden="true" id="brandFallback" viewbox="0 0 40 40">
-<circle cx="20" cy="20" fill="#111115" r="18" stroke="var(--gold)" stroke-width="calc(var(--gold-stroke))"></circle>
-<text dy=".1em" fill="var(--mint)" font-family="Montserrat" font-size="16" text-anchor="middle" x="50%" y="55%">AR</text>
-</svg>
-<span class="name">Anup Rijal</span>
-</div>
-<button aria-controls="primary-nav" aria-expanded="false" class="menu-btn" id="menuBtn">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z" fill="currentColor"></path></svg>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <div class="brand">
+         <img src="images/logo.png" alt="Anup Rijal Logo" style="height:40px; width:auto; border-radius:8px;aria-expanded="false">
+        <svg viewBox="0 0 40 40" aria-hidden="true">
+        </svg> 
+      </div>
+      <button class="menu-btn" aria-expanded="false" aria-controls="primary-nav" id="menuBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
         Menu
       </button>
-<nav id="primary-nav">
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="projects.html">Projects</a></li>
-<li><a href="blog.html">Blogs</a></li>
-<li><a href="vlogs.html">Vlogs</a></li>
-<li><a href="testimoni.html">Testimony</a></li>
-</ul>
-</nav>
-</div>
-</header>
+      <nav id="primary-nav">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="blog.html">Blogs</a></li>
+          <li><a href="vlogs.html">Vlogs</a></li>
+          <li><a href="testimoni.html">Testimony</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+    
+
+    
+
 <!-- Hero -->
 <section class="hero">
 <div class="container hero-inner">
