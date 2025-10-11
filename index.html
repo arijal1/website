@@ -405,7 +405,131 @@
       return { start, stop, reset };
     })();
   </script>
- 
+  
+ <!-- Chat launcher button -->
+<button id="chat-launcher" class="chat-launcher" aria-controls="n8n-chat" aria-expanded="false">
+  💬 Chat with Anup
+</button>
+
+<style>
+  /* Force the host element to be fixed so it never blocks the footer */
+  n8n-chat {
+    position: fixed !important;
+    bottom: 24px;
+    right: 24px;
+    z-index: 2147483647; /* keep above other UI */
+  }
+
+  /* Launcher styling (feel free to tweak) */
+  .chat-launcher {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: none;
+    font: 600 14px/1.2 Poppins, system-ui, sans-serif;
+    color: #ffffff;
+    background: #8b5cf6; /* matches your theme purple */
+    box-shadow: 0 8px 20px rgba(0,0,0,.25);
+    cursor: pointer;
+    z-index: 2147483646; /* just under the chat itself */
+  }
+
+  .chat-launcher:focus-visible { outline: 3px solid #c4b5fd; }
+  @media (max-width: 480px) {
+    n8n-chat, .chat-launcher { bottom: 16px; right: 16px; }
+  }
+</style>
+
+<script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+  const chat = createChat({
+    webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+    initialMessages: ["🤖 Hi there! I’m Anup’s assistant. How can I help you today?"],
+    theme: {
+      position: "bottom-right",
+      chatWindowBackground: "#1f2937",
+      userMessageBubbleColor: "#8b5cf6",
+      botMessageBubbleColor: "#374151",
+      fontFamily: "Poppins, sans-serif",
+      borderRadius: "12px",
+      headerBackgroundColor: "#111827",
+      headerTextColor: "#ffffff",
+      inputBackgroundColor: "#1f2937",
+      inputTextColor: "#ffffff",
+      sendButtonColor: "#8b5cf6"
+    }
+  });
+
+  // Ensure the widget host is attached to <body> (in case it was injected elsewhere)
+  // and force fixed positioning/z-index in JS too (belt & braces).
+  const ensureFixedHost = () => {
+    const host = document.querySelector('n8n-chat');
+    if (!host) return;
+
+    // If it's not under body directly, move it.
+    if (host.parentElement !== document.body) {
+      document.body.appendChild(host);
+    }
+
+    host.style.position = 'fixed';
+    host.style.bottom = '24px';
+    host.style.right = '24px';
+    host.style.zIndex = '2147483647';
+  };
+
+  // Run now and also after the widget initializes
+  ensureFixedHost();
+  setTimeout(ensureFixedHost, 0);
+
+  // Popup behavior: click the launcher to open/minimize
+  const launcher = document.getElementById('chat-launcher');
+  let isOpen = false;
+
+  const setLauncherState = (open) => {
+    isOpen = open;
+    launcher.setAttribute('aria-expanded', String(open));
+    launcher.textContent = open ? '— Minimize chat' : '💬 Chat with Anup';
+  };
+
+  launcher.addEventListener('click', () => {
+    if (isOpen) {
+      chat.minimize();
+      setLauncherState(false);
+    } else {
+      chat.open();
+      setLauncherState(true);
+    }
+  });
+
+  // Optional: click outside to minimize
+  document.addEventListener('click', (event) => {
+    const host = document.querySelector('n8n-chat');
+    if (!host) return;
+
+    const isInside = host.shadowRoot
+      ? host.shadowRoot.contains(event.target)
+      : host.contains(event.target);
+
+    const clickedLauncher = launcher.contains(event.target);
+
+    if (!isInside && !clickedLauncher && isOpen) {
+      chat.minimize();
+      setLauncherState(false);
+    }
+  });
+
+  // Optional: remember per-session if the user already opened the chat
+  if (sessionStorage.getItem('chatOpened') === '1') {
+    chat.open();
+    setLauncherState(true);
+  }
+  // Update flag whenever opened
+  const originalOpen = chat.open.bind(chat);
+  chat.open = () => { sessionStorage.setItem('chatOpened', '1'); setLauncherState(true); return originalOpen(); };
+</script>
   
 </body>
 </html>
