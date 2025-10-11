@@ -91,55 +91,71 @@
     .social a:hover { background: rgba(212,175,55,.12); }
   </style>
   <style>
-  .container.nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 1rem;
-  }
 
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
 
+    
+.container.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand img {
+  height: 40px;
+  width: auto;
+  border-radius: 8px;
+}
+
+/* NAV LINKS */
+nav#primary-nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav#primary-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ✅ Minimal left shift for desktop */
+#primary-nav {
+  transform: translateX(-10px); /* adjust between -6px and -16px */
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
   .brand img {
-    height: 40px;
-    width: auto;
-    border-radius: 8px;
+    height: 32px;
   }
 
-  @media (max-width: 768px) {
-    .brand img {
-      height: 32px;
-    }
-
-    .container.nav {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    nav#primary-nav ul {
-      flex-direction: column;
-      gap: 1rem;
-    }
+  .container.nav {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   nav#primary-nav ul {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    flex-direction: column;
+    gap: 1rem;
   }
 
-  nav#primary-nav a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
+  /* Remove left shift on mobile */
+  #primary-nav {
+    transform: none;
   }
+}
+
 </style>
 </head>
 <body>
