@@ -427,10 +427,14 @@
   </script>
 
   
+<!-- n8n Chatbot --><!-- Make sure particles canvas is first -->
+<canvas id="particles" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+
 <!-- n8n Chatbot -->
 <script type="module">
 import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
+// Initialize chat
 const chat = createChat({
   webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
   initialMessages: ["🤖 Hi there! I’m Anup’s assistant. How can I help you today?"],
@@ -443,24 +447,26 @@ const chat = createChat({
   }
 });
 
-// Open after short delay
+// Auto-open chat after short delay
 setTimeout(() => chat.open(), 2000);
 
-// Wait for chat element
+// Wait until chat element is added and then style
 const waitForChat = setInterval(() => {
   const chatEl = document.querySelector('n8n-chat');
   if (!chatEl) return;
 
-  // Move to end of body
-  document.body.appendChild(chatEl);
+  // Move chat element directly under <body> to avoid footer/container issues
+  if (chatEl.parentElement !== document.body) {
+    document.body.appendChild(chatEl);
+  }
 
-  // Force fixed position & very high z-index
+  // Force fixed position and very high z-index
   chatEl.style.position = 'fixed';
-  chatEl.style.bottom = '120px'; // above footer
+  chatEl.style.bottom = '120px'; // adjust above footer
   chatEl.style.right = '24px';
-  chatEl.style.zIndex = '2147483647'; // max possible z-index
+  chatEl.style.zIndex = '2147483647'; // highest possible z-index
 
-  // Shadow DOM tweaks
+  // Shadow DOM tweaks for sleek design
   const shadow = chatEl.shadowRoot;
   if (shadow) {
     const windowEl = shadow.querySelector('.chat-window');
@@ -481,24 +487,55 @@ const waitForChat = setInterval(() => {
   clearInterval(waitForChat);
 }, 100);
 
-// Minimize on outside click
+// Minimize chat on click outside
 document.addEventListener('click', (event) => {
   const chatWrapper = document.querySelector('n8n-chat');
   if (!chatWrapper) return;
+
   const isClickInside = chatWrapper.shadowRoot
     ? chatWrapper.shadowRoot.contains(event.target)
     : chatWrapper.contains(event.target);
+
   if (!isClickInside) chat.minimize();
 });
 </script>
 
-<style>
-/* Let canvas ignore pointer events so chat is clickable */
-#particles {
-  pointer-events: none;
-}
-</style>
+<!-- Particle animation -->
+<script>
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+let particles = [];
 
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.radius = Math.random() * 2;
+    this.speedX = Math.random() * 1 - 0.5;
+    this.speedY = Math.random() * 1 - 0.5;
+  }
+  draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2); ctx.fillStyle = "rgba(0,0,0,0.3)"; ctx.fill(); }
+  move() {
+    this.x += this.speedX; this.y += this.speedY;
+    if(this.x<0||this.x>canvas.width) this.speedX*=-1;
+    if(this.y<0||this.y>canvas.height) this.speedY*=-1;
+  }
+}
+
+for(let i=0;i<80;i++) particles.push(new Particle());
+
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{p.move();p.draw();});
+  requestAnimationFrame(animateParticles);
+}
+
+animateParticles();
+</script>
 
 </body>
 </html>
