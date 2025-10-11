@@ -428,7 +428,6 @@
 
   
 <!-- n8n Chatbot -->
-<!-- Chatbot -->
 <script type="module">
   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
@@ -447,27 +446,29 @@
   // Auto open after short delay
   setTimeout(() => chat.open(), 2000);
 
-  // Make sure chat floats above footer
+  // Wait for n8n-chat to exist and style it
   const waitForChat = setInterval(() => {
     const chatEl = document.querySelector('n8n-chat');
     if (!chatEl) return;
 
-    // Move it directly under body
-    document.body.appendChild(chatEl);
+    // Move directly under body so footer or containers don't interfere
+    if (chatEl.parentElement !== document.body) {
+      document.body.appendChild(chatEl);
+    }
 
-    // Force fixed position and high z-index
+    // Force fixed position and very high z-index
     chatEl.style.position = 'fixed';
-    chatEl.style.bottom = '90px'; // adjust if footer is taller
+    chatEl.style.bottom = '90px'; // adjust if needed
     chatEl.style.right = '24px';
-    chatEl.style.zIndex = '999999';
+    chatEl.style.zIndex = '9999999'; // way above footer
 
-    // Access shadow DOM and tweak window design
+    // Shadow DOM tweaks for window design
     const shadow = chatEl.shadowRoot;
     if (shadow) {
       const windowEl = shadow.querySelector('.chat-window');
       if (windowEl) {
-        windowEl.style.borderRadius = '16px'; // rounded corners
-        windowEl.style.background = '#1f2937'; // darker background
+        windowEl.style.borderRadius = '16px'; 
+        windowEl.style.background = '#1f2937'; 
         windowEl.style.fontFamily = 'Poppins, sans-serif';
       }
       const toggleBtn = shadow.querySelector('.chat-toggle');
@@ -482,7 +483,7 @@
     clearInterval(waitForChat);
   }, 100);
 
-  // Detect clicks outside the chatbot container
+  // Detect clicks outside to minimize
   document.addEventListener('click', (event) => {
     const chatWrapper = document.querySelector('n8n-chat');
     if (!chatWrapper) return;
@@ -495,43 +496,6 @@
       chat.minimize();
     }
   });
-</script>
-
-<!-- Floating Particle Animation -->
-<script>
-  const canvas = document.getElementById("particles");
-  const ctx = canvas.getContext("2d");
-  let particles = [];
-
-  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-  window.addEventListener("resize", resizeCanvas);
-  resizeCanvas();
-
-  class Particle {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.radius = Math.random() * 2;
-      this.speedX = Math.random() * 1 - 0.5;
-      this.speedY = Math.random() * 1 - 0.5;
-    }
-    draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2); ctx.fillStyle = "rgba(0,0,0,0.3)"; ctx.fill(); }
-    move() {
-      this.x += this.speedX; this.y += this.speedY;
-      if(this.x<0||this.x>canvas.width) this.speedX*=-1;
-      if(this.y<0||this.y>canvas.height) this.speedY*=-1;
-    }
-  }
-
-  for(let i=0;i<80;i++) particles.push(new Particle());
-
-  function animateParticles(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach(p=>{p.move();p.draw();});
-    requestAnimationFrame(animateParticles);
-  }
-
-  animateParticles();
 </script>
 
 </body>
