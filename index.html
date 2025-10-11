@@ -445,25 +445,39 @@
 ">💬</button>
 
 <!-- Chat Box -->
-<!-- Chat Toggle -->
-<button id="chat-toggle" style="position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:#8b5cf6;color:white;font-size:24px;border:none;cursor:pointer;z-index:999999;">💬</button>
-
-<!-- Chat Box -->
-<div id="chat-box" style="position:fixed;bottom:90px;right:24px;width:340px;max-height:500px;background:#1f2937;color:white;border-radius:16px;display:none;flex-direction:column;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:999999;font-family:'Poppins',sans-serif;">
-  <div style="padding:10px;display:flex;justify-content:space-between;align-items:center;background:#111827;border-top-left-radius:16px;border-top-right-radius:16px;">
+<div id="chat-box" style="
+  position: fixed;
+  bottom: 90px; /* above footer */
+  right: 24px;
+  width: 340px;
+  max-height: 500px;
+  background: #1f2937;
+  color: white;
+  border-radius: 16px;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  z-index: 999999;
+  font-family: 'Poppins', sans-serif;
+">
+  <div style="padding:10px; display:flex; justify-content:space-between; align-items:center; background:#111827; border-top-left-radius:16px; border-top-right-radius:16px;">
     <span>🤖 Anup's Assistant</span>
     <button id="chat-close" style="background:none;border:none;color:white;font-size:18px;cursor:pointer;">×</button>
   </div>
-  <div id="chat-messages" style="flex-grow:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px;">
-    <div style="background:#374151;padding:8px 10px;border-radius:10px;max-width:80%;">👋 Hi there! I'm Anup’s assistant. How can I help you today?</div>
+  <div id="chat-messages" style="flex-grow:1; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:8px;">
+    <div style="background:#374151; padding:8px 10px; border-radius:10px; max-width:80%;">👋 Hi there! I'm Anup’s assistant. How can I help you today?</div>
   </div>
-  <div style="display:flex;padding:10px;background:#111827;">
-    <input id="chat-input" type="text" placeholder="Type your message..." style="flex-grow:1;padding:8px 10px;border:none;border-radius:8px;background:#374151;color:white;">
-    <button id="chat-send" style="margin-left:8px;padding:8px 12px;background:#8b5cf6;border:none;color:white;border-radius:8px;cursor:pointer;">➤</button>
+  <div style="display:flex; padding:10px; background:#111827;">
+    <input id="chat-input" type="text" placeholder="Type your message..." style="flex-grow:1; padding:8px 10px; border:none; border-radius:8px; background:#374151; color:white;">
+    <button id="chat-send" style="margin-left:8px; padding:8px 12px; background:#8b5cf6; border:none; color:white; border-radius:8px; cursor:pointer;">➤</button>
   </div>
 </div>
 
+<!-- Particle Background -->
+<canvas id="particles" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:1; pointer-events:none;"></canvas>
+
 <script>
+  // Chat functionality
   const toggle = document.getElementById("chat-toggle");
   const box = document.getElementById("chat-box");
   const closeBtn = document.getElementById("chat-close");
@@ -492,13 +506,11 @@
     messages.scrollTop = messages.scrollHeight;
 
     try {
-      // Ensure HTTPS and correct JSON format
       const res = await fetch("https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text })
       });
-
       const data = await res.json();
       loading.remove();
 
@@ -527,6 +539,41 @@
       box.style.display = "none";
     }
   });
+
+  // Particle animation
+  const canvas = document.getElementById("particles");
+  const ctx = canvas.getContext("2d");
+  let particles = [];
+
+  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.radius = Math.random() * 2;
+      this.speedX = Math.random() * 1 - 0.5;
+      this.speedY = Math.random() * 1 - 0.5;
+    }
+    draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2); ctx.fillStyle = "rgba(0,0,0,0.3)"; ctx.fill(); }
+    move() {
+      this.x += this.speedX; this.y += this.speedY;
+      if(this.x<0||this.x>canvas.width) this.speedX*=-1;
+      if(this.y<0||this.y>canvas.height) this.speedY*=-1;
+    }
+  }
+
+  for(let i=0;i<80;i++) particles.push(new Particle());
+
+  function animateParticles(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{p.move();p.draw();});
+    requestAnimationFrame(animateParticles);
+  }
+
+  animateParticles();
 </script>
 
 </body>
