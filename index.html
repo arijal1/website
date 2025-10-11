@@ -428,25 +428,56 @@
 
   
 <!-- n8n Chatbot --><!-- Make sure particles canvas is first -->
-<!-- Particles Canvas -->
-<canvas id="particles" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+<!-- 1) Widget CSS (required) -->
+<link rel="stylesheetnet/npm/@n8n/chat/dist/style.css
 
-<!-- n8n Chatbot -->
-<script type="module">
-import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+<!-- 2) Optional: your font -->
+<link://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap
 
-const chat = createChat({
-  webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
-  initialMessages: ["🤖 Hi there! I’m Anup’s assistant. How can I help you today?"],
-  theme: {
-    chatWindowBackground: "#1f2937",
-    userMessageBubbleColor: "#3b82f6",
-    botMessageBubbleColor: "#374151",
-    fontFamily: "Poppins, sans-serif",
-    borderRadius: "12px"
+<!-- 3) Optional: brand tweaks via CSS variables -->
+<style>
+  :root {
+    /* Window size and rounding */
+    --chat--window--width: 400px;
+    --chat--window--height: 600px;
+    --chat--border-radius: 12px;
+
+    /* Colors to match your original config */
+    --chat--header--background: #1f2937;            /* header / top bar */
+    --chat--header--color: #e5e7eb;
+
+    --chat--message--user--background: #3b82f6;     /* user bubble */
+    --chat--message--user--color: #ffffff;
+
+    --chat--message--bot--background: #374151;      /* bot bubble */
+    --chat--message--bot--color: #e5e7eb;
+
+    /* Launcher button */
+    --chat--toggle--background: #3b82f6;
+    --chat--toggle--color: #ffffff;
   }
-});
 
+  /* Use your font */
+  body { font-family: "Poppins", sans-serif; }
+</style>
+
+<!-- 4) (Optional) Particles canvas; keep it behind the chat -->
+<canvas id="particles"
+        style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;">
+</canvas>
+
+<!-- 5) n8n Chat widget -->
+<script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+  // Mount directly to <body> so it can't be constrained by footer wrappers
+  createChat({
+    webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+    target: 'body',
+    mode: 'window', // toggle + floating window
+    initialMessages: ["🤖 Hi there! I’m Anup’s assistant. How can I help you today?"]
+    // If you later enable streaming or uploads, add enableStreaming / allowFileUploads here
+  });
 </script>
 
 
