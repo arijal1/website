@@ -428,6 +428,7 @@
 
   
 <!-- n8n Chatbot -->
+<!-- n8n Chatbot -->
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
 <!-- Single Chat Launcher -->
@@ -474,7 +475,7 @@
 <script type="module">
   import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
-  // Create chat widget (no default launcher)
+  // Create chat widget with launcher disabled
   const chat = createChat({
     webhookUrl: "https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
     initialMessages: ["👋 Hi there! I'm Anup’s assistant. How can I help you today?"],
@@ -491,13 +492,20 @@
       inputTextColor: "#ffffff",
       sendButtonColor: "#8b5cf6"
     },
-    showLauncher: false // 👈 hides n8n’s default button
+    showLauncher: false // ✅ disables default launcher
   });
+
+  // 🔥 Extra safety: remove any n8n default launcher if it appears
+  const removeDefaultLauncher = () => {
+    const defaultLauncher = document.querySelector('button[class*="n8n-chat-launcher"]');
+    if (defaultLauncher) defaultLauncher.remove();
+  };
+  setInterval(removeDefaultLauncher, 500);
 
   const launcher = document.getElementById("chat-launcher");
   let chatOpen = false;
 
-  // Toggle open/close
+  // Toggle chat
   launcher.addEventListener("click", (e) => {
     e.stopPropagation();
     if (chatOpen) {
@@ -521,6 +529,7 @@
     }
   });
 </script>
+
 
 
 </body>
