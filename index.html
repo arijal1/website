@@ -428,6 +428,72 @@
 
   
 <!-- n8n Chatbot --><!-- Make sure particles canvas is first -->
+<!-- n8n Chat CSS (required) -->
+<link rel="stylesheet" href="https://t/dist/style.css
+
+<!-- Optional: font to match your site -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel=" particles behind everything */
+  #particles { z-index: 1; pointer-events: none; }
+
+  /* Fixed mount point for the chat — floats at bottom-right */
+  #n8n-chat {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 10000; /* above footer/canvas/content */
+    font-family: "Poppins", sans-serif;
+  }
+
+  /* Your branding via the widget’s CSS variables */
+  :root {
+    --chat--window--width: 400px;
+    --chat--window--height: 600px;
+    --chat--border-radius: 12px;
+
+    --chat--header--background: #1f2937; /* window header */
+    --chat--header--color: #e5e7eb;
+
+    --chat--message--user--background: #3b82f6; /* your user bubble */
+    --chat--message--user--color: #ffffff;
+
+    --chat--message--bot--background: #374151;  /* your bot bubble */
+    --chat--message--bot--color: #e5e7eb;
+
+    --chat--toggle--background: #3b82f6;        /* launcher button */
+    --chat--toggle--color: #ffffff;
+  }
+</style>
+
+<!-- Keep your particles canvas -->
+<canvas id="particles"
+        style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+
+<!-- Dedicated chat mount point (NOT inside footer) -->
+<div id="n8n-chat" aria-live="polite"></div>
+
+<!-- n8n Chat widget (webhook settings only) -->
+<script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+  createChat({
+    // 1) Your webhook URL from the Chat Trigger
+    webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+
+    // 2) (Optional) headers or method if you need them (Basic/Bearer etc.)
+    //    Leave empty if you don't need auth headers.
+    webhookConfig: {
+      method: 'POST',
+      headers: { /* 'Authorization': 'Bearer <token>' */ }
+    },
+
+    // 3) Mount to our fixed container so it always floats bottom-right
+    target: '#n8n-chat',
+    mode: 'window', // toggle + fixed-size window (NOT fullscreen)
+
+    // 4) Initial bot message
+    initialMessages: ["🤖 Hi there! I’m Anup’s assistant. How can I help you today?"]
+  });
+</script>
 
 
 
