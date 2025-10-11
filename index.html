@@ -429,74 +429,76 @@
   
 <!-- n8n Chatbot -->
 <script type="module">
-  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-  const chat = createChat({
-    webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
-    initialMessages: ["🤖 Hi there! I’m Anup’s assistant. How can I help you today?"],
-    theme: {
-      chatWindowBackground: "#1f2937",
-      userMessageBubbleColor: "#3b82f6",
-      botMessageBubbleColor: "#374151",
-      fontFamily: "Poppins, sans-serif",
-      borderRadius: "12px"
+const chat = createChat({
+  webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+  initialMessages: ["🤖 Hi there! I’m Anup’s assistant. How can I help you today?"],
+  theme: {
+    chatWindowBackground: "#1f2937",
+    userMessageBubbleColor: "#3b82f6",
+    botMessageBubbleColor: "#374151",
+    fontFamily: "Poppins, sans-serif",
+    borderRadius: "12px"
+  }
+});
+
+// Open after short delay
+setTimeout(() => chat.open(), 2000);
+
+// Wait for chat element
+const waitForChat = setInterval(() => {
+  const chatEl = document.querySelector('n8n-chat');
+  if (!chatEl) return;
+
+  // Move to end of body
+  document.body.appendChild(chatEl);
+
+  // Force fixed position & very high z-index
+  chatEl.style.position = 'fixed';
+  chatEl.style.bottom = '120px'; // above footer
+  chatEl.style.right = '24px';
+  chatEl.style.zIndex = '2147483647'; // max possible z-index
+
+  // Shadow DOM tweaks
+  const shadow = chatEl.shadowRoot;
+  if (shadow) {
+    const windowEl = shadow.querySelector('.chat-window');
+    if (windowEl) {
+      windowEl.style.borderRadius = '16px';
+      windowEl.style.background = '#1f2937';
+      windowEl.style.fontFamily = 'Poppins, sans-serif';
     }
-  });
-
-  // Auto open after short delay
-  setTimeout(() => chat.open(), 2000);
-
-  // Wait for n8n-chat to exist and style it
-  const waitForChat = setInterval(() => {
-    const chatEl = document.querySelector('n8n-chat');
-    if (!chatEl) return;
-
-    // Move directly under body so footer or containers don't interfere
-    if (chatEl.parentElement !== document.body) {
-      document.body.appendChild(chatEl);
+    const toggleBtn = shadow.querySelector('.chat-toggle');
+    if (toggleBtn) {
+      toggleBtn.style.background = '#8b5cf6';
+      toggleBtn.style.color = '#fff';
+      toggleBtn.style.boxShadow = '0 8px 20px rgba(0,0,0,0.25)';
+      toggleBtn.style.borderRadius = '50%';
     }
+  }
 
-    // Force fixed position and very high z-index
-    chatEl.style.position = 'fixed';
-    chatEl.style.bottom = '90px'; // adjust if needed
-    chatEl.style.right = '24px';
-    chatEl.style.zIndex = '9999999'; // way above footer
+  clearInterval(waitForChat);
+}, 100);
 
-    // Shadow DOM tweaks for window design
-    const shadow = chatEl.shadowRoot;
-    if (shadow) {
-      const windowEl = shadow.querySelector('.chat-window');
-      if (windowEl) {
-        windowEl.style.borderRadius = '16px'; 
-        windowEl.style.background = '#1f2937'; 
-        windowEl.style.fontFamily = 'Poppins, sans-serif';
-      }
-      const toggleBtn = shadow.querySelector('.chat-toggle');
-      if (toggleBtn) {
-        toggleBtn.style.background = '#8b5cf6';
-        toggleBtn.style.color = '#fff';
-        toggleBtn.style.boxShadow = '0 8px 20px rgba(0,0,0,0.25)';
-        toggleBtn.style.borderRadius = '50%';
-      }
-    }
-
-    clearInterval(waitForChat);
-  }, 100);
-
-  // Detect clicks outside to minimize
-  document.addEventListener('click', (event) => {
-    const chatWrapper = document.querySelector('n8n-chat');
-    if (!chatWrapper) return;
-
-    const isClickInside = chatWrapper.shadowRoot
-      ? chatWrapper.shadowRoot.contains(event.target)
-      : chatWrapper.contains(event.target);
-
-    if (!isClickInside) {
-      chat.minimize();
-    }
-  });
+// Minimize on outside click
+document.addEventListener('click', (event) => {
+  const chatWrapper = document.querySelector('n8n-chat');
+  if (!chatWrapper) return;
+  const isClickInside = chatWrapper.shadowRoot
+    ? chatWrapper.shadowRoot.contains(event.target)
+    : chatWrapper.contains(event.target);
+  if (!isClickInside) chat.minimize();
+});
 </script>
+
+<style>
+/* Let canvas ignore pointer events so chat is clickable */
+#particles {
+  pointer-events: none;
+}
+</style>
+
 
 </body>
 </html>
