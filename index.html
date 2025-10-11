@@ -425,14 +425,16 @@
       return { start, stop, reset };
     })();
   </script>
-  <!-- n8n Chatbot -->
+
+  
+<!-- n8n Chatbot -->
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
-<!-- Chat Launcher -->
-<button id="chat-btn" class="chat-btn">💬 Chat with Anup</button>
+<!-- Single Chat Launcher -->
+<button id="chat-launcher" class="chat-launcher">💬 Chat with Anup</button>
 
 <style>
-  .chat-btn {
+  .chat-launcher {
     position: fixed;
     bottom: 24px;
     right: 24px;
@@ -449,7 +451,7 @@
     transition: all 0.3s ease;
   }
 
-  .chat-btn:hover {
+  .chat-launcher:hover {
     background-color: #7c3aed;
     transform: scale(1.05);
   }
@@ -462,7 +464,7 @@
   }
 
   @media (max-width: 600px) {
-    .chat-btn, n8n-chat {
+    .chat-launcher, n8n-chat {
       bottom: 16px;
       right: 16px;
     }
@@ -472,6 +474,7 @@
 <script type="module">
   import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
+  // Create chat widget (no default launcher)
   const chat = createChat({
     webhookUrl: "https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
     initialMessages: ["👋 Hi there! I'm Anup’s assistant. How can I help you today?"],
@@ -487,26 +490,34 @@
       inputBackgroundColor: "#1f2937",
       inputTextColor: "#ffffff",
       sendButtonColor: "#8b5cf6"
-    }
+    },
+    showLauncher: false // 👈 hides n8n’s default button
   });
 
-  const btn = document.getElementById("chat-btn");
+  const launcher = document.getElementById("chat-launcher");
   let chatOpen = false;
 
-  btn.addEventListener("click", () => {
-    chatOpen ? chat.minimize() : chat.open();
+  // Toggle open/close
+  launcher.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (chatOpen) {
+      chat.minimize();
+      launcher.textContent = "💬 Chat with Anup";
+    } else {
+      chat.open();
+      launcher.textContent = "— Close chat";
+    }
     chatOpen = !chatOpen;
-    btn.textContent = chatOpen ? "— Close chat" : "💬 Chat with Anup";
   });
 
-  // Minimize chat when user clicks outside it
+  // Minimize when clicking outside
   document.addEventListener("click", (e) => {
     const host = document.querySelector("n8n-chat");
     if (!host || !chatOpen) return;
-    if (!host.contains(e.target) && !btn.contains(e.target)) {
+    if (!host.contains(e.target) && !launcher.contains(e.target)) {
       chat.minimize();
+      launcher.textContent = "💬 Chat with Anup";
       chatOpen = false;
-      btn.textContent = "💬 Chat with Anup";
     }
   });
 </script>
