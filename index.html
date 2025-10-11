@@ -425,7 +425,92 @@
       return { start, stop, reset };
     })();
   </script>
-  
+  <!-- n8n Chatbot -->
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
+<!-- Chat Launcher -->
+<button id="chat-btn" class="chat-btn">💬 Chat with Anup</button>
+
+<style>
+  .chat-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 999px;
+    background-color: #8b5cf6;
+    color: #fff;
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    z-index: 9999;
+    transition: all 0.3s ease;
+  }
+
+  .chat-btn:hover {
+    background-color: #7c3aed;
+    transform: scale(1.05);
+  }
+
+  n8n-chat {
+    position: fixed !important;
+    bottom: 80px;
+    right: 24px;
+    z-index: 10000;
+  }
+
+  @media (max-width: 600px) {
+    .chat-btn, n8n-chat {
+      bottom: 16px;
+      right: 16px;
+    }
+  }
+</style>
+
+<script type="module">
+  import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
+
+  const chat = createChat({
+    webhookUrl: "https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
+    initialMessages: ["👋 Hi there! I'm Anup’s assistant. How can I help you today?"],
+    theme: {
+      position: "bottom-right",
+      chatWindowBackground: "#1f2937",
+      userMessageBubbleColor: "#8b5cf6",
+      botMessageBubbleColor: "#374151",
+      fontFamily: "Poppins, sans-serif",
+      borderRadius: "12px",
+      headerBackgroundColor: "#111827",
+      headerTextColor: "#ffffff",
+      inputBackgroundColor: "#1f2937",
+      inputTextColor: "#ffffff",
+      sendButtonColor: "#8b5cf6"
+    }
+  });
+
+  const btn = document.getElementById("chat-btn");
+  let chatOpen = false;
+
+  btn.addEventListener("click", () => {
+    chatOpen ? chat.minimize() : chat.open();
+    chatOpen = !chatOpen;
+    btn.textContent = chatOpen ? "— Close chat" : "💬 Chat with Anup";
+  });
+
+  // Minimize chat when user clicks outside it
+  document.addEventListener("click", (e) => {
+    const host = document.querySelector("n8n-chat");
+    if (!host || !chatOpen) return;
+    if (!host.contains(e.target) && !btn.contains(e.target)) {
+      chat.minimize();
+      chatOpen = false;
+      btn.textContent = "💬 Chat with Anup";
+    }
+  });
+</script>
+
 
 </body>
 </html>
