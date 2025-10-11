@@ -428,18 +428,6 @@
 
   
 <!-- n8n Chatbot -->
-<!-- Custom Anup Chatbot -->
-<!-- N8N Chatbot -->
-<style>
-  /* Ensure the chat floats above everything */
-  n8n-chat {
-    position: fixed !important;
-    bottom: 90px !important; /* Adjust above footer */
-    right: 24px !important;
-    z-index: 99999 !important;
-  }
-</style>
-
 <script type="module">
   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
@@ -455,10 +443,27 @@
     }
   });
 
-  // Auto open after short delay
+  // Wait until chat DOM is added
+  const waitForChat = setInterval(() => {
+    const chatEl = document.querySelector('n8n-chat');
+    if (!chatEl) return;
+
+    // Move chat element directly under body
+    document.body.appendChild(chatEl);
+
+    // Force fixed position above everything
+    chatEl.style.position = 'fixed';
+    chatEl.style.bottom = '90px'; // adjust above footer
+    chatEl.style.right = '24px';
+    chatEl.style.zIndex = '999999';
+
+    clearInterval(waitForChat);
+  }, 100);
+
+  // Auto open after delay
   setTimeout(() => chat.open(), 2000);
 
-  // Detect clicks outside the chatbot container to minimize
+  // Minimize on outside click
   document.addEventListener('click', (event) => {
     const chatWrapper = document.querySelector('n8n-chat');
     if (!chatWrapper) return;
@@ -471,44 +476,6 @@
       chat.minimize();
     }
   });
-</script>
-
-<!-- Floating Particle Animation -->
-<canvas id="particles" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:1; pointer-events:none;"></canvas>
-<script>
-  const canvas = document.getElementById("particles");
-  const ctx = canvas.getContext("2d");
-  let particles = [];
-
-  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-  window.addEventListener("resize", resizeCanvas);
-  resizeCanvas();
-
-  class Particle {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.radius = Math.random() * 2;
-      this.speedX = Math.random() * 1 - 0.5;
-      this.speedY = Math.random() * 1 - 0.5;
-    }
-    draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2); ctx.fillStyle = "rgba(0,0,0,0.3)"; ctx.fill(); }
-    move() {
-      this.x += this.speedX; this.y += this.speedY;
-      if(this.x<0||this.x>canvas.width) this.speedX*=-1;
-      if(this.y<0||this.y>canvas.height) this.speedY*=-1;
-    }
-  }
-
-  for(let i=0;i<80;i++) particles.push(new Particle());
-
-  function animateParticles(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach(p=>{p.move();p.draw();});
-    requestAnimationFrame(animateParticles);
-  }
-
-  animateParticles();
 </script>
 
 
