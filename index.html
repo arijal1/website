@@ -512,6 +512,103 @@
 </style>
 
 <!-- Launcher (bottom-right floating) -->
+<!-- ===== Floating Chat with n8n webhook (paste just before </body>) ===== -->
+<style>
+  :root {
+    --chat-primary: #0a84ff;
+    --chat-bg: #ffffff;
+    --chat-border: #e5e7eb;
+    --chat-shadow: 0 20px 40px rgba(0,0,0,0.18);
+  }
+
+  /* Launcher button (bottom-right) */
+  .chat-launcher {
+    position: fixed;
+    right: 20px;
+    bottom: 20px; /* sits above footer */
+    z-index: 99999;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--chat-border);
+    background: var(--chat-primary);
+    color: #fff;
+    font: 600 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    box-shadow: var(--chat-shadow);
+    cursor: pointer;
+  }
+  .chat-launcher svg { width: 18px; height: 18px; }
+
+  /* Chat panel (above launcher) */
+  .chat-panel {
+    position: fixed;
+    right: 20px;
+    bottom: 80px; /* sits above launcher */
+    width: 360px;
+    max-height: 70vh;
+    display: none; /* toggled open */
+    flex-direction: column;
+    background: var(--chat-bg);
+    border: 1px solid var(--chat-border);
+    border-radius: 12px;
+    box-shadow: var(--chat-shadow);
+    z-index: 99999;
+    overflow: hidden;
+  }
+  .chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--chat-border);
+    font-weight: 600;
+    color: #0b132a;
+  }
+  .chat-close {
+    appearance: none;
+    border: 0; background: transparent; cursor: pointer; color: #334155;
+    padding: 6px; border-radius: 6px;
+  }
+  .chat-body { padding: 12px; overflow-y: auto; }
+  .chat-input {
+    display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--chat-border);
+  }
+  .chat-input input {
+    flex: 1; border: 1px solid var(--chat-border); border-radius: 10px; padding: 10px;
+  }
+  .chat-input button {
+    border: 0; background: var(--chat-primary); color: #fff; border-radius: 10px; padding: 10px 12px; font-weight: 600;
+  }
+
+  /* Message bubbles */
+  .msg {
+    margin: 6px 0; padding: 8px 10px; border-radius: 10px; max-width: 80%;
+    color: #0b132a;
+  }
+  .msg.you  { background: #e6f0ff; margin-left: auto; }
+  .msg.bot  { background: #f1f5f9; }
+
+  /* Typing indicator */
+  .typing { display: inline-block; }
+  .typing span {
+    display: inline-block; width: 6px; height: 6px; margin-right: 3px;
+    background: #9aa7b2; border-radius: 50%; animation: blink 1s infinite;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: 0.2 } 40% { opacity: 1 } }
+
+  /* Mobile */
+  @media (max-width: 480px) {
+    .chat-panel { width: calc(100vw - 24px); right: 12px; bottom: 76px; }
+    .chat-launcher { right: 12px; bottom: 12px; }
+  }
+</style>
+
+<!-- Launcher (bottom-right floating) -->
 <button id="chatLauncher" class="chat-launcher" aria-expanded="false" aria-controls="chatPanel" aria-label="Chat with Anup">
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M12 3C7.582 3 4 6.134 4 10c0 1.845.854 3.527 2.276 4.81-.118 1.06-.524 2.144-1.154 3.045-.095.135-.095.312.002.444.098.131.27.19.43.146 1.774-.479 3.209-1.22 4.17-1.876C10.525 16.86 11.25 17 12 17c4.418 0 8-3.134 8-7s-3.582-7-8-7Z" fill="currentColor"/>
@@ -571,9 +668,9 @@
     if (t) t.remove();
   }
 
-  // n8n webhook call
+  // n8n webhook call (YOUR URL inserted)
   async function sendToN8N(message){
-    const WEBHOOK_URL = 'http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat'; // YOUR n8n webhook
+    const WEBHOOK_URL = 'http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat';
 
     const payload = {
       message,
