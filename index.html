@@ -453,13 +453,14 @@
 "></div>
 
 <!-- Chat Toggle Button -->
+<!-- Chat Toggle Button -->
 <button id="chat-toggle" onclick="toggleChatWidget()" style="
   position:fixed;
   bottom:20px;
   right:20px;
   z-index:99999;
   padding:12px 20px;
-  background:#3b82f6;
+  background:linear-gradient(135deg,#3b82f6,#9333ea);
   color:white;
   border:none;
   border-radius:50px;
@@ -506,11 +507,11 @@
     }
   });
 
-  // Force widget to open after load
+  // Automatically open the widget after load
   setTimeout(() => {
     const toggleButton = document.querySelector('.n8n-chat-widget__toggle');
     if (toggleButton) {
-      toggleButton.click(); // Simulate click to open widget
+      toggleButton.click();
     }
   }, 1000);
 </script>
