@@ -6,9 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Anup Rijal — Portfolio </title>
   <meta name="description" content="Portfolio of Anup Rijal — ICT Service Desk Support Specialist. Projects, blogs, vlogs, testimony, and contact." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  https://fonts.googleapis.com
+  https://fonts.gstatic.com
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:w700&family=Poppins:wght@300;400;600&display=swap
+
   <style>
     :root {
       --bg: #1C1C1C; --text: #EAEAEA; --muted: #B5B5B5; --mint: #00FFB3; --pink: #FF4DA6; --purple: #8A2BE2;
@@ -91,77 +92,79 @@
     .social a:hover { background: rgba(212,175,55,.12); }
   </style>
 
-
-<style>
-  /* Base header layout */
-  .container.nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 1rem;
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .brand img {
-    height: 40px;
-    width: auto;
-    border-radius: 8px;
-  }
-
-  nav#primary-nav ul {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  nav#primary-nav a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  /* ✅ Mobile adjustments */
-  @media (max-width: 768px) {
-    .brand img {
-      height: 32px;
-    }
-
-    /* Make top row: logo left + menu button right */
+  <style>
+    /* Base header layout */
     .container.nav {
-      flex-direction: row;          /* row so they sit side-by-side */
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;              /* nav wraps below */
+      flex-wrap: wrap;
+      padding: 1rem;
     }
 
-    .brand { order: 1; }
-    .menu-btn {
-      order: 2;
-      margin-left: auto;            /* pushes button to right */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    /* Nav full width below */
-    #primary-nav {
-      order: 3;
-      width: 100%;
-      margin-top: .5rem;
+    .brand img {
+      height: 40px;
+      width: auto;
+      border-radius: 8px;
     }
 
     nav#primary-nav ul {
-      flex-direction: column;       /* vertical links */
-      gap: 1rem;
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
-  }
 
-</style>
+    nav#primary-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* ✅ Mobile adjustments */
+    @media (max-width: 768px) {
+      .brand img {
+        height: 32px;
+      }
+
+      /* Make top row: logo left + menu button right */
+      .container.nav {
+        flex-direction: row;          /* row so they sit side-by-side */
+        align-items: center;
+        flex-wrap: wrap;              /* nav wraps below */
+      }
+
+      .brand { order: 1; }
+      .menu-btn {
+        order: 2;
+        margin-left: auto;            /* pushes button to right */
+      }
+
+      /* Nav full width below */
+      #primary-nav {
+        order: 3;
+        width: 100%;
+        margin-top: .5rem;
+      }
+
+      nav#primary-nav ul {
+        flex-direction: column;       /* vertical links */
+        gap: 1rem;
+      }
+    }
+  </style>
+
+  <!-- ✅ Proper stylesheet link for the n8n chat widget -->
+  https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css
 </head>
+
 <body>
   <!-- Background layers -->
   <div class="animated-bg" aria-hidden="true"></div>
@@ -479,58 +482,19 @@
   }
 </style>
 
-<!-- Your particles canvas (optional) -->
-<canvas id="particles"
-        style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
-
-<!-- Chat mount point: ensure this is NOT inside the <footer> -->
-<div id="n8n-chat" aria-live="polite"></div>
-<div id="n8n-chat-init-error">n8n chat failed to initialize. Open the browser console for details.</div>
-
-<!-- n8n Chat widget (diagnostic init) -->
+<!-- n8n Chat mount point: fixed, floats bottom-right above footer -->
+<div id="n8n-chat" style="position:fixed;bottom:24px;right:24px;z-index:10000;"></div>
+  <!-- n8n Chat widget (CDN ESM) -->
 <script type="module">
-  (function () {
-    const WEBHOOK_URL = 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat';
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    function showErrorBadge(msg) {
-      const el = document.getElementById('n8n-chat-init-error');
-      if (el) {
-        el.textContent = 'n8n chat failed to initialize: ' + msg;
-        el.style.display = 'block';
-      }
-    }
-
-    function initChat() {
-      console.info('[n8n-chat] Initializing…');
-      import('https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js')
-        .then(({ createChat }) => {
-          createChat({
-            webhookUrl: WEBHOOK_URL,
-            target: '#n8n-chat',     // fixed container, bottom-right
-            mode: 'window',          // toggle + fixed window (not fullscreen)
-            initialMessages: ["🤖 Hi there! I’m Anup’s assistant. How can I help you today?"],
-            webhookConfig: {
-              method: 'POST',
-              headers: {}            // add Authorization header here if you enable auth
-            }
-          });
-          console.info('[n8n-chat] Mounted successfully.');
-        })
-        .catch(err => {
-          console.error('[n8n-chat] Failed to load chat bundle:', err);
-          showErrorBadge(err && err.message ? err.message : 'bundle load error');
-        });
-    }
-
-    // Wait for DOM so #n8n-chat exists
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initChat);
-    } else {
-      initChat();
-    }
-  })();
+  createChat({
+    webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+    target: '#n8n-chat',    // mount into the fixed container so it never hijacks the page
+    mode: 'window',         // launcher + small window (NOT fullscreen)
+    initialMessages: ["🤖 Hi there! I’m Anup’s assistant. How can I help you today?"]
+  });
 </script>
-
 
 </body>
 </html>
