@@ -413,6 +413,8 @@
     })();
   </script>
 <!-- n8n Chatbot --><!-- Make sure particles canvas is first -->
+
+    
 <!-- Chat Toggle Button -->
 <button id="chat-toggle" onclick="toggleChatWidget()" style="
   position:fixed;
@@ -452,35 +454,31 @@
 <script type="module">
   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-  const chat = createChat({
-    webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
-    target: '#n8n-chat-widget',
-    mode: 'window',
-    autoOpen: true,
-    showWelcomeScreen: true,
-    theme: {
-      chatWindowBackground: '#1f2937',
-      userMessageBubbleColor: '#3b82f6',
-      botMessageBubbleColor: '#374151',
-      fontFamily: 'Poppins, sans-serif',
-      borderRadius: '14px'
-    }
-  });
+  let chatInitialized = false;
 
-  // Automatically open the widget after load
-  setTimeout(() => {
-    const toggleButton = document.querySelector('.n8n-chat-widget__toggle');
-    if (toggleButton) {
-      toggleButton.click();
-    }
-  }, 1000);
-</script>
-
-<!-- Toggle Script -->
-<script>
   function toggleChatWidget() {
     const widget = document.getElementById('n8n-chat-widget');
-    widget.style.display = widget.style.display === 'none' ? 'block' : 'none';
+    const isHidden = widget.style.display === 'none';
+
+    widget.style.display = isHidden ? 'block' : 'none';
+
+    if (isHidden && !chatInitialized) {
+      createChat({
+        webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+        target: '#n8n-chat-widget',
+        mode: 'window',
+        autoOpen: true,
+        showWelcomeScreen: false,
+        theme: {
+          chatWindowBackground: '#1f2937',
+          userMessageBubbleColor: '#3b82f6',
+          botMessageBubbleColor: '#374151',
+          fontFamily: 'Poppins, sans-serif',
+          borderRadius: '14px'
+        }
+      });
+      chatInitialized = true;
+    }
   }
 </script>
     
