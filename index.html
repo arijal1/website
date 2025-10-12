@@ -415,74 +415,102 @@
 <!-- n8n Chatbot --><!-- Make sure particles canvas is first -->
 
     
-<!-- Chat Toggle Button -->
-<button id="chat-toggle" onclick="toggleChatWidget()" style="
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  z-index:99999;
-  padding:12px 20px;
-  background:linear-gradient(135deg,#3b82f6,#9333ea);
-  color:white;
-  border:none;
-  border-radius:50px;
-  cursor:pointer;
-  font-family:'Poppins',sans-serif;
-  font-size:16px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.2);
-">
-  💬 Chat with Anup
-</button>
+<!-- Trigger button/link -->
+<button id="chatTrigger" class="chat-trigger" aria-label="Chat with Anup">💬 Chat with Anup</button>
 
-<!-- Chat Container -->
-<div id="n8n-chat-widget" style="
-  display:none;
-  position:fixed;
-  bottom:80px;
-  right:20px;
-  width:400px;
-  height:600px;
-  background:#1f2937;
-  border-radius:16px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.4);
-  overflow:hidden;
-  z-index:99999;
-  font-family:'Poppins',sans-serif;
-"></div>
-
-<!-- n8n Chat Script -->
-<script type="module">
-  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
-  let chatInitialized = false;
-
-  function toggleChatWidget() {
-    const widget = document.getElementById('n8n-chat-widget');
-    const isHidden = widget.style.display === 'none';
-
-    widget.style.display = isHidden ? 'block' : 'none';
-
-    if (isHidden && !chatInitialized) {
-      createChat({
-        webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
-        target: '#n8n-chat-widget',
-        mode: 'window',
-        autoOpen: true,
-        showWelcomeScreen: false,
-        theme: {
-          chatWindowBackground: '#1f2937',
-          userMessageBubbleColor: '#3b82f6',
-          botMessageBubbleColor: '#374151',
-          fontFamily: 'Poppins, sans-serif',
-          borderRadius: '14px'
-        }
-      });
-      chatInitialized = true;
-    }
+<style>
+  .chat-trigger {
+    cursor: pointer;
+    background: #0a84ff;
+    color: #fff;
+    border: 0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 600;
   }
+</style>
+
+<script>
+  // Helper: wait until the chat provider object is ready, then call its "open"
+  function waitFor(providerCheck, openCall, timeoutMs = 15000, intervalMs = 200) {
+    const start = Date.now();
+    const timer = setInterval(() => {
+      try {
+        if (providerCheck()) {
+          clearInterval(timer);
+          openCall();
+        } else if (Date.now() - start > timeoutMs) {
+          clearInterval(timer);
+          console.warn("Chat provider API not detected within timeout.");
+        }
+      } catch (e) {
+        clearInterval(timer);
+        console.error("Chat open failed:", e);
+      }
+    }, intervalMs);
+  }
+
+  // Try common providers automatically
+  function openChatUniversal() {
+    // Crisp
+    if (window.$crisp && Array.isArray(window.$crisp)) {
+      waitFor(() => window.$crisp, () => window.$crisp.push(["do", "chat:open"]));
+      return;
+    }
+    // Tawk.to
+    if (window.Tawk_API) {
+      waitFor(() => window.Tawk_API && typeof window.Tawk_API.maximize === "function",
+              () => window.Tawk_API.maximize());
+      return;
+    }
+    // Intercom
+    if (typeof window.Intercom === "function") {
+      waitFor(() => typeof window.Intercom === "function",
+              () => window.Intercom("show"));
+      return;
+    }
+    // Tidio
+    if (window.tidioChatApi) {
+      waitFor(() => window.tidioChatApi && typeof window.tidioChatApi.open === "function",
+              () => window.tidioChatApi.open());
+      return;
+    }
+    // Drift
+    if (window.drift && window.drift.api) {
+      waitFor(() => window.drift && window.drift.api && window.drift.api.sidebar,
+              () => window.drift.api.sidebar.open());
+      return;
+    }
+    // Freshchat
+    if (window.fcWidget) {
+      waitFor(() => window.fcWidget && typeof window.fcWidget.open === "function",
+              () => window.fcWidget.open());
+      return;
+    }
+    // Botpress WebChat
+    if (window.botpressWebChat) {
+      waitFor(() => window.botpressWebChat && typeof window.botpressWebChat.open === "function",
+              () => window.botpressWebChat.open());
+      return;
+    }
+
+    // Fallback: if you embedded the chat in a hidden container, just show it
+    const chatContainer = document.querySelector(".chat-container, #chat");
+    if (chatContainer) chatContainer.style.display = "block";
+  }
+
+  // Attach click handler
+  document.addEventListener("DOMContentLoaded", function() {
+    const trigger = document.getElementById("chatTrigger");
+    if (trigger) {
+      trigger.addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openChatUniversal();
+      });
+    }
+  });
 </script>
-    
-    
 
     
 </body>
