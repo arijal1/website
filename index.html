@@ -1,0 +1,446 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Anup Rijal — Portfolio </title>
+<meta content="Portfolio of Anup Rijal — ICT Service Desk Support Specialist. Projects, blogs, vlogs, testimony, and contact." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --bg: #1C1C1C; --text: #EAEAEA; --muted: #B5B5B5; --mint: #00FFB3; --pink: #FF4DA6; --purple: #8A2BE2;
+      --gold: #D4AF37; --gold-stroke: 1px; --card: #232323; --shadow: rgba(0,0,0,.25); --maxw: 1120px;
+    }
+    html, body { height: 100%; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+           font-family: 'Poppins','Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,sans-serif; line-height: 1.6; }
+
+    /* Background layers */
+    .animated-bg, .parallax-layer { position: fixed; inset: 0; z-index: -3; overflow: hidden; }
+    .animated-bg { background: linear-gradient(135deg, #151515, #1C1C1C 45%, #111111); }
+    .parallax-layer { z-index: -2; pointer-events: none; }
+    .parallax-layer .blob { position: absolute; filter: blur(70px); opacity: .45; border: var(--gold-stroke) solid var(--gold);
+      width: 380px; height: 380px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(138,43,226,.5), transparent 60%),
+                  radial-gradient(circle at 70% 60%, rgba(255,77,166,.45), transparent 60%), rgba(0,255,179,.18);
+      box-shadow: inset 0 0 0 calc(var(--gold-stroke)) rgba(212,175,55,.25);
+    }
+    /* Keep particles off-layout so header doesn't jump */
+    #particles { position: fixed; inset: 0; z-index: -1; pointer-events: none; display: block; }
+
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+    /* Header */
+    header { position: sticky; top: 0; backdrop-filter: blur(8px); background: rgba(18,18,18,0.75);
+             border-bottom: var(--gold-stroke) solid var(--gold); z-index: 20; }
+    .nav { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 12px 0; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .3px; }
+    .brand svg { width: 32px; height: 32px; }
+    .brand .name { font-family: 'Montserrat'; font-weight: 700; }
+    .menu-btn { justify-self: end; display: inline-flex; align-items: center; gap: 8px; color: var(--text);
+                background: transparent; border: var(--gold-stroke) solid var(--gold); border-radius: 10px; padding: 8px 12px; }
+    .menu-btn svg { width: 18px; height: 18px; }
+    nav { grid-column: 1 / -1; display: none; }
+    nav.open { display: block; }
+    nav ul { list-style: none; display: grid; grid-template-columns: 1fr; gap: 10px; margin: 10px 0 0; padding: 0; }
+    nav a { color: var(--text); text-decoration: none; padding: 10px 12px; border: var(--gold-stroke) solid transparent; border-radius: 10px; }
+    nav a:hover, nav a:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,55,.15); outline: none; }
+    @media (min-width: 880px) { .menu-btn { display: none; } nav { display: block; grid-column: 3; } nav ul { display: inline-flex; gap: 16px; margin: 0; } }
+
+    /* Hero */
+    .hero { padding: 96px 0 64px; text-align: center; }
+    .eyebrow { color: var(--mint); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: .85rem; }
+    h1 { font-family: 'Montserrat'; font-size: clamp(2rem, 4.5vw, 3.6rem); margin: 12px 0 8px; }
+    .subtitle { color: var(--muted); max-width: 760px; margin: 0 auto 24px; }
+    .cta { display: inline-flex; gap: 12px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 12px; border: var(--gold-stroke) solid var(--gold);
+           background: linear-gradient(180deg, rgba(212,175,55,.15), rgba(212,175,55,.05)); color: var(--text); font-weight: 600; }
+    .btn--primary { background: linear-gradient(90deg, var(--purple), var(--pink)); border-color: var(--gold); box-shadow: 0 8px 24px var(--shadow); }
+
+    /* Sections */
+    section { padding: 56px 0; }
+    .section-title { display: flex; align-items: center; gap: 10px; font-family: 'Montserrat'; font-weight: 700; }
+    .section-title .rule { flex: 1; height: var(--gold-stroke); background: linear-gradient(90deg, var(--gold), transparent); }
+
+    /* About */
+    .about { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: start; }
+    .about .panel { background: var(--card); border: var(--gold-stroke) solid var(--gold); border-radius: 16px; padding: 24px; }
+    .about ul { margin: 0; padding-left: 18px; }
+    @media (max-width: 840px) { .about { grid-template-columns: 1fr; } }
+
+    /* Featured posts grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .card { background: var(--card); border: var(--gold-stroke) solid var(--gold); border-radius: 16px; padding: 20px; box-shadow: 0 12px 28px var(--shadow);
+            transition: transform .2s ease, box-shadow .2s ease; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 18px 36px rgba(212,175,55,.12); }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; background: rgba(138,43,226,.18); color: var(--text); border: var(--gold-stroke) solid var(--gold); font-size: .8rem; }
+
+    /* Contact */
+    form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    form .full { grid-column: 1 / -1; }
+    input, textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: var(--gold-stroke) solid var(--gold); background: #1a1a1a; color: var(--text); }
+    textarea { min-height: 140px; }
+
+    /* Footer */
+    footer { border-top: var(--gold-stroke) solid var(--gold); margin-top: 32px; background: rgba(18,18,18,.85); }
+    .footer-inner { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 20px 0; }
+    .social a { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: var(--gold-stroke) solid var(--gold); border-radius: 50%; color: var(--text); margin-right: 8px; text-decoration: none; }
+    .social a:hover { background: rgba(212,175,55,.12); }
+  </style>
+<style>
+  /* Base header layout */
+  .container.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1rem;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .brand img {
+    height: 40px;
+    width: auto;
+    border-radius: 8px;
+  }
+
+  nav#primary-nav ul {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav#primary-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  /* ✅ Mobile adjustments */
+  @media (max-width: 768px) {
+    .brand img {
+      height: 32px;
+    }
+
+    /* Make top row: logo left + menu button right */
+    .container.nav {
+      flex-direction: row;          /* row so they sit side-by-side */
+      align-items: center;
+      flex-wrap: wrap;              /* nav wraps below */
+    }
+
+    .brand { order: 1; }
+    .menu-btn {
+      order: 2;
+      margin-left: auto;            /* pushes button to right */
+    }
+
+    /* Nav full width below */
+    #primary-nav {
+      order: 3;
+      width: 100%;
+      margin-top: .5rem;
+    }
+
+    nav#primary-nav ul {
+      flex-direction: column;       /* vertical links */
+      gap: 1rem;
+    }
+  }
+
+</style>
+</head>
+<body>
+<!-- Background layers -->
+<div aria-hidden="true" class="animated-bg"></div>
+<div aria-hidden="true" class="parallax-layer">
+<div class="blob" style="top:10%; left:5%"></div>
+<div class="blob" style="bottom:12%; right:8%"></div>
+</div>
+<canvas aria-hidden="true" id="particles"></canvas>
+<!-- Header -->
+<!-- Header -->
+<!-- Header -->
+<header>
+<div aria-label="Primary" class="container nav" role="navigation">
+<div class="brand">
+<img alt="Anup Rijal Logo" false"="" src="images/logo.png" style="height:40px; width:auto; border-radius:8px;aria-expanded="/>
+<svg aria-hidden="true" viewbox="0 0 40 40">
+</svg>
+</div>
+<button aria-controls="primary-nav" aria-expanded="false" class="menu-btn" id="menuBtn">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z" fill="currentColor"></path></svg>
+        Menu
+      </button>
+<nav id="primary-nav">
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="projects.html">Projects</a></li>
+<li><a href="blog.html">Blogs</a></li>
+<li><a href="vlogs.html">Vlogs</a></li>
+<li><a href="testimoni.html">Testimony</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<!-- Hero -->
+<section class="hero">
+<div class="container">
+<div class="eyebrow">IT Service Delivery Analyst</div>
+<h1 id="heroTitle" style="word-break: normal; white-space: normal; hyphens: none; overflow-wrap: normal;">
+  Practical, people‑first tech with a sleek modern touch
+</h1>
+<p class="subtitle">I coordinate teams and support complex environments across Microsoft 365, Azure, and multi‑platform ecosystems. Clean design, clear communication, and reliable delivery.</p>
+<div class="cta">
+<a class="btn btn--primary" href="projects.html">See My Work</a>
+<a class="btn" href="mailto:rejalanop55@gmail.com">Contact Me</a>
+</div>
+</div>
+</section>
+<!-- About / Experience -->
+<section>
+<div class="container about">
+<div class="panel">
+<div class="section-title"><span>About Me</span><span class="rule"></span></div>
+<p>I'm Anup Rijal, a versatile professional with experience across healthcare, tech, retail, and telecom. I specialize in team coordination and customer‑focused service, delivering practical, people‑first solutions.</p>
+<p>Outside of work, I stay active through sports, travel, and time outdoors.</p>
+</div>
+<div class="panel">
+<div class="section-title"><span>Core Experience</span><span class="rule"></span></div>
+<ul>
+<li>Hands‑on IT across Opal Healthcare, Apple, Telstra, and Nike.</li>
+<li>Support for Windows Server, Active Directory, multi‑platform environments.</li>
+<li>Microsoft 365, Azure, Exchange, SQL, virtualization (VMware, Hyper‑V).</li>
+<li>Enterprise tools: Intune, Citrix, MDM, POS, SCCM, ITSM platforms.</li>
+<li>Human‑centered communication and empathy in every role.</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Featured Posts -->
+<section>
+<div class="container">
+<div class="section-title"><span>Featured Posts</span><span class="rule"></span></div>
+<div class="grid" id="cardsGrid">
+<article aria-labelledby="post-ai" class="card">
+<span class="badge">AI &amp; Work</span>
+<h3 id="post-ai">The Rise of AI</h3>
+<p>How AI is transforming work, creativity, and everyday life — from automation to innovation.</p>
+<a aria-label="Read The Rise of AI" class="btn" href="ai.html">Read More →</a>
+</article>
+<article aria-labelledby="post-story" class="card">
+<span class="badge">Story</span>
+<h3 id="post-story">From Nepal to Sydney</h3>
+<p>A journey from Sankarpokhari to global tech brands in Sydney — fueled by dreams and resilience.</p>
+<a aria-label="Read From Nepal to Sydney" class="btn" href="blog1.html">Read Full Story →</a>
+</article>
+<article aria-labelledby="post-vlogs" class="card">
+<span class="badge">Vlogs</span>
+<h3 id="post-vlogs">Latest Vlogs</h3>
+<p>Short technical vlogs and behind‑the‑scenes clips on tooling, workflows, and personal projects.</p>
+<a aria-label="Go to Vlogs" class="btn" href="vlogs.html">Watch →</a>
+</article>
+</div>
+</div>
+</section>
+<!-- Contact -->
+<section>
+<div class="container">
+<div class="section-title"><span>Get in Touch</span><span class="rule"></span></div>
+<form action="#" aria-label="Contact form" method="post">
+<label class="sr-only" for="name">Name</label>
+<input id="name" name="name" placeholder="Name" type="text"/>
+<label class="sr-only" for="email">Email</label>
+<input id="email" name="email" placeholder="Email" type="email"/>
+<label class="sr-only" for="message">Message</label>
+<textarea class="full" id="message" name="message" placeholder="Message"></textarea>
+<button class="btn btn--primary full" type="submit">Send Message</button>
+</form>
+</div>
+</section>
+<!-- Footer -->
+<footer>
+<div class="container footer-inner">
+<div>
+<small>© 2025 Anup Rijal. All rights reserved.</small>
+</div>
+<div aria-label="Social links" class="social">
+<a aria-label="Email" href="mailto:rejalanop55@gmail.com">@</a>
+<a aria-label="GitHub" href="https://github.com/arijal1">GH</a>
+<a aria-label="LinkedIn" href="https://www.linkedin.com/in/anup-rijal-bb579a131">in</a>
+</div>
+</div>
+</footer>
+<!-- Motion tuning is built-in via JS below -->
+<script crossorigin="anonymous" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script crossorigin="anonymous" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const nav = document.getElementById('primary-nav');
+    menuBtn?.addEventListener('click', () => { const open = nav.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', String(open)); });
+
+    // Reduced motion / perf flags
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const savedMotion = localStorage.getItem('motion');
+    const savedPerf   = localStorage.getItem('perf');
+    const lowHardware = (navigator.hardwareConcurrency || 4) < 4 || (window.innerWidth < 360);
+    let motionEnabled = savedMotion ? (savedMotion === 'on') : !prefersReduced;
+    let perfLow = savedPerf ? (savedPerf === 'low') : lowHardware;
+
+    // ===== GSAP animations =====
+    if (motionEnabled && window.gsap) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Header brand intro
+      gsap.from('header .brand', { y: -20, opacity: 0, duration: 0.6, ease: 'power2.out' });
+
+      // Parallax strength (reduce if you want calmer motion)
+      const strength1 = perfLow ? -8 : -15;
+      const strength2 = perfLow ? 10 : 20;
+      gsap.to('.parallax-layer .blob:nth-child(1)', {
+        yPercent: strength1,
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 1 }
+      });
+      gsap.to('.parallax-layer .blob:nth-child(2)', {
+        yPercent: strength2,
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 1 }
+      });
+
+      // Split hero title and animate characters
+      function splitText(selector) {
+        const el = document.querySelector(selector); if (!el) return [];
+        const text = el.textContent.trim(); const words = text.split(/\s+/);
+        el.innerHTML = words.map(w => `<span class="word">${[...w].map(c => `<span class="char">${c}</span>`).join('')}</span>`).join(' ');
+        return el.querySelectorAll('.char');
+      }
+      const chars = splitText('#heroTitle');
+      gsap.set(chars, { display: 'inline-block' });
+      gsap.from(chars, { y: 18, opacity: 0, duration: 0.8, ease: 'power2.out', stagger: 0.02 }); // Stagger speed
+
+      // Grid reveal timing
+      gsap.from('#cardsGrid .card', {
+        opacity: 0,
+        y: 24,
+        duration: 0.6, // speed of fade/slide
+        ease: 'power2.out',
+        stagger: { each: 0.08 },
+        scrollTrigger: { trigger: '#cardsGrid', start: 'top 85%' } // trigger point
+      });
+    }
+
+    // ===== Particle field =====
+    const Particle = (function(){
+      const canvas = document.getElementById('particles');
+      const ctx = canvas.getContext('2d');
+      let w, h, dpr, particles = [], animId, lastTime = 0, running = false;
+
+      // Default
+      let config = { countMobile: 50, countDesktop: 110, maxDist: 90, connect: true };
+
+      function resize(){
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.width = Math.floor(window.innerWidth * dpr);
+        h = canvas.height = Math.floor(window.innerHeight * dpr);
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+      }
+      function rand(min, max){ return Math.random() * (max - min) + min; }
+      function initParticles(){
+        particles = [];
+        const baseCount = window.innerWidth < 680 ? config.countMobile : config.countDesktop;
+        const count = (motionEnabled ? baseCount : 0);
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: rand(0, w), y: rand(0, h),
+            vx: rand(-0.08, 0.08) * dpr, vy: rand(-0.08, 0.08) * dpr,
+            r: rand(0.6, 1.8) * dpr,
+            color: i % 7 === 0 ? 'rgba(212,175,55,0.9)' : (i % 3 ? 'rgba(255,77,166,0.8)' : 'rgba(138,43,226,0.8)')
+          });
+        }
+      }
+      function draw(ts){
+        animId = requestAnimationFrame(draw);
+        const dt = Math.min(32, ts - lastTime); lastTime = ts;
+        ctx.clearRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'lighter';
+        for (let p of particles) {
+          p.x += p.vx * dt; p.y += p.vy * dt;
+          if (p.x < 0 || p.x > w) p.vx *= -1;
+          if (p.y < 0 || p.y > h) p.vy *= -1;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+          ctx.fillStyle = p.color; ctx.fill();
+        }
+        const max = config.maxDist * dpr;
+        if (config.connect) {
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const dx = particles[i].x - particles[j].x;
+              const dy = particles[i].y - particles[j].y;
+              const d2 = dx*dx + dy*dy;
+              if (d2 < max*max) {
+                const alpha = 1 - Math.sqrt(d2)/max;
+                ctx.strokeStyle = `rgba(212,175,55,${alpha*0.35})`;
+                ctx.lineWidth = 0.6 * dpr;
+                ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+              }
+            }
+          }
+        }
+      }
+      function start(){ resize(); initParticles(); running = true; animId = requestAnimationFrame(draw); }
+      function stop(){ running = false; cancelAnimationFrame(animId); ctx.clearRect(0,0,canvas.width,canvas.height); }
+      function reset(low){
+        // Low perf
+        config = low ? { countMobile: 30, countDesktop: 80, maxDist: 70, connect: false } : { countMobile: 50, countDesktop: 110, maxDist: 90, connect: true };
+        if (running) { resize(); initParticles(); }
+      }
+      window.addEventListener('resize', () => { if (running) { resize(); initParticles(); } });
+      document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else if (motionEnabled) start(); });
+      if (motionEnabled) start();
+      return { start, stop, reset };
+    })();
+  </script>
+<!-- n8n Chatbot --><!-- Make sure particles canvas is first -->
+<!-- Particles Canvas -->
+<canvas id="particles" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+<!-- n8n Chatbot -->
+
+<button id="chat-toggle" onclick="toggleChatWidget()" style="position:fixed;bottom:20px;right:20px;z-index:99999;padding:12px 20px;background:linear-gradient(135deg,#3b82f6,#9333ea);color:white;border:none;border-radius:50px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:16px;box-shadow:0 4px 12px rgba(0,0,0,0.2);">💬 Chat with Anup</button><div id="n8n-chat-widget" style="display:none;position:fixed;bottom:80px;right:20px;width:400px;height:600px;background:#1f2937;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.4);overflow:hidden;z-index:99999;font-family:'Poppins',sans-serif;"></div><script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+  let chatInitialized = false;
+  window.toggleChatWidget = function() {
+    const widget = document.getElementById('n8n-chat-widget');
+    const isHidden = widget.style.display === 'none';
+    widget.style.display = isHidden ? 'block' : 'none';
+    if (!chatInitialized) {
+      createChat({
+        webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
+        target: '#n8n-chat-widget',
+        mode: 'inline',
+        autoOpen: true,
+        showWelcomeScreen: false,
+        theme: {
+          chatWindowBackground: '#1f2937',
+          userMessageBubbleColor: '#3b82f6',
+          botMessageBubbleColor: '#374151',
+          fontFamily: 'Poppins, sans-serif',
+          borderRadius: '14px'
+        }
+      });
+      chatInitialized = True;
+    }
+  }
+</script></body>
+</html>
