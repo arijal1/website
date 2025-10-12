@@ -415,33 +415,101 @@
 <!-- n8n Chatbot --><!-- Make sure particles canvas is first -->
 <!-- Particles Canvas -->
 <canvas id="particles" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
-<!-- n8n Chatbot -->
 
-<button id="chat-toggle" onclick="toggleChatWidget()" style="position:fixed;bottom:20px;right:20px;z-index:99999;padding:12px 20px;background:linear-gradient(135deg,#3b82f6,#9333ea);color:white;border:none;border-radius:50px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:16px;box-shadow:0 4px 12px rgba(0,0,0,0.2);">💬 Chat with Anup</button><div id="n8n-chat-widget" style="display:none;position:fixed;bottom:80px;right:20px;width:400px;height:600px;background:#1f2937;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.4);overflow:hidden;z-index:99999;font-family:'Poppins',sans-serif;"></div><script type="module">
+<!-- @n8n/chat base styles -->
+https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css
+
+<!-- Sleek overrides -->
+<style>
+  /* (the same :root overrides from the previous block) */
+  :root {
+    --chat--color-primary: #7c3aed;
+    --chat--color-primary-shade-50: #6d28d9;
+    --chat--color-primary-shade-100: #5b21b6;
+    --chat--color-secondary: #3b82f6;
+    --chat--color-white: #ffffff;
+    --chat--color-light: #111827;
+    --chat--color-light-shade-50: #1f2937;
+    --chat--color-light-shade-100: #0f172a;
+    --chat--color-dark: #0b1220;
+    --chat--color-disabled: #9aa3af;
+    --chat--color-typing: #6b7280;
+    --chat--spacing: 0.9rem;
+    --chat--border-radius: 14px;
+    --chat--transition-duration: 0.25s;
+    --chat--window--width: 400px;
+    --chat--window--height: 560px;
+    --chat--header-height: auto;
+    --chat--header--padding: .75rem 1rem;
+    --chat--header--background: #0f172a;
+    --chat--header--color: #e5e7eb;
+    --chat--heading--font-size: 1.05rem;
+    --chat--subtitle--font-size: .85rem;
+    --chat--subtitle--line-height: 1.6;
+    --chat--message--font-size: 0.95rem;
+    --chat--message--padding: 0.75rem 0.9rem;
+    --chat--message--border-radius: 14px;
+    --chat--message-line-height: 1.6;
+    --chat--message--bot--background: #1f2937;
+    --chat--message--bot--color: #e5e7eb;
+    --chat--message--bot--border: none;
+    --chat--message--user--background: #3b82f6;
+    --chat--message--user--color: #ffffff;
+    --chat--message--user--border: none;
+    --chat--textarea--height: 52px;
+    --chat--toggle--background: linear-gradient(135deg,#3b82f6,#9333ea);
+    --chat--toggle--hover--background: linear-gradient(135deg,#2563eb,#7c3aed);
+    --chat--toggle--active--background: linear-gradient(135deg,#1d4ed8,#6d28d9);
+    --chat--toggle--color: #ffffff;
+    --chat--toggle--size: 56px;
+  }
+  #n8n-chat-widget {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: 0 18px 40px rgba(0,0,0,.35);
+  }
+  #n8n-chat-widget textarea,
+  #n8n-chat-widget input[type="text"] {
+    border-radius: 12px !important;
+  }
+  #n8n-chat-widget ::-webkit-scrollbar { width: 8px; }
+  #n8n-chat-widget ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg,#3b82f6,#9333ea);
+    border-radius: 100px;
+  }
+</style>
+
+<!-- n8n Chatbot -->
+<button id="chat-toggle" onclick="toggleChatWidget()"
+  style="position:fixed;bottom:20px;right:20px;z-index:99999;padding:12px 20px;background:linear-gradient(135deg,#3b82f6,#9333ea);color:white;border:none;border-radius:50px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:16px;box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+  💬 Chat with Anup
+</button>
+
+<div id="n8n-chat-widget"
+  style="display:none;position:fixed;bottom:80px;right:20px;width:400px;height:600px;background:#1f2937;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.4);overflow:hidden;z-index:99999;font-family:'Poppins',sans-serif;">
+</div>
+
+<script type="module">
   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
   let chatInitialized = false;
   window.toggleChatWidget = function() {
     const widget = document.getElementById('n8n-chat-widget');
     const isHidden = widget.style.display === 'none';
     widget.style.display = isHidden ? 'block' : 'none';
+
     if (!chatInitialized) {
       createChat({
         webhookUrl: 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat',
         target: '#n8n-chat-widget',
-        mode: 'inline',
-        autoOpen: true,
-        showWelcomeScreen: false,
-        theme: {
-          chatWindowBackground: '#1f2937',
-          userMessageBubbleColor: '#3b82f6',
-          botMessageBubbleColor: '#374151',
-          fontFamily: 'Poppins, sans-serif',
-          borderRadius: '14px'
-        }
+        mode: 'inline',          // left as-is
+        autoOpen: true,          // left as-is
+        showWelcomeScreen: false // left as-is
+        // theme object removed — styling is handled via CSS variables above
       });
-      chatInitialized = True;
+      chatInitialized = true;    // ✅ JS boolean
     }
   }
-</script>
+      </script>
 </body>
 </html>
