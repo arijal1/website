@@ -211,19 +211,23 @@
   Contact Me
 </button>
 
-<!-- Contact Popup -->
-<div id="contactPopup" class="hidden fixed inset-0 z-50 bg-black/70 flex justify-center items-center">
-  <div class="bg-[#1b1b1b] border border-yellow-500 rounded-2xl p-6 w-72 text-center relative shadow-2xl">
-    <h2 class="text-lg font-semibold text-yellow-300 mb-4">Get in Touch</h2>
-    <div class="flex flex-col gap-3">
-      <a href="mailto:rejalanop55@gmail.com" class="px-4 py-2 rounded-lg bg-yellow-400 text-black hover:bg-yellow-300 transition">📧 Email Me</a>
-      <a href="https://github.com/arijal1" target="_blank" class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition">💻 GitHub</a>
-      <a href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" class="px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-600 text-white transition">🔗 LinkedIn</a>
-    </div>
-    <button id="closePopup" class="absolute top-2 right-4 text-gray-400 hover:text-white text-2xl">&times;</button>
-  </div>
-</div>
+<!-- Replace your existing Contact control with this, or paste near it -->
+<button id="contactBtn" type="button" aria-haspopup="dialog" aria-controls="contactPopup" class="btn">
+  Contact Me
+</button>
 
+<!-- Modal: put once in the page (can be anywhere) -->
+<div id="contactPopup" role="dialog" aria-modal="true" aria-hidden="true">
+  <div id="contactPopupPanel" role="document">
+    <button id="closePopup" aria-label="Close contact popup">&times;</button>
+    <h2>Get in Touch</h2>
+    <div class="links">
+      <a id="emailLink" href="mailto:rejalanop55@gmail.com" rel="noopener">📧 Email Me</a>
+      <a id="ghLink" href="https://github.com/arijal1" target="_blank" rel="noopener">💻 GitHub</a>
+      <a id="liLink" href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" rel="noopener">🔗 LinkedIn</a>
+    </div>
+  </div>
+    
 </div>
 </div>
 </section>
@@ -433,33 +437,171 @@
   </script>
 
 
+<!--script-->
+<style>
+/* Strong, isolated modal CSS to avoid conflicts */
+#contactPopup {
+  position: fixed !important;
+  inset: 0 !important;
+  display: none !important;            /* hidden by default */
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(0,0,0,0.7) !important;
+  z-index: 99999 !important;
+}
 
-    <!--jsscript-->
+#contactPopup[aria-hidden="false"]{ display:flex !important; }
+
+#contactPopupPanel {
+  width: 320px;
+  max-width: calc(100% - 40px);
+  background: #121212;
+  border: 2px solid #d7b244;
+  color: #f1f1f1;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  position: relative;
+  text-align: center;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+#contactPopup h2 { margin: 0 0 12px 0; color: #ffd86b; font-size: 1.05rem; }
+
+#contactPopupPanel .links { display:flex; flex-direction:column; gap:10px; margin-top:6px; }
+
+#contactPopupPanel a {
+  display:inline-block;
+  text-decoration:none;
+  padding:10px 12px;
+  border-radius:8px;
+  background:#222;
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.04);
+}
+
+#contactPopupPanel a:hover { opacity:0.95; transform:translateY(-1px); }
+
+#closePopup {
+  position:absolute;
+  top:8px;
+  right:10px;
+  background: #ffffff10;
+  color: #fff;
+  font-size:20px;
+  line-height:1;
+  border: none;
+  width:36px;
+  height:36px;
+  border-radius:999px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+</style>
+
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const contactBtn = document.getElementById('contactBtn');
-    const popup = document.getElementById('contactPopup');
-    const closePopup = document.getElementById('closePopup');
+(function(){
+  // Defensive setup
+  function qs(sel, root=document){ return root.querySelector(sel); }
+  function qsa(sel, root=document){ return Array.from((root||document).querySelectorAll(sel)); }
 
-    // Open
-    contactBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      popup.classList.remove('hidden');
+  // Wait until DOM is usable
+  function ready(fn){
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
+  }
+
+  ready(() => {
+    var popup = document.getElementById('contactPopup');
+    var popupPanel = document.getElementById('contactPopupPanel');
+    var closeBtn = document.getElementById('closePopup');
+
+    // If modal missing, create it dynamically as last resort
+    if (!popup) {
+      console.warn('contactPopup not found — creating a fallback modal.');
+      popup = document.createElement('div');
+      popup.id = 'contactPopup';
+      popup.setAttribute('aria-hidden','true');
+      popup.innerHTML = `
+        <div id="contactPopupPanel" role="document">
+          <button id="closePopup" aria-label="Close contact popup">&times;</button>
+          <h2>Get in Touch</h2>
+          <div class="links">
+            <a id="emailLink" href="mailto:rejalanop55@gmail.com" rel="noopener">📧 Email Me</a>
+            <a id="ghLink" href="https://github.com/arijal1" target="_blank" rel="noopener">💻 GitHub</a>
+            <a id="liLink" href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" rel="noopener">🔗 LinkedIn</a>
+          </div>
+        </div>`;
+      document.body.appendChild(popup);
+      popupPanel = document.getElementById('contactPopupPanel');
+      closeBtn = document.getElementById('closePopup');
+    }
+
+    // Ensure aria-hidden attribute exists
+    if (!popup.hasAttribute('aria-hidden')) popup.setAttribute('aria-hidden','true');
+
+    // Find trigger: first preference is id=contactBtn, fallback to button/link with text 'Contact'
+    var trigger = document.getElementById('contactBtn');
+    if (!trigger) {
+      // look for element with class .btn and innerText containing 'contact'
+      var possible = qsa('.btn, a, button');
+      trigger = possible.find(el => {
+        if(!el.innerText) return false;
+        return el.innerText.trim().toLowerCase().includes('contact');
+      });
+    }
+
+    if (!trigger) {
+      console.warn('No Contact trigger found. Create element with id="contactBtn" or a .btn that contains "Contact" text.');
+    } else {
+      // Attach click handler (prevent default for anchors so popup toggles instead of navigating)
+      trigger.addEventListener('click', function(e){
+        // if it's an anchor and user wants mailto default behavior, they can change; here we toggle popup
+        if (e.target && e.target.tagName.toLowerCase() === 'a') e.preventDefault();
+        toggleOpen();
+      });
+    }
+
+    function openPopup(){
+      popup.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      // focus first link
+      setTimeout(() => {
+        var first = popup.querySelector('a');
+        if (first) first.focus();
+      }, 20);
+      console.log('Contact popup opened');
+    }
+    function closePopup(){
+      popup.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      console.log('Contact popup closed');
+      if (trigger) trigger.focus();
+    }
+    function toggleOpen(){ popup.getAttribute('aria-hidden') === 'true' ? openPopup() : closePopup(); }
+
+    // Close button
+    if (closeBtn) closeBtn.addEventListener('click', closePopup);
+
+    // Backdrop click: if clicked outside panel close
+    popup.addEventListener('click', function(e){
+      if (e.target === popup) closePopup();
     });
 
-    // Close
-    closePopup.addEventListener('click', () => {
-      popup.classList.add('hidden');
+    // Escape key closes
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && popup.getAttribute('aria-hidden') === 'false') closePopup();
     });
 
-    // Close when clicking outside the box
-    popup.addEventListener('click', (e) => {
-      if (e.target === popup) popup.classList.add('hidden');
-    });
+    // Defensive: hide popup on load (in case it was visible)
+    popup.setAttribute('aria-hidden','true');
 
-    // Ensure starts hidden
-    popup.classList.add('hidden');
+    // Debug info in console to help you see what's bound
+    console.log('Contact modal initialized. Trigger:', trigger, 'Popup element:', popup);
   });
+})();
 </script>
 
 
