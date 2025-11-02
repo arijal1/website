@@ -601,7 +601,7 @@
 
 
 <!-- Chat Button -->
-<!-- Custom Chat Button -->
+<<!-- Custom Chat Button -->
 <div id="custom-chat-btn" style="
     position: fixed;
     bottom: 24px;
@@ -619,7 +619,7 @@
     box-shadow: 0 6px 25px rgba(0,0,0,0.3);
     z-index: 99999;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-  ">💬</div>
+">💬</div>
 
 <!-- Custom Chat Container -->
 <div id="custom-chat-box" style="
@@ -673,7 +673,6 @@
 import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
 let chatInitialized = false;
-
 const chatBtn = document.getElementById('custom-chat-btn');
 const chatBox = document.getElementById('custom-chat-box');
 
@@ -694,13 +693,13 @@ function toggleChat() {
                 target: "#custom-chat-box",
                 webhookUrl: "https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
                 mode: "inline",
-                autoOpen: true,
-                showLauncher: false, // disables n8n default icon
+                autoOpen: false,       // Opens only on click
+                showLauncher: false,   // disables default n8n icon
                 showWelcomeScreen: false,
                 initialMessages: [
                     "👋 Hi, I'm **Anup**. How can I help you today?"
                 ],
-                rootClass: "custom-n8n-chat" // apply custom dark theme
+                rootClass: "custom-n8n-chat"
             });
             chatInitialized = true;
         }
