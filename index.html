@@ -6,45 +6,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Anup Rijal</title>
 <meta name="description" content="Portfolio of Anup Rijal — ICT Service Desk Support Specialist. Projects, blogs, vlogs, testimony, and contact."/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+
 <style>
 :root {
   --bg: #1C1C1C; --text: #EAEAEA; --muted: #B5B5B5; --mint: #00FFB3; --pink: #FF4DA6; --purple: #8A2BE2;
   --gold: #D4AF37; --gold-stroke: 1px; --card: #232323; --shadow: rgba(0,0,0,.25); --maxw: 1120px;
 }
-html, body { height: 100%; }
-body { margin: 0; background: var(--bg); color: var(--text);
-       font-family: 'Poppins','Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,sans-serif; line-height: 1.6; }
+html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font-family: 'Poppins','Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,sans-serif; line-height: 1.6; }
 
 /* Background layers */
 .animated-bg, .parallax-layer { position: fixed; inset: 0; z-index: -3; overflow: hidden; }
 .animated-bg { background: linear-gradient(135deg, #151515, #1C1C1C 45%, #111111); }
 .parallax-layer { z-index: -2; pointer-events: none; }
-.parallax-layer .blob { position: absolute; filter: blur(70px); opacity: .45; border: var(--gold-stroke) solid var(--gold);
-  width: 380px; height: 380px; border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(138,43,226,.5), transparent 60%),
-              radial-gradient(circle at 70% 60%, rgba(255,77,166,.45), transparent 60%), rgba(0,255,179,.18);
-  box-shadow: inset 0 0 0 calc(var(--gold-stroke)) rgba(212,175,55,.25);
-}
+.parallax-layer .blob { position: absolute; filter: blur(70px); opacity: .45; border: var(--gold-stroke) solid var(--gold); width: 380px; height: 380px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(138,43,226,.5), transparent 60%), radial-gradient(circle at 70% 60%, rgba(255,77,166,.45), transparent 60%), rgba(0,255,179,.18); box-shadow: inset 0 0 0 calc(var(--gold-stroke)) rgba(212,175,55,.25); }
 #particles { position: fixed; inset: 0; z-index: -1; pointer-events: none; display: block; }
 
 .container { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
 
 /* Header */
-header { position: sticky; top: 0; backdrop-filter: blur(8px); background: rgba(18,18,18,0.75);
-         border-bottom: var(--gold-stroke) solid var(--gold); z-index: 20; }
-.container.nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: 1rem; }
-.brand { display: flex; align-items: center; gap: 10px; }
+header { position: sticky; top: 0; backdrop-filter: blur(8px); background: rgba(18,18,18,0.75); border-bottom: var(--gold-stroke) solid var(--gold); z-index: 20; }
+.container.nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: 12px 0; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
 .brand img { height: 40px; width: auto; border-radius: 8px; }
-nav#primary-nav ul { display: flex; gap: 1.5rem; list-style: none; padding: 0; margin: 0; }
-nav#primary-nav a { color: var(--text); text-decoration: none; font-weight: 500; }
-.menu-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--text); background: transparent; border: var(--gold-stroke) solid var(--gold); border-radius: 10px; padding: 8px 12px; }
+.menu-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--text); background: transparent; border: var(--gold-stroke) solid var(--gold); border-radius: 10px; padding: 8px 12px; cursor:pointer; }
 .menu-btn svg { width: 18px; height: 18px; }
-@media (max-width: 768px) {
-  .brand img { height: 32px; }
-  #primary-nav ul { flex-direction: column; gap: 1rem; margin-top: .5rem; }
+nav#primary-nav { display: none; width: 100%; margin-top: .5rem; }
+nav#primary-nav.open { display: block; }
+nav#primary-nav ul { list-style: none; display: flex; flex-direction: column; gap: 10px; padding: 0; margin: 0; }
+nav#primary-nav a { color: var(--text); text-decoration: none; padding: 10px 12px; border: var(--gold-stroke) solid transparent; border-radius: 10px; }
+nav#primary-nav a:hover, nav#primary-nav a:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,55,.15); outline: none; }
+
+@media (min-width: 880px) {
+  .menu-btn { display: none; }
+  nav#primary-nav { display: block; width: auto; margin-top: 0; }
+  nav#primary-nav ul { flex-direction: row; gap: 16px; }
 }
 
 /* Hero */
@@ -53,8 +51,7 @@ nav#primary-nav a { color: var(--text); text-decoration: none; font-weight: 500;
 h1 { font-family: 'Montserrat'; font-size: clamp(2rem, 4.5vw, 3.6rem); margin: 12px 0 8px; }
 .subtitle { color: var(--muted); max-width: 760px; margin: 0 auto 24px; }
 .cta { display: inline-flex; gap: 12px; }
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 12px; border: var(--gold-stroke) solid var(--gold);
-       background: linear-gradient(180deg, rgba(212,175,55,.15), rgba(212,175,55,.05)); color: var(--text); font-weight: 600; cursor:pointer; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 12px; border: var(--gold-stroke) solid var(--gold); background: linear-gradient(180deg, rgba(212,175,55,.15), rgba(212,175,55,.05)); color: var(--text); font-weight: 600; cursor:pointer; }
 .btn--primary { background: linear-gradient(90deg, var(--purple), var(--pink)); border-color: var(--gold); box-shadow: 0 8px 24px var(--shadow); }
 
 /* Sections */
@@ -68,13 +65,13 @@ section { padding: 56px 0; }
 .about ul { margin: 0; padding-left: 18px; }
 @media (max-width: 840px) { .about { grid-template-columns: 1fr; } }
 
-/* Grid cards */
+/* Featured posts grid */
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 .card { background: var(--card); border: var(--gold-stroke) solid var(--gold); border-radius: 16px; padding: 20px; box-shadow: 0 12px 28px var(--shadow); transition: transform .2s ease, box-shadow .2s ease; }
 .card:hover { transform: translateY(-4px); box-shadow: 0 18px 36px rgba(212,175,55,.12); }
 .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; background: rgba(138,43,226,.18); color: var(--text); border: var(--gold-stroke) solid var(--gold); font-size: .8rem; }
 
-/* Contact Form */
+/* Contact */
 form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 form .full { grid-column: 1 / -1; }
 input, textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: var(--gold-stroke) solid var(--gold); background: #1a1a1a; color: var(--text); }
@@ -86,20 +83,31 @@ footer { border-top: var(--gold-stroke) solid var(--gold); margin-top: 32px; bac
 .social a { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: var(--gold-stroke) solid var(--gold); border-radius: 50%; color: var(--text); margin-right: 8px; text-decoration: none; }
 .social a:hover { background: rgba(212,175,55,.12); }
 
-/* Contact Modal */
-#contactPopup { position: fixed; inset:0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,0.7); z-index:99999; }
-#contactPopup[aria-hidden="false"]{ display:flex; }
-#contactPopupPanel { width:320px; max-width:calc(100% - 40px); background:#121212; border:2px solid #d7b244; color:#f1f1f1; padding:18px; border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,0.6); text-align:center; position:relative; }
-#contactPopup h2 { margin:0 0 12px 0; color:#ffd86b; font-size:1.05rem; }
+/* Contact popup */
+#contactPopup { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.7); z-index: 99999; }
+#contactPopup[aria-hidden="false"] { display:flex; }
+#contactPopupPanel { width: 320px; max-width: calc(100% - 40px); background: #121212; border: 2px solid #d7b244; color: #f1f1f1; padding: 18px; border-radius: 14px; box-shadow: 0 12px 30px rgba(0,0,0,0.6); position: relative; text-align: center; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+#contactPopup h2 { margin: 0 0 12px 0; color: #ffd86b; font-size: 1.05rem; }
 #contactPopupPanel .links { display:flex; flex-direction:column; gap:10px; margin-top:6px; }
 #contactPopupPanel a { display:inline-block; text-decoration:none; padding:10px 12px; border-radius:8px; background:#222; color:#fff; border:1px solid rgba(255,255,255,0.04); }
 #contactPopupPanel a:hover { opacity:0.95; transform:translateY(-1px); }
-#closePopup { position:absolute; top:8px; right:10px; background:#ffffff10; color:#fff; font-size:20px; line-height:1; border:none; width:36px; height:36px; border-radius:999px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+#closePopup { position:absolute; top:8px; right:10px; background: #ffffff10; color: #fff; font-size:20px; line-height:1; border: none; width:36px; height:36px; border-radius:999px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+
+/* Chat button */
+#custom-chat-btn { position: fixed; bottom: 24px; right: 24px; width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5, #10b981); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 28px; color: #fff; box-shadow: 0 6px 25px rgba(0,0,0,0.3); z-index: 99999; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+#custom-chat-box { position: fixed; bottom: 100px; right: 24px; width: 400px; max-width: 90%; height: 520px; border-radius: 20px; overflow: hidden; background: #0f172a; display: none; transform: scale(0.9); opacity: 0; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 99999; }
+
+/* Dark theme for chat */
+.custom-n8n-chat *, .custom-n8n-chat *::before, .custom-n8n-chat *::after { font-family: 'Poppins', sans-serif !important; color: #e5e7eb !important; background: #0f172a !important; }
+.custom-n8n-chat .n8n-chat-message-bubble { background: #1f2937 !important; color: #e5e7eb !important; border: none !important; }
+.custom-n8n-chat .n8n-chat-message-bubble--user { background: #4f46e5 !important; color: #fff !important; border: none !important; }
+.custom-n8n-chat .n8n-chat-input input { background: #1f2937 !important; border: 1px solid #374151 !important; color: #fff !important; }
+.custom-n8n-chat .n8n-chat-input button { background: linear-gradient(135deg, #4f46e5, #10b981) !important; color: #fff !important; border: none !important; }
 </style>
 </head>
-<body>
 
-<!-- Background layers -->
+<body>
+<!-- Background -->
 <div aria-hidden="true" class="animated-bg"></div>
 <div aria-hidden="true" class="parallax-layer">
   <div class="blob" style="top:10%; left:5%"></div>
@@ -109,174 +117,112 @@ footer { border-top: var(--gold-stroke) solid var(--gold); margin-top: 32px; bac
 
 <!-- Header -->
 <header>
-  <div class="container nav" role="navigation" aria-label="Primary">
-    <div class="brand">
-      <img src="images/logo.png" alt="Anup Rijal Logo"/>
-    </div>
-    <button id="menuBtn" class="menu-btn" aria-controls="primary-nav" aria-expanded="false">
-      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z" fill="currentColor"></path></svg> Menu
-    </button>
-    <nav id="primary-nav">
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="blog.html">Blogs</a></li>
-        <li><a href="vlogs.html">Vlogs</a></li>
-        <li><a href="testimoni.html">Testimony</a></li>
-      </ul>
-    </nav>
+<div class="container nav" role="navigation" aria-label="Primary">
+  <div class="brand">
+    <img src="images/logo.png" alt="Anup Rijal Logo"/>
   </div>
+  <button id="menuBtn" class="menu-btn" aria-controls="primary-nav" aria-expanded="false">
+    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z" fill="currentColor"></path></svg>Menu
+  </button>
+  <nav id="primary-nav">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="blog.html">Blogs</a></li>
+      <li><a href="vlogs.html">Vlogs</a></li>
+      <li><a href="testimoni.html">Testimony</a></li>
+    </ul>
+  </nav>
+</div>
 </header>
 
 <!-- Hero -->
 <section class="hero">
-  <div class="container">
-    <div class="eyebrow">IT Service Delivery Analyst</div>
-    <h1 id="heroTitle">
-      Practical, people‑first tech with a sleek modern touch
-    </h1>
-    <p class="subtitle">I coordinate teams and support complex environments across Microsoft 365, Azure, and multi‑platform ecosystems. Clean design, clear communication, and reliable delivery.</p>
-    <div class="cta">
-      <a class="btn btn--primary" href="projects.html">See My Work</a>
-      <button id="contactBtn" class="btn">Contact Me</button>
-    </div>
+<div class="container">
+  <div class="eyebrow">IT Service Delivery Analyst</div>
+  <h1 id="heroTitle">Practical, people‑first tech with a sleek modern touch</h1>
+  <p class="subtitle">I coordinate teams and support complex environments across Microsoft 365, Azure, and multi‑platform ecosystems. Clean design, clear communication, and reliable delivery.</p>
+  <div class="cta">
+    <a class="btn btn--primary" href="projects.html">See My Work</a>
+    <button id="contactBtn" class="btn">Contact Me</button>
   </div>
+</div>
 </section>
-
-<!-- About / Experience -->
-<section>
-  <div class="container about">
-    <div class="panel">
-      <div class="section-title"><span>About Me</span><span class="rule"></span></div>
-      <p>I'm Anup Rijal, a versatile professional with experience across healthcare, tech, retail, and telecom. I specialize in team coordination and customer‑focused service, delivering practical, people‑first solutions.</p>
-      <p>Outside of work, I stay active through sports, travel, and time outdoors.</p>
-    </div>
-    <div class="panel">
-      <div class="section-title"><span>Core Experience</span><span class="rule"></span></div>
-      <ul>
-        <li>Hands‑on IT across Opal Healthcare, Apple, Telstra, and Nike.</li>
-        <li>Support for Windows Server, Active Directory, multi‑platform environments.</li>
-        <li>Microsoft 365, Azure, Exchange, SQL, virtualization (VMware, Hyper‑V).</li>
-        <li>Enterprise tools: Intune, Citrix, MDM, POS, SCCM, ITSM platforms.</li>
-        <li>Human‑centered communication and empathy in every role.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- Featured Posts -->
-<section>
-  <div class="container">
-    <div class="section-title"><span>Featured Posts</span><span class="rule"></span></div>
-    <div class="grid" id="cardsGrid">
-      <article class="card">
-        <span class="badge">AI &amp; Work</span>
-        <h3>The Rise of AI</h3>
-        <p>How AI is transforming work, creativity, and everyday life — from automation to innovation.</p>
-        <a class="btn" href="ai.html">Read More →</a>
-      </article>
-      <article class="card">
-        <span class="badge">Story</span>
-        <h3>From Nepal to Sydney</h3>
-        <p>A journey from Sankarpokhari to global tech brands in Sydney — fueled by dreams and resilience.</p>
-        <a class="btn" href="blog1.html">Read Full Story →</a>
-      </article>
-      <article class="card">
-        <span class="badge">Vlogs</span>
-        <h3>Latest Vlogs</h3>
-        <p>Short technical vlogs and behind‑the‑scenes clips on tooling, workflows, and personal projects.</p>
-        <a class="btn" href="vlogs.html">Watch →</a>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- Contact Form -->
-<section>
-  <div class="container">
-    <div class="section-title"><span>Get in Touch</span><span class="rule"></span></div>
-    <form action="#" method="post">
-      <input id="name" name="name" placeholder="Name" type="text"/>
-      <input id="email" name="email" placeholder="Email" type="email"/>
-      <textarea class="full" id="message" name="message" placeholder="Message"></textarea>
-      <button class="btn btn--primary full" type="submit">Send Message</button>
-    </form>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer>
-  <div class="container footer-inner">
-    <div><small>© 2025 Anup Rijal. All rights reserved.</small></div>
-    <div class="social" aria-label="Social links">
-      <a href="mailto:rejalanop55@gmail.com">@</a>
-      <a href="https://github.com/arijal1">GH</a>
-      <a href="https://www.linkedin.com/in/anup-rijal-bb579a131">in</a>
-    </div>
-  </div>
-</footer>
 
 <!-- Contact Popup -->
-<div id="contactPopup" aria-hidden="true">
-  <div id="contactPopupPanel">
+<div id="contactPopup" aria-hidden="true" role="dialog">
+  <div id="contactPopupPanel" role="document">
     <button id="closePopup" aria-label="Close contact popup">&times;</button>
     <h2>Get in Touch</h2>
     <div class="links">
-      <a href="mailto:rejalanop55@gmail.com" rel="noopener">📧 Email Me</a>
-      <a href="https://github.com/arijal1" target="_blank" rel="noopener">💻 GitHub</a>
-      <a href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" rel="noopener">🔗 LinkedIn</a>
+      <a href="mailto:rejalanop55@gmail.com">📧 Email Me</a>
+      <a href="https://github.com/arijal1" target="_blank">💻 GitHub</a>
+      <a href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank">🔗 LinkedIn</a>
     </div>
   </div>
 </div>
 
-<!-- Chat Button -->
-<div id="custom-chat-btn" style="position:fixed; bottom:24px; right:24px; width:65px; height:65px; border-radius:50%; background:linear-gradient(135deg,#4f46e5,#10b981); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:28px; color:#fff; box-shadow:0 6px 25px rgba(0,0,0,0.3); z-index:99999;">💬</div>
-<div id="custom-chat-box" style="position:fixed; bottom:100px; right:24px; width:400px; max-width:90%; height:520px; border-radius:20px; overflow:hidden; background:#0f172a; display:none; transform:scale(0.9); opacity:0; transition:all 0.3s ease; box-shadow:0 10px 30px rgba(0,0,0,0.5); z-index:99999;"></div>
+<!-- About Section -->
+<section>
+<div class="container about">
+  <div class="panel">
+    <div class="section-title"><span>About Me</span><span class="rule"></span></div>
+    <p>I'm Anup Rijal, a versatile professional with experience across healthcare, tech, retail, and telecom. I specialize in team coordination and customer‑focused service, delivering practical, people‑first solutions.</p>
+    <p>Outside of work, I stay active through sports, travel, and time outdoors.</p>
+  </div>
+  <div class="panel">
+    <div class="section-title"><span>Core Experience</span><span class="rule"></span></div>
+    <ul>
+      <li>Hands‑on IT across Opal Healthcare, Apple, Telstra, and Nike.</li>
+      <li>Support for Windows Server, Active Directory, multi‑platform environments.</li>
+      <li>Microsoft 365, Azure, Exchange, SQL, virtualization (VMware, Hyper‑V).</li>
+      <li>Enterprise tools: Intune, Citrix, MDM, POS, SCCM, ITSM platforms.</li>
+      <li>Human‑centered communication and empathy in every role.</li>
+    </ul>
+  </div>
+</div>
+</section>
 
-<!-- Scripts -->
-<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script type="module">
-import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
+<!-- Chat Widget -->
+<div id="custom-chat-btn" aria-label="Open Chatbot">💬</div>
+<div id="custom-chat-box" class="custom-n8n-chat">
+  <iframe src="https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat" width="100%" height="100%" frameborder="0"></iframe>
+</div>
 
-const chatBtn = document.getElementById('custom-chat-btn');
-const chatBox = document.getElementById('custom-chat-box');
-let chatInitialized = false;
-chatBtn.addEventListener('click', () => {
-  if(chatBox.style.display==="block"){
-    chatBox.style.opacity=0; chatBox.style.transform="scale(0.9)";
-    setTimeout(()=>chatBox.style.display="none",300);
-  } else {
-    chatBox.style.display="block";
-    setTimeout(()=>{ chatBox.style.opacity=1; chatBox.style.transform="scale(1)"; },20);
-    if(!chatInitialized){
-      createChat({
-        target:"#custom-chat-box",
-        webhookUrl:"https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
-        mode:"inline",
-        autoOpen:false,
-        showLauncher:false,
-        showWelcomeScreen:false,
-        initialMessages:["👋 Hi, I'm **Anup**. How can I help you today?"],
-        rootClass:"custom-n8n-chat"
-      });
-      chatInitialized = true;
-    }
-  }
-});
+<!-- Footer -->
+<footer>
+<div class="container footer-inner">
+  <div>&copy; 2025 Anup Rijal. All rights reserved.</div>
+  <div class="social">
+    <a href="https://github.com/arijal1" target="_blank" aria-label="GitHub">GH</a>
+    <a href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" aria-label="LinkedIn">LI</a>
+  </div>
+</div>
+</footer>
 
-// Contact popup
-const contactBtn = document.getElementById('contactBtn');
-const contactPopup = document.getElementById('contactPopup');
-const closePopup = document.getElementById('closePopup');
-contactBtn.addEventListener('click', ()=>contactPopup.setAttribute('aria-hidden','false'));
-closePopup.addEventListener('click', ()=>contactPopup.setAttribute('aria-hidden','true'));
-
-// Mobile menu toggle
+<script>
+/* Menu toggle */
 const menuBtn = document.getElementById('menuBtn');
 const nav = document.getElementById('primary-nav');
-menuBtn?.addEventListener('click',()=>{ 
-  const open = nav.classList.toggle('open'); 
-  menuBtn.setAttribute('aria-expanded',String(open));
+menuBtn.addEventListener('click',()=>{ const expanded=menuBtn.getAttribute('aria-expanded')==='true'; menuBtn.setAttribute('aria-expanded',!expanded); nav.classList.toggle('open'); });
+
+/* Contact popup toggle */
+const contactBtn=document.getElementById('contactBtn');
+const contactPopup=document.getElementById('contactPopup');
+const closePopup=document.getElementById('closePopup');
+contactBtn.addEventListener('click',()=>{contactPopup.setAttribute('aria-hidden','false');});
+closePopup.addEventListener('click',()=>{contactPopup.setAttribute('aria-hidden','true');});
+contactPopup.addEventListener('click',e=>{if(e.target===contactPopup){contactPopup.setAttribute('aria-hidden','true');}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){contactPopup.setAttribute('aria-hidden','true');}});
+
+/* Chat toggle */
+const chatBtn = document.getElementById('custom-chat-btn');
+const chatBox = document.getElementById('custom-chat-box');
+let chatOpen=false;
+chatBtn.addEventListener('click',()=>{
+  chatOpen=!chatOpen;
+  chatBox.style.display='block';
+  setTimeout(()=>{chatBox.style.opacity=chatOpen?1:0; chatBox.style.transform=chatOpen?'scale(1)':'scale(0.9)'; if(!chatOpen){setTimeout(()=>{chatBox.style.display='none';},300);} },10);
 });
 </script>
 </body>
