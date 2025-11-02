@@ -605,124 +605,90 @@
 <!-- Chat Launcher -->
 <button id="chat-launcher"
   style="
-  position:fixed;
-  bottom:22px;right:22px;
+  position:fixed;bottom:22px;right:22px;
   z-index:999999;width:62px;height:62px;
-  border-radius:50%;
+  border-radius:50%;font-size:28px;
   background:linear-gradient(135deg,#3b82f6,#9333ea);
-  border:none;display:flex;align-items:center;justify-content:center;
-  font-size:28px;color:white;cursor:pointer;
-  box-shadow:0 6px 20px rgba(0,0,0,.28);
-  transition:all .25s ease;">
+  color:#fff;border:none;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.28);
+  transition:transform .2s ease;
+">
 💬
 </button>
 
-<!-- Floating greeting -->
-<div id="chat-greet"
- style="
- position:fixed;bottom:95px;right:95px;
- background:#0f172a;color:white;
- padding:10px 14px;border-radius:10px;
- font-family:'Poppins',sans-serif;
- font-size:14px;
- border:1px solid rgba(255,255,255,.1);
- box-shadow:0 6px 20px rgba(0,0,0,.25);
- z-index:999999;animation:floatIn .8s ease;">
-👋 Need help?
+<!-- Chat Window -->
+<div id="anup-chat-box"
+  style="
+  position:fixed;bottom:95px;right:22px;
+  width:375px;height:550px;
+  border-radius:18px;overflow:hidden;
+  background:#0f172a;display:none;
+  z-index:999999;
+  box-shadow:0 8px 25px rgba(0,0,0,.45);
+  transform:scale(0.8);opacity:0;
+">
 </div>
 
 <style>
-@keyframes floatIn {
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
+/* Pop animation */
+.chat-pop {
+  animation: chatPop .22s ease forwards;
 }
-.hidden { display:none!important; }
-
-/* Chat Box */
-#anup-chat-box {
- position:fixed;bottom:95px;right:22px;
- width:370px;height:520px;
- background:var(--chat-bg,#0f172a);
- border-radius:16px;
- box-shadow:0 10px 40px rgba(0,0,0,.4);
- overflow:hidden;display:none;z-index:999999;
+@keyframes chatPop {
+  0% {transform:scale(0.7);opacity:0;}
+  50% {transform:scale(1.05);opacity:1;}
+  100% {transform:scale(1);}
 }
 
-/* Avatar */
-.n8n-chat-avatar {
- width:32px;height:32px;border-radius:50%;
- background:url('https://api.dicebear.com/7.x/personas/svg?seed=Anup');
- background-size:cover;margin-right:8px;
+/* Force dark mode UI for n8n chat */
+.n8n-chat, .n8n-chat-window, .n8n-chat-root {
+  background:#0f172a !important;color:#e5e7eb !important;
 }
-
-.n8n-typing {
- font-size:13px;color:#9ca3af;
- padding:6px 12px;font-style:italic;
- display:flex;align-items:center;
+.n8n-chat-message-bubble {
+  background:#1f2937 !important;color:#e5e7eb !important;border:none !important;
+}
+.n8n-chat-message-bubble--user {
+  background:#3b82f6 !important;color:white !important;border:none !important;
+}
+.n8n-chat-input input {
+  background:#1f2937 !important;border:1px solid #374151 !important;color:white !important;
+}
+.n8n-chat-input button {
+  background:linear-gradient(135deg,#3b82f6,#9333ea) !important;color:white !important;border:none !important;
 }
 </style>
-
-<div id="anup-chat-box"></div>
-
-<!-- Notification sound -->
-<audio id="chatSound">
- <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_7e0b596a3c.mp3" type="audio/mpeg">
-</audio>
 
 <script type="module">
 import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
-let chatLoaded=false;
-
-// Dark/Light Mode Sync
-function syncTheme() {
- const isDark = document.documentElement.classList.contains("dark");
- document.documentElement.style.setProperty('--chat-bg', isDark ? '#0f172a' : '#ffffff');
-}
-syncTheme();
-window.addEventListener("click",syncTheme);
+let chatLoaded = false;
 
 document.getElementById("chat-launcher").onclick = () => {
- const box=document.getElementById("anup-chat-box");
- const greet=document.getElementById("chat-greet");
- const visible=box.style.display==="block";
- box.style.display = visible ? "none" : "block";
- greet.classList.add("hidden");
+  const box = document.getElementById("anup-chat-box");
+  const isOpen = box.style.display === "block";
 
- if(!chatLoaded) {
-   const chat = createChat({
-     webhookUrl:"https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
-     target:"#anup-chat-box",
-     mode:"inline",
-     autoOpen:true,
-     showWelcomeScreen:false,
-     initialMessages:[
-       "👋 Hi! I'm **Anup**, your personal assistant here.",
-       "How can I help you today?"
-     ],
-   });
+  if(isOpen){
+    box.style.display = "none";
+    box.classList.remove("chat-pop");
+  } else {
+    box.style.display = "block";
+    box.classList.add("chat-pop");
+  }
 
-   // Add typing animation
-   chat.on("typing", ({ typing }) => {
-     if(typing){
-       const el=document.createElement("div");
-       el.className="n8n-typing";
-       el.id="anup-typing-indicator";
-       el.innerHTML=`<span class="n8n-chat-avatar"></span> Anup is typing…`;
-       document.querySelector("#anup-chat-box").appendChild(el);
-     } else {
-       const exist=document.getElementById("anup-typing-indicator");
-       if(exist) exist.remove();
-     }
-   });
-
-   // Play sound on new message
-   chat.on("message", () => {
-     document.getElementById("chatSound").play().catch(()=>{});
-   });
-
-   chatLoaded=true;
- }
+  if (!chatLoaded) {
+    createChat({
+      target:"#anup-chat-box",
+      webhookUrl:"https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
+      mode:"inline",
+      autoOpen:true,
+      showWelcomeScreen:false,
+      initialMessages:[
+        "👋 Hi, I'm **Anup**. How can I help you today?"
+      ]
+    });
+    chatLoaded = true;
+  }
 };
 </script>
 
