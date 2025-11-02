@@ -291,170 +291,437 @@
 </section>
 <!-- Footer -->
 <footer>
-  <div class="container footer-inner">
-    <div>
-      <small>© 2025 Anup Rijal. All rights reserved.</small>
-    </div>
-    <div aria-label="Social links" class="social">
-      <a aria-label="Email" href="mailto:rejalanop55@gmail.com">@</a>
-      <a aria-label="GitHub" href="https://github.com/arijal1">GH</a>
-      <a aria-label="LinkedIn" href="https://www.linkedin.com/in/anup-rijal-bb579a131">in</a>
-    </div>
-  </div>
-</footer>
-
-<!-- Contact Popup Modal -->
-<div id="contactPopup" aria-hidden="true">
-  <div id="contactPopupPanel" role="document">
-    <button id="closePopup" aria-label="Close contact popup">&times;</button>
-    <h2>Get in Touch</h2>
-    <div class="links">
-      <a href="mailto:rejalanop55@gmail.com" rel="noopener">📧 Email Me</a>
-      <a href="https://github.com/arijal1" target="_blank" rel="noopener">💻 GitHub</a>
-      <a href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" rel="noopener">🔗 LinkedIn</a>
-    </div>
-  </div>
+<div class="container footer-inner">
+<div>
+<small>© 2025 Anup Rijal. All rights reserved.</small>
 </div>
+<div aria-label="Social links" class="social">
+<a aria-label="Email" href="mailto:rejalanop55@gmail.com">@</a>
+<a aria-label="GitHub" href="https://github.com/arijal1">GH</a>
+<a aria-label="LinkedIn" href="https://www.linkedin.com/in/anup-rijal-bb579a131">in</a>
+</div>
+</div>
+</footer>
+<!-- Motion tuning is built-in via JS below -->
+<script crossorigin="anonymous" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script crossorigin="anonymous" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const nav = document.getElementById('primary-nav');
+    menuBtn?.addEventListener('click', () => { const open = nav.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', String(open)); });
 
-<!-- Custom Chat Button -->
-<div id="custom-chat-btn">💬</div>
-<div id="custom-chat-box"></div>
+    // Reduced motion / perf flags
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const savedMotion = localStorage.getItem('motion');
+    const savedPerf   = localStorage.getItem('perf');
+    const lowHardware = (navigator.hardwareConcurrency || 4) < 4 || (window.innerWidth < 360);
+    let motionEnabled = savedMotion ? (savedMotion === 'on') : !prefersReduced;
+    let perfLow = savedPerf ? (savedPerf === 'low') : lowHardware;
 
+    // ===== GSAP animations =====
+    if (motionEnabled && window.gsap) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Header brand intro
+      gsap.from('header .brand', { y: -20, opacity: 0, duration: 0.6, ease: 'power2.out' });
+
+      // Parallax strength (reduce if you want calmer motion)
+      const strength1 = perfLow ? -8 : -15;
+      const strength2 = perfLow ? 10 : 20;
+      gsap.to('.parallax-layer .blob:nth-child(1)', {
+        yPercent: strength1,
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 1 }
+      });
+      gsap.to('.parallax-layer .blob:nth-child(2)', {
+        yPercent: strength2,
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 1 }
+      });
+
+      // Split hero title and animate characters
+      function splitText(selector) {
+        const el = document.querySelector(selector); if (!el) return [];
+        const text = el.textContent.trim(); const words = text.split(/\s+/);
+        el.innerHTML = words.map(w => `<span class="word">${[...w].map(c => `<span class="char">${c}</span>`).join('')}</span>`).join(' ');
+        return el.querySelectorAll('.char');
+      }
+      const chars = splitText('#heroTitle');
+      gsap.set(chars, { display: 'inline-block' });
+      gsap.from(chars, { y: 18, opacity: 0, duration: 0.8, ease: 'power2.out', stagger: 0.02 }); // Stagger speed
+
+      // Grid reveal timing
+      gsap.from('#cardsGrid .card', {
+        opacity: 0,
+        y: 24,
+        duration: 0.6, // speed of fade/slide
+        ease: 'power2.out',
+        stagger: { each: 0.08 },
+        scrollTrigger: { trigger: '#cardsGrid', start: 'top 85%' } // trigger point
+      });
+    }
+
+    // ===== Particle field =====
+    const Particle = (function(){
+      const canvas = document.getElementById('particles');
+      const ctx = canvas.getContext('2d');
+      let w, h, dpr, particles = [], animId, lastTime = 0, running = false;
+
+      // Default
+      let config = { countMobile: 50, countDesktop: 110, maxDist: 90, connect: true };
+
+      function resize(){
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.width = Math.floor(window.innerWidth * dpr);
+        h = canvas.height = Math.floor(window.innerHeight * dpr);
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+      }
+      function rand(min, max){ return Math.random() * (max - min) + min; }
+      function initParticles(){
+        particles = [];
+        const baseCount = window.innerWidth < 680 ? config.countMobile : config.countDesktop;
+        const count = (motionEnabled ? baseCount : 0);
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: rand(0, w), y: rand(0, h),
+            vx: rand(-0.08, 0.08) * dpr, vy: rand(-0.08, 0.08) * dpr,
+            r: rand(0.6, 1.8) * dpr,
+            color: i % 7 === 0 ? 'rgba(212,175,55,0.9)' : (i % 3 ? 'rgba(255,77,166,0.8)' : 'rgba(138,43,226,0.8)')
+          });
+        }
+      }
+      function draw(ts){
+        animId = requestAnimationFrame(draw);
+        const dt = Math.min(32, ts - lastTime); lastTime = ts;
+        ctx.clearRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'lighter';
+        for (let p of particles) {
+          p.x += p.vx * dt; p.y += p.vy * dt;
+          if (p.x < 0 || p.x > w) p.vx *= -1;
+          if (p.y < 0 || p.y > h) p.vy *= -1;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+          ctx.fillStyle = p.color; ctx.fill();
+        }
+        const max = config.maxDist * dpr;
+        if (config.connect) {
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const dx = particles[i].x - particles[j].x;
+              const dy = particles[i].y - particles[j].y;
+              const d2 = dx*dx + dy*dy;
+              if (d2 < max*max) {
+                const alpha = 1 - Math.sqrt(d2)/max;
+                ctx.strokeStyle = `rgba(212,175,55,${alpha*0.35})`;
+                ctx.lineWidth = 0.6 * dpr;
+                ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+              }
+            }
+          }
+        }
+      }
+      function start(){ resize(); initParticles(); running = true; animId = requestAnimationFrame(draw); }
+      function stop(){ running = false; cancelAnimationFrame(animId); ctx.clearRect(0,0,canvas.width,canvas.height); }
+      function reset(low){
+        // Low perf
+        config = low ? { countMobile: 30, countDesktop: 80, maxDist: 70, connect: false } : { countMobile: 50, countDesktop: 110, maxDist: 90, connect: true };
+        if (running) { resize(); initParticles(); }
+      }
+      window.addEventListener('resize', () => { if (running) { resize(); initParticles(); } });
+      document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else if (motionEnabled) start(); });
+      if (motionEnabled) start();
+      return { start, stop, reset };
+    })();
+  </script>
+
+
+<!--script-->
 <style>
-  /* Contact Popup Styles */
-  #contactPopup {
-    position: fixed;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.7);
-    z-index: 100000; /* lower than chat */
-  }
-  #contactPopup[aria-hidden="false"] { display:flex; }
-  #contactPopupPanel {
-    width: 320px;
-    max-width: 95%;
-    background: #121212;
-    border: 2px solid #d7b244;
-    color: #f1f1f1;
-    padding: 18px;
-    border-radius: 14px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-    position: relative;
-    text-align: center;
-  }
-  #contactPopupPanel h2 { margin:0 0 12px 0; color:#ffd86b; font-size:1.05rem; }
-  #contactPopupPanel .links { display:flex; flex-direction:column; gap:10px; margin-top:6px; }
-  #contactPopupPanel a {
-    display:inline-block; text-decoration:none; padding:10px 12px;
-    border-radius:8px; background:#222; color:#fff;
-    border:1px solid rgba(255,255,255,0.04);
-  }
-  #contactPopupPanel a:hover { opacity:0.95; transform:translateY(-1px); }
-  #closePopup {
-    position:absolute; top:8px; right:10px;
-    background: #ffffff10; color:#fff; font-size:20px; border:none;
-    width:36px; height:36px; border-radius:999px; cursor:pointer;
-    display:inline-flex; align-items:center; justify-content:center;
-  }
+/* Strong, isolated modal CSS to avoid conflicts */
+#contactPopup {
+  position: fixed !important;
+  inset: 0 !important;
+  display: none !important;            /* hidden by default */
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(0,0,0,0.7) !important;
+  z-index: 99999 !important;
+}
 
-  /* Chat Button & Box */
-  #custom-chat-btn {
-    position: fixed; bottom:24px; right:24px;
-    width:65px; height:65px; border-radius:50%;
-    background: linear-gradient(135deg, #4f46e5, #10b981);
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer; font-size:28px; color:#fff;
-    box-shadow:0 6px 25px rgba(0,0,0,0.3);
-    z-index:100001; /* above popup */
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  #custom-chat-btn:hover { transform: scale(1.15); box-shadow:0 12px 35px rgba(0,0,0,0.5); }
+#contactPopup[aria-hidden="false"]{ display:flex !important; }
 
-  #custom-chat-box {
-    position: fixed; bottom:100px; right:24px;
-    width:400px; max-width:90%; height:520px;
-    border-radius:20px; overflow:hidden;
-    background:#0f172a; display:none; opacity:0; transform:scale(0.9);
-    transition: all 0.3s ease; z-index:100002; /* above popup & button */
-  }
+#contactPopupPanel {
+  width: 320px;
+  max-width: calc(100% - 40px);
+  background: #121212;
+  border: 2px solid #d7b244;
+  color: #f1f1f1;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  position: relative;
+  text-align: center;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
 
-  /* Chat Dark Theme */
-  .custom-n8n-chat *, .custom-n8n-chat *::before, .custom-n8n-chat *::after {
-    font-family:'Poppins', sans-serif !important;
-    color:#e5e7eb !important; background:#0f172a !important;
-  }
-  .custom-n8n-chat .n8n-chat-message-bubble {
-    background:#1f2937 !important; color:#e5e7eb !important; border:none !important;
-  }
-  .custom-n8n-chat .n8n-chat-message-bubble--user {
-    background:#4f46e5 !important; color:#fff !important; border:none !important;
-  }
-  .custom-n8n-chat .n8n-chat-input input {
-    background:#1f2937 !important; border:1px solid #374151 !important; color:#fff !important;
-  }
-  .custom-n8n-chat .n8n-chat-input button {
-    background:linear-gradient(135deg,#4f46e5,#10b981) !important; color:#fff !important; border:none !important;
-  }
+#contactPopup h2 { margin: 0 0 12px 0; color: #ffd86b; font-size: 1.05rem; }
+
+#contactPopupPanel .links { display:flex; flex-direction:column; gap:10px; margin-top:6px; }
+
+#contactPopupPanel a {
+  display:inline-block;
+  text-decoration:none;
+  padding:10px 12px;
+  border-radius:8px;
+  background:#222;
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.04);
+}
+
+#contactPopupPanel a:hover { opacity:0.95; transform:translateY(-1px); }
+
+#closePopup {
+  position:absolute;
+  top:8px;
+  right:10px;
+  background: #ffffff10;
+  color: #fff;
+  font-size:20px;
+  line-height:1;
+  border: none;
+  width:36px;
+  height:36px;
+  border-radius:999px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
 </style>
 
 <script>
-  // Contact Popup Logic
-  const contactBtn = document.getElementById('contactBtn') || document.querySelector('.btn, a, button');
-  const contactPopup = document.getElementById('contactPopup');
-  const closePopup = document.getElementById('closePopup');
+(function(){
+  // Defensive setup
+  function qs(sel, root=document){ return root.querySelector(sel); }
+  function qsa(sel, root=document){ return Array.from((root||document).querySelectorAll(sel)); }
 
-  function toggleContactPopup() {
-    if(contactPopup.getAttribute('aria-hidden') === 'true'){
-      contactPopup.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
-    } else {
-      contactPopup.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-    }
+  // Wait until DOM is usable
+  function ready(fn){
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
   }
 
-  contactBtn?.addEventListener('click', e => { e.preventDefault(); toggleContactPopup(); });
-  closePopup?.addEventListener('click', toggleContactPopup);
-  contactPopup?.addEventListener('click', e => { if(e.target===contactPopup) toggleContactPopup(); });
-  document.addEventListener('keydown', e => { if(e.key==='Escape' && contactPopup.getAttribute('aria-hidden')==='false') toggleContactPopup(); });
+  ready(() => {
+    var popup = document.getElementById('contactPopup');
+    var popupPanel = document.getElementById('contactPopupPanel');
+    var closeBtn = document.getElementById('closePopup');
+
+    // If modal missing, create it dynamically as last resort
+    if (!popup) {
+      console.warn('contactPopup not found — creating a fallback modal.');
+      popup = document.createElement('div');
+      popup.id = 'contactPopup';
+      popup.setAttribute('aria-hidden','true');
+      popup.innerHTML = `
+        <div id="contactPopupPanel" role="document">
+          <button id="closePopup" aria-label="Close contact popup">&times;</button>
+          <h2>Get in Touch</h2>
+          <div class="links">
+            <a id="emailLink" href="mailto:rejalanop55@gmail.com" rel="noopener">📧 Email Me</a>
+            <a id="ghLink" href="https://github.com/arijal1" target="_blank" rel="noopener">💻 GitHub</a>
+            <a id="liLink" href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" rel="noopener">🔗 LinkedIn</a>
+          </div>
+        </div>`;
+      document.body.appendChild(popup);
+      popupPanel = document.getElementById('contactPopupPanel');
+      closeBtn = document.getElementById('closePopup');
+    }
+
+    // Ensure aria-hidden attribute exists
+    if (!popup.hasAttribute('aria-hidden')) popup.setAttribute('aria-hidden','true');
+
+    // Find trigger: first preference is id=contactBtn, fallback to button/link with text 'Contact'
+    var trigger = document.getElementById('contactBtn');
+    if (!trigger) {
+      // look for element with class .btn and innerText containing 'contact'
+      var possible = qsa('.btn, a, button');
+      trigger = possible.find(el => {
+        if(!el.innerText) return false;
+        return el.innerText.trim().toLowerCase().includes('contact');
+      });
+    }
+
+    if (!trigger) {
+      console.warn('No Contact trigger found. Create element with id="contactBtn" or a .btn that contains "Contact" text.');
+    } else {
+      // Attach click handler (prevent default for anchors so popup toggles instead of navigating)
+      trigger.addEventListener('click', function(e){
+        // if it's an anchor and user wants mailto default behavior, they can change; here we toggle popup
+        if (e.target && e.target.tagName.toLowerCase() === 'a') e.preventDefault();
+        toggleOpen();
+      });
+    }
+
+    function openPopup(){
+      popup.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      // focus first link
+      setTimeout(() => {
+        var first = popup.querySelector('a');
+        if (first) first.focus();
+      }, 20);
+      console.log('Contact popup opened');
+    }
+    function closePopup(){
+      popup.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      console.log('Contact popup closed');
+      if (trigger) trigger.focus();
+    }
+    function toggleOpen(){ popup.getAttribute('aria-hidden') === 'true' ? openPopup() : closePopup(); }
+
+    // Close button
+    if (closeBtn) closeBtn.addEventListener('click', closePopup);
+
+    // Backdrop click: if clicked outside panel close
+    popup.addEventListener('click', function(e){
+      if (e.target === popup) closePopup();
+    });
+
+    // Escape key closes
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && popup.getAttribute('aria-hidden') === 'false') closePopup();
+    });
+
+    // Defensive: hide popup on load (in case it was visible)
+    popup.setAttribute('aria-hidden','true');
+
+    // Debug info in console to help you see what's bound
+    console.log('Contact modal initialized. Trigger:', trigger, 'Popup element:', popup);
+  });
+})();
 </script>
+
+
+<!-- Chat Button -->
+<<!-- Custom Chat Button -->
+<div id="custom-chat-btn" style="
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f46e5, #10b981);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 28px;
+    color: #fff;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+    z-index: 99999;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+">💬</div>
+
+<!-- Custom Chat Container -->
+<div id="custom-chat-box" style="
+    position: fixed;
+    bottom: 100px;
+    right: 24px;
+    width: 400px;
+    max-width: 90%;
+    height: 520px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #0f172a;
+    display: none;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 99999;
+"></div>
+
+<style>
+/* Dark theme for chat */
+.custom-n8n-chat *, .custom-n8n-chat *::before, .custom-n8n-chat *::after {
+    font-family: 'Poppins', sans-serif !important;
+    color: #e5e7eb !important;
+    background: #0f172a !important;
+}
+.custom-n8n-chat .n8n-chat-message-bubble {
+    background: #1f2937 !important;
+    color: #e5e7eb !important;
+    border: none !important;
+}
+.custom-n8n-chat .n8n-chat-message-bubble--user {
+    background: #4f46e5 !important;
+    color: #fff !important;
+    border: none !important;
+}
+.custom-n8n-chat .n8n-chat-input input {
+    background: #1f2937 !important;
+    border: 1px solid #374151 !important;
+    color: #fff !important;
+}
+.custom-n8n-chat .n8n-chat-input button {
+    background: linear-gradient(135deg, #4f46e5, #10b981) !important;
+    color: #fff !important;
+    border: none !important;
+}
+</style>
 
 <script type="module">
-  import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
+import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
-  const chatBtn = document.getElementById('custom-chat-btn');
-  const chatBox = document.getElementById('custom-chat-box');
-  let chatInitialized = false;
+let chatInitialized = false;
+const chatBtn = document.getElementById('custom-chat-btn');
+const chatBox = document.getElementById('custom-chat-box');
 
-  function toggleChat() {
-    if(chatBox.style.display==="block"){
-      chatBox.style.opacity=0;
-      chatBox.style.transform="scale(0.9)";
-      setTimeout(()=>chatBox.style.display="none",300);
+function toggleChat() {
+    if(chatBox.style.display === "block") {
+        chatBox.style.opacity = 0;
+        chatBox.style.transform = "scale(0.9)";
+        setTimeout(() => chatBox.style.display = "none", 300);
     } else {
-      chatBox.style.display="block";
-      setTimeout(()=>{ chatBox.style.opacity=1; chatBox.style.transform="scale(1)"; },20);
+        chatBox.style.display = "block";
+        setTimeout(() => {
+            chatBox.style.opacity = 1;
+            chatBox.style.transform = "scale(1)";
+        }, 20);
 
-      if(!chatInitialized){
-        createChat({
-          target:"#custom-chat-box",
-          webhookUrl:"https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
-          mode:"inline",
-          autoOpen:false,
-          showLauncher:false,
-          showWelcomeScreen:false,
-          initialMessages:["👋 Hi, I'm **Anup**. How can I help you today?"],
-          rootClass:"custom-n8n-chat"
-        });
-        chatInitialized=true;
-      }
+        if(!chatInitialized) {
+            createChat({
+                target: "#custom-chat-box",
+                webhookUrl: "https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
+                mode: "inline",
+                autoOpen: false,       // Opens only on click
+                showLauncher: false,   // disables default n8n icon
+                showWelcomeScreen: false,
+                initialMessages: [
+                    "👋 Hi, I'm **Anup**. How can I help you today?"
+                ],
+                rootClass: "custom-n8n-chat"
+            });
+            chatInitialized = true;
+        }
     }
-  }
+}
 
-  chatBtn.addEventListener('click', toggleChat);
+// Single click toggle
+chatBtn.addEventListener("click", toggleChat);
+
+// Hover effect
+chatBtn.addEventListener("mouseenter", () => {
+    chatBtn.style.transform = "scale(1.15)";
+    chatBtn.style.boxShadow = "0 12px 35px rgba(0,0,0,0.5)";
+});
+chatBtn.addEventListener("mouseleave", () => {
+    chatBtn.style.transform = "scale(1)";
+    chatBtn.style.boxShadow = "0 6px 25px rgba(0,0,0,0.3)";
+});
 </script>
+
 
 
 </body>
