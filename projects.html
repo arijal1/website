@@ -312,7 +312,7 @@
   </script>
 
 <!-- Chatbot Widget -->
-<!-- Custom Glass Chatbot Widget -->
+<!-- Glass Chatbot Widget -->
 <style>
   #glass-chatbot {
     position: fixed;
@@ -434,11 +434,10 @@
         chatInput: message
       })
     })
-    .then(res => res.json())
-    .then(data => {
-      console.log("Webhook response:", data);
-      const reply = data.reply || data.text || data.response || JSON.stringify(data);
-      chatBody.innerHTML += `<div><strong>AnupBot:</strong> ${reply}</div>`;
+    .then(res => res.text()) // ✅ Handles plain text or JSON
+    .then(text => {
+      console.log("Webhook response:", text);
+      chatBody.innerHTML += `<div><strong>AnupBot:</strong> ${text}</div>`;
       chatBody.scrollTop = chatBody.scrollHeight;
     })
     .catch(err => {
@@ -447,7 +446,6 @@
     });
   }
 </script>
-
 
 </body>
 </html>
