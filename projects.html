@@ -424,11 +424,12 @@
     fetch(webhookURL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: message }) // Adjusted to match n8n format
+      body: JSON.stringify({ text: message }) // ✅ Correct key for n8n agent
     })
     .then(res => res.json())
     .then(data => {
-      const reply = data.reply || data.text || JSON.stringify(data);
+      console.log("Webhook response:", data); // ✅ Debug log
+      const reply = data.reply || data.text || JSON.stringify(data); // ✅ Flexible parsing
       chatBody.innerHTML += `<div><strong>AnupBot:</strong> ${reply}</div>`;
       chatBody.scrollTop = chatBody.scrollHeight;
     })
@@ -437,6 +438,7 @@
     });
   }
 </script>
+
 
 </body>
 </html>
