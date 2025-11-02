@@ -312,7 +312,7 @@
   </script>
 
 <!-- Chatbot Widget -->
-<!-- Glass Chatbot Widget -->
+<!-- Custom Glass Chatbot Widget -->
 <style>
   #glass-chatbot {
     position: fixed;
@@ -354,72 +354,98 @@
     color: #fff;
   }
 
-  #custom-chat-box {
-    height: 100%;
+  #glass-chat-header {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 14px;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
-  /* Optional: Customize n8n chat styles */
-  .custom-n8n-chat .n8n-chat-message-bubble {
-    background: #1f2937 !important;
-    color: #e5e7eb !important;
-    border: none !important;
+  #glass-chat-body {
+    padding: 12px;
+    height: 360px;
+    overflow-y: auto;
+    font-size: 14px;
   }
 
-  .custom-n8n-chat .n8n-chat-message-bubble--user {
-    background: #4f46e5 !important;
-    color: #fff !important;
-    border: none !important;
+  #glass-chat-input {
+    display: flex;
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
 
-  .custom-n8n-chat .n8n-chat-input input {
-    background: #1f2937 !important;
-    border: 1px solid #374151 !important;
-    color: #fff !important;
+  #glass-chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    outline: none;
   }
 
-  .custom-n8n-chat .n8n-chat-input button {
-    background: linear-gradient(135deg, #4f46e5, #10b981) !important;
-    color: #fff !important;
-    border: none !important;
+  #glass-chat-input button {
+    background: linear-gradient(135deg, #4f46e5, #10b981);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    cursor: pointer;
   }
 </style>
 
 <div id="glass-chatbot">
   <button id="glass-chatbot-button">💬</button>
   <div id="glass-chat-window">
-    <div id="custom-chat-box"></div>
+    <div id="glass-chat-header">AnupBot Assistant</div>
+    <div id="glass-chat-body"></div>
+    <div id="glass-chat-input">
+      <input type="text" id="glass-user-input" placeholder="Ask me anything..." />
+      <button onclick="sendGlassMessage()">Send</button>
+    </div>
   </div>
 </div>
 
-<script type="module">
-  import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
+<script>
+  const webhookURL = "http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat";
 
-  const chatBtn = document.getElementById("glass-chatbot-button");
-  const chatWindow = document.getElementById("glass-chat-window");
-  let chatInitialized = false;
+  function generateSessionId() {
+    return Math.random().toString(36).substring(2, 18);
+  }
 
-  chatBtn.addEventListener("click", () => {
-    if (chatWindow.style.display === "none") {
-      chatWindow.style.display = "block";
-      if (!chatInitialized) {
-        createChat({
-          target: "#custom-chat-box",
-          webhookUrl: "https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
-          mode: "inline",
-          autoOpen: false,
-          showLauncher: false,
-          showWelcomeScreen: false,
-          initialMessages: [
-            "👋 Hi, I'm **AnupBot**. How can I help you today?"
-          ],
-          rootClass: "custom-n8n-chat"
-        });
-        chatInitialized = true;
-      }
-    } else {
-      chatWindow.style.display = "none";
-    }
-  });
+  document.getElementById("glass-chatbot-button").onclick = () => {
+    const chatWindow = document.getElementById("glass-chat-window");
+    chatWindow.style.display = chatWindow.style.display === "none" ? "block" : "none";
+  };
+
+  function sendGlassMessage() {
+    const input = document.getElementById("glass-user-input");
+    const message = input.value.trim();
+    if (!message) return;
+
+    const chatBody = document.getElementById("glass-chat-body");
+    chatBody.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
+    input.value = "";
+
+    fetch(webhookURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sessionId: generateSessionId(),
+        action: "sendMessage",
+        chatInput: message
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log("Webhook response:", data);
+      const reply = data.reply || data.text || data.response || JSON.stringify(data);
+      chatBody.innerHTML += `<div><strong>AnupBot:</strong> ${reply}</div>`;
+      chatBody.scrollTop = chatBody.scrollHeight;
+    })
+    .catch(err => {
+      console.error("Fetch error:", err);
+      chatBody.innerHTML += `<div><strong>AnupBot:</strong> Sorry, something went wrong.</div>`;
+    });
+  }
 </script>
 
 
