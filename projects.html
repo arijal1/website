@@ -421,21 +421,25 @@
     chatBody.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
     input.value = "";
 
-    fetch(webhookURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: message }) // ✅ Correct key for n8n agent
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log("Webhook response:", data); // ✅ Debug log
-      const reply = data.reply || data.text || JSON.stringify(data); // ✅ Flexible parsing
-      chatBody.innerHTML += `<div><strong>AnupBot:</strong> ${reply}</div>`;
-      chatBody.scrollTop = chatBody.scrollHeight;
-    })
-    .catch(err => {
-      chatBody.innerHTML += `<div><strong>AnupBot:</strong> Sorry, something went wrong.</div>`;
-    });
+  fetch(webhookURL, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ text: message }) // Make sure this matches your n8n agent
+})
+.then(res => {
+  console.log("Status:", res.status);
+  return res.json();
+})
+.then(data => {
+  console.log("Webhook response:", data);
+  const reply = data.reply || data.text || JSON.stringify(data);
+  chatBody.innerHTML += `<div><strong>AnupBot:</strong> ${reply}</div>`;
+  chatBody.scrollTop = chatBody.scrollHeight;
+})
+.catch(err => {
+  console.error("Fetch error:", err);
+  chatBody.innerHTML += `<div><strong>AnupBot:</strong> Sorry, something went wrong.</div>`;
+});
   }
 </script>
 
