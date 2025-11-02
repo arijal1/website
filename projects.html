@@ -312,6 +312,7 @@
   </script>
 
 <!-- Chatbot Widget -->
+<!-- Chatbot Widget -->
 <style>
   #anup-chatbot {
     position: fixed;
@@ -400,7 +401,7 @@
 </div>
 
 <script>
-  const webhookURL = "https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat";
+  const webhookURL = "http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat";
 
   document.getElementById("anup-chatbot-button").onclick = () => {
     const chatWindow = document.getElementById("anup-chat-window");
@@ -423,7 +424,7 @@
     })
     .then(res => res.json())
     .then(data => {
-      const reply = data.reply || "🤖 Response received.";
+      const reply = data.reply || data.text || "🤖 Response received.";
       chatBody.innerHTML += `<div><strong>AnupBot:</strong> ${reply}</div>`;
       chatBody.scrollTop = chatBody.scrollHeight;
     })
@@ -432,7 +433,6 @@
     });
   }
 </script>
-
 
   
 </body>
