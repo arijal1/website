@@ -600,6 +600,88 @@
 </script>
 
 
+<!-- Chat Button -->
+<button id="chat-launcher" 
+  style="
+    position:fixed;
+    bottom:24px;
+    right:24px;
+    z-index:99999;
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#4f46e5,#10b981);
+    color:#fff;
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:30px;
+    box-shadow:0 6px 25px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: pulse 2s infinite;
+  ">
+💬
+</button>
+
+<!-- Chat Container -->
+<div id="anup-chat-box"
+  style="
+    position:fixed;
+    bottom:110px;
+    right:24px;
+    width:400px;
+    max-width:90%;
+    height:520px;
+    border-radius:20px;
+    overflow:hidden;
+    background:#0f172a;
+    display:none;
+    z-index:99999;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    transform: scale(0.9);
+    opacity:0;
+    transition: all 0.3s ease;
+  ">
+</div>
+
+<style>
+/* Pulse animation for chat button */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(79,70,229,0.5); }
+  70% { box-shadow: 0 0 0 15px rgba(79,70,229,0); }
+  100% { box-shadow: 0 0 0 0 rgba(79,70,229,0); }
+}
+
+/* Force dark theme for n8n chat */
+.n8n-chat, .n8n-chat-window, .n8n-chat-root {
+  background:#0f172a !important;
+  color:#e5e7eb !important;
+  font-family:'Poppins',sans-serif !important;
+}
+.n8n-chat-message-bubble {
+  background:#1f2937 !important;
+  color:#e5e7eb !important;
+  border:none !important;
+}
+.n8n-chat-message-bubble--user {
+  background:#4f46e5 !important;
+  color:white !important;
+  border:none !important;
+}
+.n8n-chat-input input {
+  background:#1f2937 !important;
+  border:1px solid #374151 !important;
+  color:white !important;
+}
+.n8n-chat-input button {
+  background:linear-gradient(135deg,#4f46e5,#10b981) !important;
+  color:white !important;
+  border:none !important;
+}
+</style>
+
 <script type="module">
 import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
@@ -607,17 +689,17 @@ let chatInitialized = false;
 const chatButton = document.getElementById("chat-launcher");
 const chatBox = document.getElementById("anup-chat-box");
 
-// Toggle chat box function
+// Toggle chat box with smooth animation
 function toggleChat() {
   if(chatBox.style.display === "block"){
     chatBox.style.opacity = 0;
-    chatBox.style.transform = "translateY(20px)";
+    chatBox.style.transform = "scale(0.9)";
     setTimeout(()=> chatBox.style.display = "none", 300);
   } else {
     chatBox.style.display = "block";
     setTimeout(()=>{
       chatBox.style.opacity = 1;
-      chatBox.style.transform = "translateY(0)";
+      chatBox.style.transform = "scale(1)";
     }, 20);
 
     // Initialize chat only once
@@ -627,7 +709,7 @@ function toggleChat() {
         webhookUrl:"https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
         mode:"inline",
         autoOpen:true,
-        showLauncher:false, // ✅ disables n8n default icon
+        showLauncher:false,
         showWelcomeScreen:false,
         initialMessages:[
           "👋 Hi, I'm **Anup**. How can I help you today?"
@@ -642,8 +724,8 @@ chatButton.addEventListener("click", toggleChat);
 
 // Button hover animation
 chatButton.addEventListener("mouseenter", () => {
-  chatButton.style.transform = "scale(1.1)";
-  chatButton.style.boxShadow = "0 10px 30px rgba(0,0,0,0.4)";
+  chatButton.style.transform = "scale(1.15)";
+  chatButton.style.boxShadow = "0 12px 35px rgba(0,0,0,0.5)";
 });
 chatButton.addEventListener("mouseleave", () => {
   chatButton.style.transform = "scale(1)";
