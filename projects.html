@@ -312,75 +312,79 @@
   </script>
 
 <!-- Chatbot Widget -->
-<!-- Chatbot Widget -->
+<!-- Glass Chatbot Widget -->
 <style>
-  #anup-chatbot {
+  #glass-chatbot {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 24px;
+    right: 24px;
     z-index: 9999;
   }
 
-  #anup-chatbot-button {
-    background-color: #4A90E2;
+  #glass-chatbot-button {
+    background: linear-gradient(135deg, #4f46e5, #10b981);
     color: white;
     border: none;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     font-size: 28px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     transition: transform 0.3s ease;
   }
 
-  #anup-chatbot-button:hover {
+  #glass-chatbot-button:hover {
     transform: scale(1.1);
   }
 
-  #anup-chat-window {
+  #glass-chat-window {
     display: none;
     position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 320px;
-    max-height: 500px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    bottom: 100px;
+    right: 24px;
+    width: 360px;
+    max-height: 520px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
     overflow: hidden;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
   }
 
-  #anup-chat-header {
-    background-color: #4A90E2;
-    color: white;
-    padding: 12px;
-    font-weight: bold;
+  #glass-chat-header {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 14px;
+    font-weight: 600;
     text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
-  #anup-chat-body {
-    padding: 10px;
-    height: 350px;
+  #glass-chat-body {
+    padding: 12px;
+    height: 360px;
     overflow-y: auto;
     font-size: 14px;
   }
 
-  #anup-chat-input {
+  #glass-chat-input {
     display: flex;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
 
-  #anup-chat-input input {
+  #glass-chat-input input {
     flex: 1;
     padding: 10px;
     border: none;
+    background: rgba(255,255,255,0.05);
+    color: #fff;
     outline: none;
   }
 
-  #anup-chat-input button {
-    background-color: #4A90E2;
+  #glass-chat-input button {
+    background: linear-gradient(135deg, #4f46e5, #10b981);
     color: white;
     border: none;
     padding: 10px 16px;
@@ -388,14 +392,14 @@
   }
 </style>
 
-<div id="anup-chatbot">
-  <button id="anup-chatbot-button">💬</button>
-  <div id="anup-chat-window">
-    <div id="anup-chat-header">Chat with AnupBot</div>
-    <div id="anup-chat-body"></div>
-    <div id="anup-chat-input">
-      <input type="text" id="anup-user-input" placeholder="Type your message..." />
-      <button onclick="sendAnupMessage()">Send</button>
+<div id="glass-chatbot">
+  <button id="glass-chatbot-button">💬</button>
+  <div id="glass-chat-window">
+    <div id="glass-chat-header">AnupBot Assistant</div>
+    <div id="glass-chat-body"></div>
+    <div id="glass-chat-input">
+      <input type="text" id="glass-user-input" placeholder="Ask me anything..." />
+      <button onclick="sendGlassMessage()">Send</button>
     </div>
   </div>
 </div>
@@ -403,28 +407,28 @@
 <script>
   const webhookURL = "http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat";
 
-  document.getElementById("anup-chatbot-button").onclick = () => {
-    const chatWindow = document.getElementById("anup-chat-window");
+  document.getElementById("glass-chatbot-button").onclick = () => {
+    const chatWindow = document.getElementById("glass-chat-window");
     chatWindow.style.display = chatWindow.style.display === "none" ? "block" : "none";
   };
 
-  function sendAnupMessage() {
-    const input = document.getElementById("anup-user-input");
+  function sendGlassMessage() {
+    const input = document.getElementById("glass-user-input");
     const message = input.value.trim();
     if (!message) return;
 
-    const chatBody = document.getElementById("anup-chat-body");
+    const chatBody = document.getElementById("glass-chat-body");
     chatBody.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
     input.value = "";
 
     fetch(webhookURL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message })
+      body: JSON.stringify({ text: message }) // Adjusted to match n8n format
     })
     .then(res => res.json())
     .then(data => {
-      const reply = data.reply || data.text || "🤖 Response received.";
+      const reply = data.reply || data.text || JSON.stringify(data);
       chatBody.innerHTML += `<div><strong>AnupBot:</strong> ${reply}</div>`;
       chatBody.scrollTop = chatBody.scrollHeight;
     })
@@ -434,6 +438,5 @@
   }
 </script>
 
-  
 </body>
 </html>
