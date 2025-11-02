@@ -407,6 +407,10 @@
 <script>
   const webhookURL = "http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat";
 
+  function generateSessionId() {
+    return Math.random().toString(36).substring(2, 18);
+  }
+
   document.getElementById("glass-chatbot-button").onclick = () => {
     const chatWindow = document.getElementById("glass-chat-window");
     chatWindow.style.display = chatWindow.style.display === "none" ? "block" : "none";
@@ -421,25 +425,29 @@
     chatBody.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
     input.value = "";
 
-  fetch(webhookURL, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ text: message }) // Make sure this matches your n8n agent
-})
-.then(res => {
-  console.log("Status:", res.status);
-  return res.json();
-})
-.then(data => {
-  console.log("Webhook response:", data);
-  const reply = data.reply || data.text || JSON.stringify(data);
-  chatBody.innerHTML += `<div><strong>AnupBot:</strong> ${reply}</div>`;
-  chatBody.scrollTop = chatBody.scrollHeight;
-})
-.catch(err => {
-  console.error("Fetch error:", err);
-  chatBody.innerHTML += `<div><strong>AnupBot:</strong> Sorry, something went wrong.</div>`;
-});
+    fetch(webhookURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sessionId: generateSessionId(),
+        action: "sendMessage",
+        chatInput: message
+      })
+    })
+    .then(res => {
+      console.log("Status:", res.status);
+      return res.json();
+    })
+    .then(data => {
+      console.log("Webhook response:", data);
+      const reply = data.reply || data.text || data.response || JSON.stringify(data);
+      chatBody.innerHTML += `<div><strong>AnupBot:</strong> ${reply}</div>`;
+      chatBody.scrollTop = chatBody.scrollHeight;
+    })
+    .catch(err => {
+      console.error("Fetch error:", err);
+      chatBody.innerHTML += `<div><strong>AnupBot:</strong> Sorry, something went wrong.</div>`;
+    });
   }
 </script>
 
