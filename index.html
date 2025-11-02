@@ -602,24 +602,25 @@
 
 
 <!-- Chat Button -->
-<button id="chat-launcher"
+<button id="chat-launcher" 
   style="
     position:fixed;
-    bottom:22px;
-    right:22px;
+    bottom:24px;
+    right:24px;
     z-index:99999;
-    width:62px;
-    height:62px;
+    width:70px;
+    height:70px;
     border-radius:50%;
-    font-size:28px;
-    background:linear-gradient(135deg,#3b82f6,#9333ea);
+    background:linear-gradient(135deg,#4f46e5,#10b981);
     color:#fff;
     border:none;
     display:flex;
     align-items:center;
     justify-content:center;
     cursor:pointer;
-    box-shadow:0 6px 20px rgba(0,0,0,.28);
+    font-size:30px;
+    box-shadow:0 6px 25px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   ">
 💬
 </button>
@@ -628,21 +629,25 @@
 <div id="anup-chat-box"
   style="
     position:fixed;
-    bottom:95px;
-    right:22px;
-    width:375px;
-    height:500px;
-    border-radius:18px;
+    bottom:110px;
+    right:24px;
+    width:400px;
+    max-width:90%;
+    height:520px;
+    border-radius:20px;
     overflow:hidden;
     background:#0f172a;
     display:none;
     z-index:99999;
-    box-shadow:0 8px 25px rgba(0,0,0,.5);
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    transform: translateY(20px);
+    opacity:0;
+    transition: all 0.3s ease;
   ">
 </div>
 
 <style>
-/* Force dark theme and styling */
+/* Force dark theme for n8n chat */
 .n8n-chat, .n8n-chat-window, .n8n-chat-root {
   background:#0f172a !important;
   color:#e5e7eb !important;
@@ -654,7 +659,7 @@
   border:none !important;
 }
 .n8n-chat-message-bubble--user {
-  background:#3b82f6 !important;
+  background:#4f46e5 !important;
   color:white !important;
   border:none !important;
 }
@@ -664,7 +669,7 @@
   color:white !important;
 }
 .n8n-chat-input button {
-  background:linear-gradient(135deg,#3b82f6,#9333ea) !important;
+  background:linear-gradient(135deg,#4f46e5,#10b981) !important;
   color:white !important;
   border:none !important;
 }
@@ -674,24 +679,49 @@
 import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
 let chatInitialized = false;
+const chatButton = document.getElementById("chat-launcher");
+const chatBox = document.getElementById("anup-chat-box");
 
-document.getElementById("chat-launcher").addEventListener("click", () => {
-  const box = document.getElementById("anup-chat-box");
-  box.style.display = box.style.display === "block" ? "none" : "block";
+// Toggle chat box function
+function toggleChat() {
+  if(chatBox.style.display === "block"){
+    chatBox.style.opacity = 0;
+    chatBox.style.transform = "translateY(20px)";
+    setTimeout(()=> chatBox.style.display = "none", 300);
+  } else {
+    chatBox.style.display = "block";
+    setTimeout(()=>{
+      chatBox.style.opacity = 1;
+      chatBox.style.transform = "translateY(0)";
+    }, 20);
 
-  if(!chatInitialized){
-    createChat({
-      target:"#anup-chat-box",
-      webhookUrl:"https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
-      mode:"inline",
-      autoOpen:true,
-      showWelcomeScreen:false,
-      initialMessages:[
-        "👋 Hi, I'm **Anup**. How can I help you today?"
-      ]
-    });
-    chatInitialized = true;
+    // Initialize chat only once
+    if(!chatInitialized){
+      createChat({
+        target:"#anup-chat-box",
+        webhookUrl:"https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat",
+        mode:"inline",
+        autoOpen:true,
+        showWelcomeScreen:false,
+        initialMessages:[
+          "👋 Hi, I'm **Anup**. How can I help you today?"
+        ]
+      });
+      chatInitialized = true;
+    }
   }
+}
+
+chatButton.addEventListener("click", toggleChat);
+
+// Button hover animation
+chatButton.addEventListener("mouseenter", () => {
+  chatButton.style.transform = "scale(1.1)";
+  chatButton.style.boxShadow = "0 10px 30px rgba(0,0,0,0.4)";
+});
+chatButton.addEventListener("mouseleave", () => {
+  chatButton.style.transform = "scale(1)";
+  chatButton.style.boxShadow = "0 6px 25px rgba(0,0,0,0.3)";
 });
 </script>
 
