@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Projects — Anup Rijal</title>
+<meta content="Selected IT projects from Anup Rijal — infrastructure transitions, automation, self-hosted builds." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+/* ======================== DESIGN TOKENS (shared) ======================== */
+:root {
+  --bg:#0D0F14; --bg2:#13161E; --bg3:#1A1D27; --surface:#1E2130; --surface2:#252840;
+  --border:rgba(212,175,55,0.15); --border-s:rgba(212,175,55,0.42);
+  --text:#F0F0F5; --text2:#9A9BB0; --text3:#5A5B70;
+  --gold:#D4AF37; --gold2:#F0CE6A; --mint:#00E5A0; --pink:#F03D8C; --purple:#7C3AED;
+  --shadow-sm:0 2px 8px rgba(0,0,0,.3); --shadow-md:0 8px 24px rgba(0,0,0,.42);
+  --shadow-lg:0 20px 56px rgba(0,0,0,.55); --r-sm:8px; --r-md:14px; --r-lg:20px;
+  --maxw:1200px; --ease:.25s ease;
+}
+[data-theme="light"] {
+  --bg:#F4F3EE; --bg2:#ECEAE4; --bg3:#E3E0D8; --surface:#FFFFFF; --surface2:#F7F5F0;
+  --border:rgba(160,130,20,0.18); --border-s:rgba(160,130,20,0.45);
+  --text:#18182A; --text2:#52526A; --text3:#8888A0;
+  --gold:#A87C14; --gold2:#C9A030;
+  --shadow-sm:0 2px 8px rgba(0,0,0,.07); --shadow-md:0 8px 24px rgba(0,0,0,.1);
+  --shadow-lg:0 20px 56px rgba(0,0,0,.14);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  transition:background var(--ease),color var(--ease)}
+
+/* ======================== PAGE TRANSITION ======================== */
+#pt{position:fixed;inset:0;background:var(--bg);z-index:9999;pointer-events:none;
+  opacity:1;transition:opacity .38s ease}
+#pt.done{opacity:0}
+
+/* ======================== BACKGROUNDS ======================== */
+.bg-mesh{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.bg-mesh::before{content:'';position:absolute;width:800px;height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(124,58,237,.1) 0%,transparent 68%);
+  top:-220px;left:-120px;animation:da 22s ease-in-out infinite alternate}
+.bg-mesh::after{content:'';position:absolute;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,175,55,.07) 0%,transparent 68%);
+  bottom:-100px;right:-60px;animation:db 19s ease-in-out infinite alternate}
+@keyframes da{0%{transform:translate(0,0)}100%{transform:translate(70px,90px)}}
+@keyframes db{0%{transform:translate(0,0)}100%{transform:translate(-55px,-65px)}}
+[data-theme="light"] .bg-mesh::before{background:radial-gradient(circle,rgba(124,58,237,.05) 0%,transparent 68%)}
+[data-theme="light"] .bg-mesh::after{background:radial-gradient(circle,rgba(212,175,55,.06) 0%,transparent 68%)}
+.bg-dots{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.028;
+  background-image:radial-gradient(circle,var(--gold) 1px,transparent 1px);background-size:28px 28px}
+[data-theme="light"] .bg-dots{opacity:.07}
+
+/* ======================== LAYOUT ======================== */
+.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+/* ======================== HEADER ======================== */
+header{position:fixed;top:0;left:0;right:0;z-index:100;
+  backdrop-filter:blur(14px) saturate(1.6);-webkit-backdrop-filter:blur(14px) saturate(1.6);
+  background:rgba(13,15,20,.78);border-bottom:1px solid var(--border);
+  transition:background var(--ease)}
+[data-theme="light"] header{background:rgba(244,243,238,.88)}
+.hdr{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-logo{width:36px;height:36px;border-radius:var(--r-sm);object-fit:cover;border:1px solid var(--border-s)}
+.brand-txt{font-family:'DM Serif Display',serif;font-size:1.1rem;line-height:1}
+.brand-txt em{font-style:normal;color:var(--gold)}
+.dnav{display:flex;align-items:center;gap:2px}
+.dnav a{color:var(--text2);text-decoration:none;font-size:.875rem;font-weight:500;
+  padding:7px 13px;border-radius:var(--r-sm);transition:color var(--ease),background var(--ease)}
+.dnav a:hover{color:var(--text);background:var(--surface)}
+.dnav a.act{color:var(--gold)}
+.hdr-r{display:flex;align-items:center;gap:10px}
+.tt-wrap{display:flex;align-items:center;gap:6px}
+.tt-ico{font-size:13px;user-select:none;line-height:1}
+.tt{width:44px;height:24px;border-radius:999px;background:var(--surface2);border:1px solid var(--border);
+  cursor:pointer;position:relative;flex-shrink:0;transition:background var(--ease)}
+.tt::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;
+  background:var(--gold);transition:transform .3s ease}
+[data-theme="light"] .tt::after{transform:translateX(20px)}
+.mbtn{display:none;align-items:center;justify-content:center;width:40px;height:40px;
+  border-radius:var(--r-sm);border:1px solid var(--border);background:transparent;
+  cursor:pointer;color:var(--text);transition:background var(--ease)}
+.mbtn:hover{background:var(--surface)}
+.mbtn svg{width:20px;height:20px}
+@media(max-width:900px){.dnav{display:none}.mbtn{display:flex}}
+
+/* ======================== MOBILE NAV ======================== */
+.mnav{position:fixed;inset:0;z-index:200;background:var(--bg);
+  transform:translateX(100%);transition:transform .36s cubic-bezier(.25,.46,.45,.94);
+  display:flex;flex-direction:column}
+.mnav.open{transform:translateX(0)}
+.mnav-hdr{display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:64px;border-bottom:1px solid var(--border)}
+.mnav-close{width:40px;height:40px;border-radius:var(--r-sm);border:1px solid var(--border);
+  background:transparent;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center}
+.mnav-links{list-style:none;padding:20px 16px;display:flex;flex-direction:column;gap:3px}
+.mnav-links a{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--r-md);
+  color:var(--text2);text-decoration:none;font-size:1.08rem;font-weight:500;
+  transition:color var(--ease),background var(--ease)}
+.mnav-links a:hover{color:var(--text);background:var(--surface)}
+.mni{font-size:18px;width:24px;text-align:center}
+.mnav-ft{margin-top:auto;padding:20px 24px;border-top:1px solid var(--border)}
+.mnav-soc{display:flex;gap:10px}
+.mnav-soc a{width:40px;height:40px;border-radius:var(--r-sm);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;color:var(--text2);text-decoration:none;
+  font-size:12px;font-weight:700;transition:color var(--ease),border-color var(--ease)}
+.mnav-soc a:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ======================== HERO ======================== */
+.hero{padding:120px 0 64px;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);margin-bottom:16px}
+.eyebrow::before{content:'';display:block;width:20px;height:2px;background:var(--gold);border-radius:2px}
+h1{font-family:'DM Serif Display',serif;font-size:clamp(2.4rem,5vw,3.8rem);
+  line-height:1.1;letter-spacing:-.02em;margin-bottom:18px}
+.hero-sub{color:var(--text2);font-size:1rem;max-width:580px;margin:0 auto 32px;line-height:1.72}
+
+/* Filter bar */
+.fbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+.fbtn{padding:7px 16px;border-radius:999px;font-size:.8rem;font-weight:600;cursor:pointer;
+  border:1px solid var(--border);background:transparent;color:var(--text2);
+  transition:all var(--ease);font-family:inherit}
+.fbtn:hover,.fbtn.act{background:var(--gold);color:#0D0F14;border-color:var(--gold)}
+
+/* ======================== BUTTONS ======================== */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:var(--r-md);
+  font-weight:600;font-size:.85rem;text-decoration:none;cursor:pointer;
+  transition:all var(--ease);border:1px solid transparent;font-family:inherit}
+.btn-p{background:var(--gold);color:#0D0F14;border-color:var(--gold)}
+.btn-p:hover{background:var(--gold2);border-color:var(--gold2);transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(212,175,55,.3)}
+.btn-o{background:transparent;color:var(--text);border-color:var(--border-s)}
+.btn-o:hover{background:var(--surface);border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.btn-sm{padding:8px 14px;font-size:.78rem}
+
+/* ======================== SECTIONS ======================== */
+section{padding:70px 0}
+.slabel{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:3px;color:var(--gold);margin-bottom:10px}
+.slabel::before{content:'';display:block;width:16px;height:2px;background:var(--gold);border-radius:2px}
+.stitle{font-family:'DM Serif Display',serif;font-size:clamp(1.7rem,3.5vw,2.4rem);line-height:1.2;margin-bottom:6px}
+.ssub{color:var(--text2);max-width:560px}
+
+/* ======================== PROJECT CARDS ======================== */
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+@media(max-width:780px){.pgrid{grid-template-columns:1fr}}
+
+.pcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+  overflow:hidden;transition:border-color var(--ease),transform var(--ease),box-shadow var(--ease);
+  display:flex;flex-direction:column}
+.pcard:hover{border-color:var(--border-s);transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.pcard-img{width:100%;height:200px;object-fit:cover;display:block;background:var(--bg3)}
+.pcard-img-ph{width:100%;height:160px;background:linear-gradient(135deg,var(--bg3),var(--surface2));
+  display:flex;align-items:center;justify-content:center;font-size:2.5rem;opacity:.5}
+.pcard-body{padding:22px;flex:1;display:flex;flex-direction:column;gap:10px}
+.pcard-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:999px;
+  font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;
+  background:rgba(212,175,55,.1);color:var(--gold);border:1px solid rgba(212,175,55,.25)}
+.badge.infra{background:rgba(124,58,237,.1);color:#A78BFA;border-color:rgba(124,58,237,.25)}
+.badge.auto{background:rgba(0,229,160,.08);color:var(--mint);border-color:rgba(0,229,160,.2)}
+.badge.web{background:rgba(240,61,140,.08);color:var(--pink);border-color:rgba(240,61,140,.2)}
+.badge.self{background:rgba(212,175,55,.1);color:var(--gold);border-color:rgba(212,175,55,.25)}
+.pcard-year{font-size:.75rem;color:var(--text3);font-weight:500}
+.pcard h3{font-family:'DM Serif Display',serif;font-size:1.18rem;line-height:1.3}
+.pcard p{color:var(--text2);font-size:.875rem;flex:1;line-height:1.65}
+.pcard-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:.68rem;font-weight:600;
+  background:var(--bg3);color:var(--text3);border:1px solid var(--border)}
+.pcard-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;padding-top:14px;border-top:1px solid var(--border)}
+
+/* Result/outcome highlight */
+.outcome{display:flex;align-items:center;gap:8px;padding:10px 13px;background:rgba(0,229,160,.07);
+  border:1px solid rgba(0,229,160,.18);border-radius:var(--r-sm);font-size:.8rem;color:var(--mint);font-weight:500}
+.outcome::before{content:'✓';font-weight:800}
+
+/* ======================== TECH STACK ======================== */
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.tgrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.tgrid{grid-template-columns:repeat(2,1fr)}}
+.titem{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
+  padding:18px 16px;text-align:center;transition:border-color var(--ease),transform var(--ease)}
+.titem:hover{border-color:var(--gold);transform:translateY(-2px)}
+.ticon{font-size:1.8rem;display:block;margin-bottom:8px}
+.tname{font-weight:700;font-size:.82rem;display:block}
+.tcat{color:var(--text3);font-size:.7rem;margin-top:2px}
+
+/* ======================== CTA BANNER ======================== */
+.cta-banner{background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(212,175,55,.08));
+  border:1px solid rgba(212,175,55,.25);border-radius:var(--r-lg);
+  padding:40px 36px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.cta-banner h3{font-family:'DM Serif Display',serif;font-size:1.6rem}
+.cta-banner p{color:var(--text2);font-size:.9rem;margin-top:5px}
+.cta-acts{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ======================== FOOTER ======================== */
+footer{border-top:1px solid var(--border);background:var(--bg2);padding:36px 0}
+.ftr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px}
+.fbrand{font-family:'DM Serif Display',serif;font-size:1.08rem}
+.fbrand em{font-style:normal;color:var(--gold)}
+.fcopy{color:var(--text3);font-size:.78rem;margin-top:3px}
+.fsoc{display:flex;gap:9px}
+.fsa{width:36px;height:36px;border-radius:var(--r-sm);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;color:var(--text2);
+  text-decoration:none;font-size:11px;font-weight:700;
+  transition:color var(--ease),border-color var(--ease)}
+.fsa:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ======================== CHATBOT ======================== */
+#cfab{position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:50%;
+  background:var(--gold);border:none;cursor:pointer;z-index:500;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 18px rgba(212,175,55,.38);transition:transform .2s,box-shadow .2s;color:#0D0F14}
+#cfab:hover{transform:scale(1.09);box-shadow:0 6px 26px rgba(212,175,55,.5)}
+#cfab svg{width:22px;height:22px}
+#cpanel{position:fixed;bottom:90px;right:24px;width:360px;max-width:calc(100vw - 40px);
+  height:490px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+  display:flex;flex-direction:column;box-shadow:var(--shadow-lg);z-index:490;overflow:hidden;
+  transform:scale(.92) translateY(20px);opacity:0;pointer-events:none;transform-origin:bottom right;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .25s ease}
+#cpanel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.chdr{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:11px;background:var(--bg2)}
+.cava{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--gold));
+  display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.cname{font-weight:700;font-size:.87rem}
+.cst{font-size:.72rem;color:var(--mint);display:flex;align-items:center;gap:4px}
+.cst::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--mint)}
+.cclse{width:28px;height:28px;border-radius:var(--r-sm);border:1px solid var(--border);
+  background:transparent;cursor:pointer;color:var(--text2);display:flex;align-items:center;
+  justify-content:center;font-size:17px;line-height:1;margin-left:auto;transition:background var(--ease)}
+.cclse:hover{background:var(--bg3)}
+.cbody{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.cmsg{max-width:84%;padding:10px 13px;border-radius:16px;font-size:.86rem;line-height:1.5}
+.cmsg.bot{background:var(--bg3);border-radius:4px 16px 16px 16px;align-self:flex-start;color:var(--text)}
+.cmsg.usr{background:var(--gold);color:#0D0F14;border-radius:16px 4px 16px 16px;align-self:flex-end;font-weight:500}
+.cfoot{padding:10px;border-top:1px solid var(--border);display:flex;gap:8px}
+.cinp{flex:1;padding:10px 13px;background:var(--bg3);border:1px solid var(--border);
+  border-radius:var(--r-md);color:var(--text);font-family:inherit;font-size:.86rem;outline:none;
+  transition:border-color var(--ease)}
+.cinp:focus{border-color:var(--gold)}
+.csnd{width:38px;height:38px;border-radius:var(--r-md);background:var(--gold);border:none;
+  cursor:pointer;color:#0D0F14;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.csnd:hover{background:var(--gold2)}
+
+/* ======================== ANIMATIONS ======================== */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+.rg>*{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.rg.vis>*:nth-child(1){opacity:1;transform:translateY(0);transition-delay:0s}
+.rg.vis>*:nth-child(2){opacity:1;transform:translateY(0);transition-delay:.08s}
+.rg.vis>*:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.16s}
+.rg.vis>*:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.24s}
+.rg.vis>*:nth-child(5){opacity:1;transform:translateY(0);transition-delay:.32s}
+.rg.vis>*:nth-child(6){opacity:1;transform:translateY(0);transition-delay:.40s}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+.mt-6{margin-top:24px}.mt-8{margin-top:32px}
+</style>
+</head>
+<body>
+
+<div id="pt" aria-hidden="true"></div>
+<div class="bg-mesh" aria-hidden="true"></div>
+<div class="bg-dots" aria-hidden="true"></div>
+
+<!-- Mobile nav overlay -->
+<nav class="mnav" id="mnav" aria-label="Mobile navigation" aria-hidden="true">
+  <div class="mnav-hdr">
+    <span class="brand-txt">Anup <em>Rijal</em></span>
+    <button class="mnav-close" id="mnav-close" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <ul class="mnav-links">
+    <li><a href="/" class="tl"><span class="mni">🏠</span>Home</a></li>
+    <li><a href="projects.html"><span class="mni">🔧</span>Projects</a></li>
+    <li><a href="blog.html" class="tl"><span class="mni">✍️</span>Blogs</a></li>
+    <li><a href="vlogs.html" class="tl"><span class="mni">🎬</span>Vlogs</a></li>
+    <li><a href="testimoni.html" class="tl"><span class="mni">💬</span>Testimony</a></li>
+  </ul>
+  <div class="mnav-ft">
+    <div class="mnav-soc">
+      <a href="mailto:rejalanop55@gmail.com" aria-label="Email">@</a>
+      <a href="https://github.com/arijal1" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
+      <a href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<header>
+  <div class="container hdr">
+    <a href="/" class="brand tl">
+      <img src="images/logo.png" alt="Anup Rijal" class="brand-logo" onerror="this.style.display='none'"/>
+      <span class="brand-txt">Anup <em>Rijal</em></span>
+    </a>
+    <nav class="dnav" aria-label="Primary navigation">
+      <a href="/" class="tl">Home</a>
+      <a href="projects.html" class="act">Projects</a>
+      <a href="blog.html" class="tl">Blogs</a>
+      <a href="vlogs.html" class="tl">Vlogs</a>
+      <a href="testimoni.html" class="tl">Testimony</a>
+    </nav>
+    <div class="hdr-r">
+      <div class="tt-wrap" title="Toggle dark/light mode">
+        <span class="tt-ico">🌙</span>
+        <button class="tt" id="tt" aria-label="Toggle theme"></button>
+        <span class="tt-ico">☀️</span>
+      </div>
+      <button class="mbtn" id="mbtn" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">Portfolio</div>
+    <h1>Selected <em style="font-style:italic;color:var(--gold)">Projects</em></h1>
+    <p class="hero-sub">Infrastructure transitions, automation pipelines, self-hosted builds, and enterprise deployments — delivered with zero downtime and full documentation.</p>
+    <div class="fbar">
+      <button class="fbtn act" data-filter="all">All</button>
+      <button class="fbtn" data-filter="infra">Infrastructure</button>
+      <button class="fbtn" data-filter="auto">Automation</button>
+      <button class="fbtn" data-filter="web">Web</button>
+      <button class="fbtn" data-filter="self">Self-hosted</button>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section style="padding-top:0">
+  <div class="container">
+    <div class="pgrid rg" id="pgrid">
+
+      <!-- Project 1 -->
+      <article class="pcard" data-cat="infra">
+        <div class="pcard-img-ph">🏥</div>
+        <div class="pcard-body">
+          <div class="pcard-top">
+            <span class="badge infra">Infrastructure</span>
+            <span class="pcard-year">2024</span>
+          </div>
+          <h3>IT Transition — Opal Healthcare</h3>
+          <p>Led full IT infrastructure transition during a care community acquisition. Decommissioned legacy hardware and network, designed new floor plan and network architecture, and installed ~50 devices including switches, workstations, printers, and phones.</p>
+          <div class="outcome">Completed in 6 weeks with zero downtime</div>
+          <div class="pcard-meta">
+            <span class="pill">Windows Server</span>
+            <span class="pill">Active Directory</span>
+            <span class="pill">Network Design</span>
+            <span class="pill">EUC</span>
+          </div>
+          <div class="pcard-acts">
+            <img src="https://raw.githubusercontent.com/arijal1/website/main/images/IMG_0698.jpeg" alt="IT Transition project" loading="lazy" style="width:100%;border-radius:var(--r-sm);object-fit:cover;height:140px;margin-top:4px;" onerror="this.style.display='none'"/>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="pcard" data-cat="infra">
+        <div class="pcard-img-ph">🏨</div>
+        <div class="pcard-body">
+          <div class="pcard-top">
+            <span class="badge infra">Cutover</span>
+            <span class="pcard-year">2024</span>
+          </div>
+          <h3>ICT Cutover — Kew Gardens (Opal)</h3>
+          <p>As ICT Technical Support Specialist L2, delivered a one-week onsite cutover rolling out BestMed iPads, Surface tablets, Workstations-on-Wheels, printers, smartcard readers, and visitor iPads — with full network connectivity and staff training.</p>
+          <div class="outcome">Zero staff disruption, all devices operational Day 1</div>
+          <div class="pcard-meta">
+            <span class="pill">Microsoft Intune</span>
+            <span class="pill">Teams Rooms</span>
+            <span class="pill">Zoom</span>
+            <span class="pill">MDM</span>
+          </div>
+          <div class="pcard-acts">
+            <img src="https://raw.githubusercontent.com/arijal1/website/main/images/IMG_2891.jpeg" alt="Kew Gardens cutover" loading="lazy" style="width:100%;border-radius:var(--r-sm);object-fit:cover;height:140px;margin-top:4px;" onerror="this.style.display='none'"/>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="pcard" data-cat="auto">
+        <div class="pcard-img-ph">⚙️</div>
+        <div class="pcard-body">
+          <div class="pcard-top">
+            <span class="badge auto">Automation</span>
+            <span class="pcard-year">2024</span>
+          </div>
+          <h3>Help Desk Automation — Freshservice</h3>
+          <p>Designed and implemented automated ticket routing by issue category and priority, auto-escalation for aging tickets, email notifications, and knowledge base integration across the service desk.</p>
+          <div class="outcome">25% faster response time · 30% FCR improvement</div>
+          <div class="pcard-meta">
+            <span class="pill">Freshservice</span>
+            <span class="pill">ITSM</span>
+            <span class="pill">Workflow Automation</span>
+          </div>
+          <div class="pcard-acts">
+            <a href="n8n-automation-project.html" class="btn btn-o btn-sm tl">Read Case Study →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 4 -->
+      <article class="pcard" data-cat="self">
+        <div class="pcard-img-ph">🖥️</div>
+        <div class="pcard-body">
+          <div class="pcard-top">
+            <span class="badge self">Self-hosted</span>
+            <span class="pcard-year">2023–24</span>
+          </div>
+          <h3>Personal Home Lab</h3>
+          <p>Fully self-hosted stack for hands-on sysadmin and security experimentation: Bitwarden for secrets management, Nginx Proxy Manager with SSL termination, Nextcloud for private cloud, RustDesk on Raspberry Pi for remote access, and Pi-hole for network-level ad blocking.</p>
+          <div class="outcome">100% private, on-prem infrastructure</div>
+          <div class="pcard-meta">
+            <span class="pill">Docker</span>
+            <span class="pill">Raspberry Pi</span>
+            <span class="pill">Nginx</span>
+            <span class="pill">SSL/TLS</span>
+            <span class="pill">DNS</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 5 -->
+      <article class="pcard" data-cat="web">
+        <div class="pcard-img-ph">🌐</div>
+        <div class="pcard-body">
+          <div class="pcard-top">
+            <span class="badge web">Web</span>
+            <span class="pcard-year">2024–25</span>
+          </div>
+          <h3>AI-Powered Portfolio Website</h3>
+          <p>Built a responsive multi-page personal site using AI assistance. Version-controlled with Git and deployed publicly on GitHub Pages with SSL and CDN via Cloudflare — entirely without backend code or a paid hosting service.</p>
+          <div class="outcome">Live at anuprijal.com · SSL · Cloudflare CDN</div>
+          <div class="pcard-meta">
+            <span class="pill">HTML/CSS/JS</span>
+            <span class="pill">GitHub Pages</span>
+            <span class="pill">Cloudflare</span>
+            <span class="pill">n8n Chatbot</span>
+          </div>
+          <div class="pcard-acts">
+            <a href="https://github.com/arijal1" target="_blank" rel="noopener" class="btn btn-o btn-sm">GitHub →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 6 -->
+      <article class="pcard" data-cat="auto">
+        <div class="pcard-img-ph">🎬</div>
+        <div class="pcard-body">
+          <div class="pcard-top">
+            <span class="badge auto">Automation</span>
+            <span class="pcard-year">2024</span>
+          </div>
+          <h3>AI Video Automation with n8n</h3>
+          <p>Self-hosted n8n pipeline that generates AI-powered videos from prompts, auto-publishes to YouTube with optimised metadata, and sends instant cross-platform notifications via Telegram, Gmail, and Discord.</p>
+          <div class="outcome">Fully automated content pipeline — 0 manual steps</div>
+          <div class="pcard-meta">
+            <span class="pill">n8n</span>
+            <span class="pill">YouTube API</span>
+            <span class="pill">Telegram</span>
+            <span class="pill">AI</span>
+          </div>
+          <div class="pcard-acts">
+            <a href="n8n-automation-project.html" class="btn btn-o btn-sm tl">Read More →</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Tech Stack -->
+<section style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="slabel">Toolkit</div>
+    <h2 class="stitle">Technologies I Work With</h2>
+    <div class="tgrid mt-8 rg">
+      <div class="titem"><span class="ticon">☁️</span><span class="tname">Microsoft 365</span><span class="tcat">Cloud / Productivity</span></div>
+      <div class="titem"><span class="ticon">🔷</span><span class="tname">Azure</span><span class="tcat">Cloud Platform</span></div>
+      <div class="titem"><span class="ticon">🛡️</span><span class="tname">Intune / SCCM</span><span class="tcat">Device Management</span></div>
+      <div class="titem"><span class="ticon">🗂️</span><span class="tname">Active Directory</span><span class="tcat">Identity & Access</span></div>
+      <div class="titem"><span class="ticon">📋</span><span class="tname">Freshservice</span><span class="tcat">ITSM</span></div>
+      <div class="titem"><span class="ticon">⚙️</span><span class="tname">n8n</span><span class="tcat">Automation</span></div>
+      <div class="titem"><span class="ticon">🔌</span><span class="tname">VMware / Hyper-V</span><span class="tcat">Virtualisation</span></div>
+      <div class="titem"><span class="ticon">🐳</span><span class="tname">Docker</span><span class="tcat">Containers</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Banner -->
+<section>
+  <div class="container">
+    <div class="cta-banner reveal">
+      <div>
+        <h3>Want to work together?</h3>
+        <p>Available for IT roles, infrastructure projects, and automation consulting.</p>
+      </div>
+      <div class="cta-acts">
+        <a href="mailto:rejalanop55@gmail.com" class="btn btn-p">Email Me →</a>
+        <a href="/" class="btn btn-o tl">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="ftr">
+      <div>
+        <div class="fbrand">Anup <em>Rijal</em></div>
+        <div class="fcopy">© 2025 Anup Rijal. All rights reserved. · Sydney, AU</div>
+      </div>
+      <div class="fsoc">
+        <a href="mailto:rejalanop55@gmail.com" class="fsa" aria-label="Email">@</a>
+        <a href="https://github.com/arijal1" target="_blank" rel="noopener" class="fsa" aria-label="GitHub">GH</a>
+        <a href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" rel="noopener" class="fsa" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Chat FAB -->
+<button id="cfab" aria-label="Open chat" aria-expanded="false">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+  </svg>
+</button>
+<div id="cpanel" role="dialog" aria-label="Chat assistant" aria-modal="true">
+  <div class="chdr">
+    <div class="cava">🤖</div>
+    <div><div class="cname">Anup's Assistant</div><div class="cst">Online</div></div>
+    <button class="cclse" id="cclse" aria-label="Close chat">×</button>
+  </div>
+  <div class="cbody" id="cbody">
+    <div class="cmsg bot">👋 Hi! I'm Anup's assistant. How can I help you today?</div>
+  </div>
+  <div class="cfoot">
+    <input type="text" class="cinp" id="cinp" placeholder="Ask me anything…" aria-label="Chat message"/>
+    <button class="csnd" id="csnd" aria-label="Send">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+/* === PAGE TRANSITION === */
+const pt = document.getElementById('pt');
+window.addEventListener('load', () => setTimeout(() => pt.classList.add('done'), 60));
+document.querySelectorAll('.tl').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || this.target === '_blank') return;
+    e.preventDefault();
+    pt.classList.remove('done');
+    setTimeout(() => { window.location.href = href; }, 360);
+  });
+});
+
+/* === THEME === */
+const html = document.documentElement;
+const tt = document.getElementById('tt');
+const saved = localStorage.getItem('ar-theme') || 'dark';
+html.setAttribute('data-theme', saved);
+tt.addEventListener('click', () => {
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('ar-theme', next);
+});
+
+/* === MOBILE NAV === */
+const mbtn = document.getElementById('mbtn');
+const mnav = document.getElementById('mnav');
+const mclose = document.getElementById('mnav-close');
+const openNav = () => { mnav.classList.add('open'); mnav.setAttribute('aria-hidden','false'); mbtn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; };
+const closeNav = () => { mnav.classList.remove('open'); mnav.setAttribute('aria-hidden','true'); mbtn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; };
+mbtn.addEventListener('click', openNav);
+mclose.addEventListener('click', closeNav);
+mnav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+
+/* === FILTER === */
+document.querySelectorAll('.fbtn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('act'));
+    this.classList.add('act');
+    const f = this.getAttribute('data-filter');
+    document.querySelectorAll('.pcard').forEach(card => {
+      const show = f === 'all' || card.getAttribute('data-cat') === f;
+      card.style.display = show ? 'flex' : 'none';
+    });
+  });
+});
+
+/* === SCROLL REVEAL === */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); ro.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal, .rg').forEach(el => ro.observe(el));
+
+/* === CHATBOT === */
+const cfab = document.getElementById('cfab');
+const cpanel = document.getElementById('cpanel');
+const cclse = document.getElementById('cclse');
+const cinp = document.getElementById('cinp');
+const csnd = document.getElementById('csnd');
+const cbody = document.getElementById('cbody');
+const WH = 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat';
+let chatOpen = false;
+let sid = Math.random().toString(36).slice(2, 18);
+const toggleChat = () => {
+  chatOpen = !chatOpen;
+  cpanel.classList.toggle('open', chatOpen);
+  cfab.setAttribute('aria-expanded', String(chatOpen));
+  if (chatOpen) setTimeout(() => cinp.focus(), 320);
+};
+cfab.addEventListener('click', toggleChat);
+cclse.addEventListener('click', toggleChat);
+const addMsg = (text, type) => {
+  const d = document.createElement('div'); d.className = 'cmsg ' + type; d.textContent = text;
+  cbody.appendChild(d); cbody.scrollTop = cbody.scrollHeight;
+};
+const sendMsg = async () => {
+  const msg = cinp.value.trim(); if (!msg) return;
+  addMsg(msg, 'usr'); cinp.value = ''; addMsg('…', 'bot');
+  try {
+    const r = await fetch(WH, { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ sessionId: sid, action: 'sendMessage', chatInput: msg }) });
+    const raw = await r.text(); cbody.lastChild.remove();
+    let reply = raw;
+    try { const j = JSON.parse(raw); reply = j.text || j.output || j.message || raw; } catch {}
+    addMsg(reply, 'bot');
+  } catch { cbody.lastChild.remove(); addMsg("Couldn't connect right now — try emailing directly!", 'bot'); }
+};
+csnd.addEventListener('click', sendMsg);
+cinp.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); } });
+</script>
+</body>
+</html>
