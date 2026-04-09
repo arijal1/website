@@ -1,648 +1,181 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+
+<html lang="en" class="dark">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Projects — Anup Rijal</title>
-<meta content="Selected IT projects from Anup Rijal — infrastructure transitions, automation, self-hosted builds." name="description"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<meta name="description" content="Selected IT projects by Anup Rijal — infrastructure, automation, self-hosted builds."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{display:['"DM Serif Display"','serif'],body:['"Plus Jakarta Sans"','sans-serif']}}}}</script>
 <style>
-/* ======================== DESIGN TOKENS (shared) ======================== */
-:root {
-  --bg:#0D0F14; --bg2:#13161E; --bg3:#1A1D27; --surface:#1E2130; --surface2:#252840;
-  --border:rgba(212,175,55,0.15); --border-s:rgba(212,175,55,0.42);
-  --text:#F0F0F5; --text2:#9A9BB0; --text3:#5A5B70;
-  --gold:#D4AF37; --gold2:#F0CE6A; --mint:#00E5A0; --pink:#F03D8C; --purple:#7C3AED;
-  --shadow-sm:0 2px 8px rgba(0,0,0,.3); --shadow-md:0 8px 24px rgba(0,0,0,.42);
-  --shadow-lg:0 20px 56px rgba(0,0,0,.55); --r-sm:8px; --r-md:14px; --r-lg:20px;
-  --maxw:1200px; --ease:.25s ease;
-}
-[data-theme="light"] {
-  --bg:#F4F3EE; --bg2:#ECEAE4; --bg3:#E3E0D8; --surface:#FFFFFF; --surface2:#F7F5F0;
-  --border:rgba(160,130,20,0.18); --border-s:rgba(160,130,20,0.45);
-  --text:#18182A; --text2:#52526A; --text3:#8888A0;
-  --gold:#A87C14; --gold2:#C9A030;
-  --shadow-sm:0 2px 8px rgba(0,0,0,.07); --shadow-md:0 8px 24px rgba(0,0,0,.1);
-  --shadow-lg:0 20px 56px rgba(0,0,0,.14);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',system-ui,sans-serif;
-  line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;
-  transition:background var(--ease),color var(--ease)}
-
-/* ======================== PAGE TRANSITION ======================== */
-#pt{position:fixed;inset:0;background:var(--bg);z-index:9999;pointer-events:none;
-  opacity:1;transition:opacity .38s ease}
-#pt.done{opacity:0}
-
-/* ======================== BACKGROUNDS ======================== */
-.bg-mesh{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
-.bg-mesh::before{content:'';position:absolute;width:800px;height:800px;border-radius:50%;
-  background:radial-gradient(circle,rgba(124,58,237,.1) 0%,transparent 68%);
-  top:-220px;left:-120px;animation:da 22s ease-in-out infinite alternate}
-.bg-mesh::after{content:'';position:absolute;width:600px;height:600px;border-radius:50%;
-  background:radial-gradient(circle,rgba(212,175,55,.07) 0%,transparent 68%);
-  bottom:-100px;right:-60px;animation:db 19s ease-in-out infinite alternate}
-@keyframes da{0%{transform:translate(0,0)}100%{transform:translate(70px,90px)}}
-@keyframes db{0%{transform:translate(0,0)}100%{transform:translate(-55px,-65px)}}
-[data-theme="light"] .bg-mesh::before{background:radial-gradient(circle,rgba(124,58,237,.05) 0%,transparent 68%)}
-[data-theme="light"] .bg-mesh::after{background:radial-gradient(circle,rgba(212,175,55,.06) 0%,transparent 68%)}
-.bg-dots{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.028;
-  background-image:radial-gradient(circle,var(--gold) 1px,transparent 1px);background-size:28px 28px}
-[data-theme="light"] .bg-dots{opacity:.07}
-
-/* ======================== LAYOUT ======================== */
-.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-
-/* ======================== HEADER ======================== */
-header{position:fixed;top:0;left:0;right:0;z-index:100;
-  backdrop-filter:blur(14px) saturate(1.6);-webkit-backdrop-filter:blur(14px) saturate(1.6);
-  background:rgba(13,15,20,.78);border-bottom:1px solid var(--border);
-  transition:background var(--ease)}
-[data-theme="light"] header{background:rgba(244,243,238,.88)}
-.hdr{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
-.brand-logo{width:36px;height:36px;border-radius:var(--r-sm);object-fit:cover;border:1px solid var(--border-s)}
-.brand-txt{font-family:'DM Serif Display',serif;font-size:1.1rem;line-height:1}
-.brand-txt em{font-style:normal;color:var(--gold)}
-.dnav{display:flex;align-items:center;gap:2px}
-.dnav a{color:var(--text2);text-decoration:none;font-size:.875rem;font-weight:500;
-  padding:7px 13px;border-radius:var(--r-sm);transition:color var(--ease),background var(--ease)}
-.dnav a:hover{color:var(--text);background:var(--surface)}
-.dnav a.act{color:var(--gold)}
-.hdr-r{display:flex;align-items:center;gap:10px}
-.tt-wrap{display:flex;align-items:center;gap:6px}
-.tt-ico{font-size:13px;user-select:none;line-height:1}
-.tt{width:44px;height:24px;border-radius:999px;background:var(--surface2);border:1px solid var(--border);
-  cursor:pointer;position:relative;flex-shrink:0;transition:background var(--ease)}
-.tt::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;
-  background:var(--gold);transition:transform .3s ease}
-[data-theme="light"] .tt::after{transform:translateX(20px)}
-.mbtn{display:none;align-items:center;justify-content:center;width:40px;height:40px;
-  border-radius:var(--r-sm);border:1px solid var(--border);background:transparent;
-  cursor:pointer;color:var(--text);transition:background var(--ease)}
-.mbtn:hover{background:var(--surface)}
-.mbtn svg{width:20px;height:20px}
+:root{--bg:#07080D;--bg2:#0D0F17;--bg3:#131520;--surf:#181B28;--surf2:#1E2133;--border:rgba(201,162,39,.12);--border-s:rgba(201,162,39,.36);--txt:#EEEEF3;--txt2:#8E8FA8;--txt3:#4A4B62;--gold:#C9A227;--gold2:#E8C547;--mint:#06D6A0;--rose:#F25C7B;--ind:#6366F1;--r:14px;--ease:.22s ease}
+html:not(.dark){--bg:#F7F6F2;--bg2:#EEECEA;--bg3:#E4E2DB;--surf:#FFFFFF;--surf2:#F4F2EE;--border:rgba(140,110,20,.14);--border-s:rgba(140,110,20,.4);--txt:#12131F;--txt2:#52536A;--txt3:#8A8BA2;--gold:#9C7A10;--gold2:#B89218}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;font-family:"Plus Jakarta Sans",sans-serif}
+body{background:var(--bg);color:var(--txt);overflow-x:hidden;transition:background .3s,color .3s;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+#scene{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.28}html:not(.dark) #scene{opacity:.09}
+.blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);animation:bf linear infinite alternate}
+.b1{width:700px;height:700px;background:radial-gradient(circle,rgba(99,102,241,.12),transparent 65%);top:-220px;left:-180px;animation-duration:28s}
+.b2{width:500px;height:500px;background:radial-gradient(circle,rgba(201,162,39,.1),transparent 65%);bottom:-100px;right:-80px;animation-duration:22s}
+.b3{width:350px;height:350px;background:radial-gradient(circle,rgba(6,214,160,.07),transparent 65%);top:35%;left:50%;animation-duration:32s}
+@keyframes bf{0%{transform:translate(0,0) scale(1)}100%{transform:translate(60px,80px) scale(1.1)}}
+.wrap{max-width:1220px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;background:rgba(7,8,13,.82);backdrop-filter:blur(18px) saturate(1.6);border-bottom:1px solid var(--border);transition:background .3s}
+html:not(.dark) #nav{background:rgba(247,246,242,.9)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:100%}
+.logo{font-family:"DM Serif Display",serif;font-size:1.1rem;text-decoration:none;color:var(--txt)}.logo span{color:var(--gold)}
+.dnav{display:flex;gap:2px}.dnav a{color:var(--txt2);text-decoration:none;font-size:.84rem;font-weight:500;padding:7px 12px;border-radius:8px;transition:color var(--ease),background var(--ease)}.dnav a:hover,.dnav a.on{color:var(--gold)}
+.nav-r{display:flex;align-items:center;gap:10px}
+.tt{width:42px;height:22px;border-radius:999px;background:var(--surf2);border:1px solid var(--border);cursor:pointer;position:relative;flex-shrink:0}.tt::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--gold);transition:transform .3s}html:not(.dark) .tt::after{transform:translateX(20px)}
+.hire-btn{padding:8px 18px;border-radius:9px;background:var(--gold);color:#07080D;font-weight:700;font-size:.82rem;text-decoration:none;transition:all var(--ease)}.hire-btn:hover{background:var(--gold2);transform:translateY(-1px)}
+.mbtn{display:none;width:38px;height:38px;border-radius:8px;border:1px solid var(--border);background:transparent;cursor:pointer;color:var(--txt);align-items:center;justify-content:center}.mbtn svg{width:18px;height:18px}
 @media(max-width:900px){.dnav{display:none}.mbtn{display:flex}}
+#mnav{position:fixed;inset:0;z-index:200;background:var(--bg);transform:translateX(100%);transition:transform .32s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column}#mnav.on{transform:translateX(0)}
+.mnav-hdr{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:62px;border-bottom:1px solid var(--border)}.mnav-close{width:38px;height:38px;border-radius:8px;border:1px solid var(--border);background:transparent;cursor:pointer;color:var(--txt);display:flex;align-items:center;justify-content:center}
+.mnav-links{list-style:none;padding:16px;display:flex;flex-direction:column;gap:3px;flex:1}.mnav-links a{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:12px;color:var(--txt2);text-decoration:none;font-size:1rem;font-weight:500;transition:all var(--ease)}.mnav-links a:hover{color:var(--txt);background:var(--surf)}
+.mnav-ft{padding:20px 24px;border-top:1px solid var(--border);display:flex;gap:8px}
+.si{width:38px;height:38px;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--txt2);text-decoration:none;font-size:11px;font-weight:700;transition:color var(--ease),border-color var(--ease)}.si:hover{color:var(--gold);border-color:var(--gold)}
+.btn-p{display:inline-flex;align-items:center;gap:7px;padding:12px 24px;border-radius:11px;background:var(--gold);color:#07080D;font-weight:700;font-size:.875rem;text-decoration:none;border:none;cursor:pointer;font-family:inherit;transition:all var(--ease)}.btn-p:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 10px 26px rgba(201,162,39,.32)}
+.btn-o{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:11px;background:transparent;color:var(--txt);font-weight:600;font-size:.875rem;text-decoration:none;border:1px solid var(--border-s);cursor:pointer;font-family:inherit;transition:all var(--ease)}.btn-o:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,162,39,.07);transform:translateY(-2px)}
+.sec{padding:90px 0}.sec-alt{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.slbl{display:inline-flex;align-items:center;gap:7px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--gold);margin-bottom:8px}.slbl::before{content:"";width:14px;height:2px;background:var(--gold);border-radius:1px}
+.stitle{font-family:"DM Serif Display",serif;font-size:clamp(1.8rem,3.5vw,2.7rem);line-height:1.16;margin-bottom:12px}.gold-t{color:var(--gold)}.ssub{color:var(--txt2);font-size:.96rem;line-height:1.72}
+.card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:24px}
+.ph{min-height:100svh;display:flex;align-items:center;padding-top:62px}
+.ph-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);margin-bottom:14px}.ph-eyebrow::before{content:"";width:20px;height:2px;background:var(--gold);border-radius:1px}
+.ph-h1{font-family:"DM Serif Display",serif;font-size:clamp(2.2rem,4.5vw,3.8rem);line-height:1.08;letter-spacing:-.03em;margin-bottom:16px}.ph-h1 em{font-style:italic;color:var(--gold)}
+.ph-p{color:var(--txt2);font-size:1rem;line-height:1.75;max-width:580px;margin-bottom:30px}
 
-/* ======================== MOBILE NAV ======================== */
-.mnav{position:fixed;inset:0;z-index:200;background:var(--bg);
-  transform:translateX(100%);transition:transform .36s cubic-bezier(.25,.46,.45,.94);
-  display:flex;flex-direction:column}
-.mnav.open{transform:translateX(0)}
-.mnav-hdr{display:flex;align-items:center;justify-content:space-between;
-  padding:0 24px;height:64px;border-bottom:1px solid var(--border)}
-.mnav-close{width:40px;height:40px;border-radius:var(--r-sm);border:1px solid var(--border);
-  background:transparent;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center}
-.mnav-links{list-style:none;padding:20px 16px;display:flex;flex-direction:column;gap:3px}
-.mnav-links a{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--r-md);
-  color:var(--text2);text-decoration:none;font-size:1.08rem;font-weight:500;
-  transition:color var(--ease),background var(--ease)}
-.mnav-links a:hover{color:var(--text);background:var(--surface)}
-.mni{font-size:18px;width:24px;text-align:center}
-.mnav-ft{margin-top:auto;padding:20px 24px;border-top:1px solid var(--border)}
-.mnav-soc{display:flex;gap:10px}
-.mnav-soc a{width:40px;height:40px;border-radius:var(--r-sm);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;color:var(--text2);text-decoration:none;
-  font-size:12px;font-weight:700;transition:color var(--ease),border-color var(--ease)}
-.mnav-soc a:hover{color:var(--gold);border-color:var(--gold)}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}@media(max-width:780px){.proj-grid{grid-template-columns:1fr}}
+.pcard{background:var(–surf);border:1px solid var(–border);border-radius:var(–r);overflow:hidden;display:flex;flex-direction:column;transition:border-color var(–ease),transform var(–ease),box-shadow var(–ease);position:relative}
+.pcard::after{content:””;position:absolute;bottom:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(–ind),var(–gold));transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.pcard:hover{border-color:var(–border-s);transform:translateY(-4px);box-shadow:0 20px 48px rgba(0,0,0,.42)}.pcard:hover::after{transform:scaleX(1)}
+.pc-img{width:100%;height:200px;object-fit:cover;display:block;background:var(–bg3)}.pc-ph{width:100%;height:160px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:linear-gradient(135deg,var(–bg3),var(–surf2))}
+.pc-body{padding:22px;flex:1;display:flex;flex-direction:column;gap:10px}.pc-badge{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(–gold)}.pc-title{font-family:“DM Serif Display”,serif;font-size:1.12rem;line-height:1.35}.pc-desc{color:var(–txt2);font-size:.85rem;flex:1;line-height:1.65}
+.pc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}.pc-tag{padding:2px 8px;border-radius:999px;font-size:.65rem;font-weight:600;background:rgba(99,102,241,.1);color:#A5B4FC;border:1px solid rgba(99,102,241,.18)}
+.outcome{display:flex;align-items:center;gap:6px;padding:8px 11px;border-radius:8px;background:rgba(6,214,160,.07);border:1px solid rgba(6,214,160,.16);font-size:.76rem;color:var(–mint);font-weight:600;margin-top:6px}.outcome::before{content:“✓”;font-weight:800}
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px}.fbtn{padding:6px 16px;border-radius:999px;font-size:.78rem;font-weight:600;cursor:pointer;border:1px solid var(–border);background:transparent;color:var(–txt2);transition:all var(–ease);font-family:inherit}.fbtn:hover,.fbtn.on{background:var(–gold);color:#07080D;border-color:var(–gold)}
+.tl-wrap{position:relative;padding-left:52px}.tl-line{position:absolute;left:19px;top:6px;bottom:0;width:2px;background:linear-gradient(to bottom,var(–gold),transparent)}
+.tl-item{position:relative;padding-bottom:32px}.tl-item:last-child{padding-bottom:0}.tl-dot{position:absolute;left:-52px;width:40px;height:40px;border-radius:50%;background:rgba(201,162,39,.1);border:2px solid var(–gold);display:flex;align-items:center;justify-content:center;font-size:16px;z-index:1}
+.tl-card{background:var(–surf);border:1px solid var(–border);border-radius:var(–r);padding:20px;transition:border-color var(–ease)}.tl-card:hover{border-color:var(–border-s)}
+.tl-role{font-family:“DM Serif Display”,serif;font-size:1.05rem;margin-bottom:3px}.tl-co{color:var(–gold);font-weight:600;font-size:.84rem;margin-bottom:8px}
+.tl-badge{padding:3px 10px;border-radius:999px;font-size:.68rem;font-weight:700;background:rgba(6,214,160,.08);border:1px solid rgba(6,214,160,.18);color:var(–mint)}
+.tl-desc{color:var(–txt2);font-size:.86rem;line-height:1.65;margin:10px 0}
 
-/* ======================== HERO ======================== */
-.hero{padding:120px 0 64px;text-align:center}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:700;
-  text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);margin-bottom:16px}
-.eyebrow::before{content:'';display:block;width:20px;height:2px;background:var(--gold);border-radius:2px}
-h1{font-family:'DM Serif Display',serif;font-size:clamp(2.4rem,5vw,3.8rem);
-  line-height:1.1;letter-spacing:-.02em;margin-bottom:18px}
-.hero-sub{color:var(--text2);font-size:1rem;max-width:580px;margin:0 auto 32px;line-height:1.72}
-
-/* Filter bar */
-.fbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
-.fbtn{padding:7px 16px;border-radius:999px;font-size:.8rem;font-weight:600;cursor:pointer;
-  border:1px solid var(--border);background:transparent;color:var(--text2);
-  transition:all var(--ease);font-family:inherit}
-.fbtn:hover,.fbtn.act{background:var(--gold);color:#0D0F14;border-color:var(--gold)}
-
-/* ======================== BUTTONS ======================== */
-.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:var(--r-md);
-  font-weight:600;font-size:.85rem;text-decoration:none;cursor:pointer;
-  transition:all var(--ease);border:1px solid transparent;font-family:inherit}
-.btn-p{background:var(--gold);color:#0D0F14;border-color:var(--gold)}
-.btn-p:hover{background:var(--gold2);border-color:var(--gold2);transform:translateY(-2px);
-  box-shadow:0 10px 24px rgba(212,175,55,.3)}
-.btn-o{background:transparent;color:var(--text);border-color:var(--border-s)}
-.btn-o:hover{background:var(--surface);border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
-.btn-sm{padding:8px 14px;font-size:.78rem}
-
-/* ======================== SECTIONS ======================== */
-section{padding:70px 0}
-.slabel{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;
-  text-transform:uppercase;letter-spacing:3px;color:var(--gold);margin-bottom:10px}
-.slabel::before{content:'';display:block;width:16px;height:2px;background:var(--gold);border-radius:2px}
-.stitle{font-family:'DM Serif Display',serif;font-size:clamp(1.7rem,3.5vw,2.4rem);line-height:1.2;margin-bottom:6px}
-.ssub{color:var(--text2);max-width:560px}
-
-/* ======================== PROJECT CARDS ======================== */
-.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
-@media(max-width:780px){.pgrid{grid-template-columns:1fr}}
-
-.pcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
-  overflow:hidden;transition:border-color var(--ease),transform var(--ease),box-shadow var(--ease);
-  display:flex;flex-direction:column}
-.pcard:hover{border-color:var(--border-s);transform:translateY(-4px);box-shadow:var(--shadow-md)}
-.pcard-img{width:100%;height:200px;object-fit:cover;display:block;background:var(--bg3)}
-.pcard-img-ph{width:100%;height:160px;background:linear-gradient(135deg,var(--bg3),var(--surface2));
-  display:flex;align-items:center;justify-content:center;font-size:2.5rem;opacity:.5}
-.pcard-body{padding:22px;flex:1;display:flex;flex-direction:column;gap:10px}
-.pcard-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:999px;
-  font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;
-  background:rgba(212,175,55,.1);color:var(--gold);border:1px solid rgba(212,175,55,.25)}
-.badge.infra{background:rgba(124,58,237,.1);color:#A78BFA;border-color:rgba(124,58,237,.25)}
-.badge.auto{background:rgba(0,229,160,.08);color:var(--mint);border-color:rgba(0,229,160,.2)}
-.badge.web{background:rgba(240,61,140,.08);color:var(--pink);border-color:rgba(240,61,140,.2)}
-.badge.self{background:rgba(212,175,55,.1);color:var(--gold);border-color:rgba(212,175,55,.25)}
-.pcard-year{font-size:.75rem;color:var(--text3);font-weight:500}
-.pcard h3{font-family:'DM Serif Display',serif;font-size:1.18rem;line-height:1.3}
-.pcard p{color:var(--text2);font-size:.875rem;flex:1;line-height:1.65}
-.pcard-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
-.pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:.68rem;font-weight:600;
-  background:var(--bg3);color:var(--text3);border:1px solid var(--border)}
-.pcard-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;padding-top:14px;border-top:1px solid var(--border)}
-
-/* Result/outcome highlight */
-.outcome{display:flex;align-items:center;gap:8px;padding:10px 13px;background:rgba(0,229,160,.07);
-  border:1px solid rgba(0,229,160,.18);border-radius:var(--r-sm);font-size:.8rem;color:var(--mint);font-weight:500}
-.outcome::before{content:'✓';font-weight:800}
-
-/* ======================== TECH STACK ======================== */
-.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-@media(max-width:900px){.tgrid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:600px){.tgrid{grid-template-columns:repeat(2,1fr)}}
-.titem{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
-  padding:18px 16px;text-align:center;transition:border-color var(--ease),transform var(--ease)}
-.titem:hover{border-color:var(--gold);transform:translateY(-2px)}
-.ticon{font-size:1.8rem;display:block;margin-bottom:8px}
-.tname{font-weight:700;font-size:.82rem;display:block}
-.tcat{color:var(--text3);font-size:.7rem;margin-top:2px}
-
-/* ======================== CTA BANNER ======================== */
-.cta-banner{background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(212,175,55,.08));
-  border:1px solid rgba(212,175,55,.25);border-radius:var(--r-lg);
-  padding:40px 36px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
-.cta-banner h3{font-family:'DM Serif Display',serif;font-size:1.6rem}
-.cta-banner p{color:var(--text2);font-size:.9rem;margin-top:5px}
-.cta-acts{display:flex;gap:10px;flex-wrap:wrap}
-
-/* ======================== FOOTER ======================== */
-footer{border-top:1px solid var(--border);background:var(--bg2);padding:36px 0}
-.ftr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px}
-.fbrand{font-family:'DM Serif Display',serif;font-size:1.08rem}
-.fbrand em{font-style:normal;color:var(--gold)}
-.fcopy{color:var(--text3);font-size:.78rem;margin-top:3px}
-.fsoc{display:flex;gap:9px}
-.fsa{width:36px;height:36px;border-radius:var(--r-sm);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;color:var(--text2);
-  text-decoration:none;font-size:11px;font-weight:700;
-  transition:color var(--ease),border-color var(--ease)}
-.fsa:hover{color:var(--gold);border-color:var(--gold)}
-
-/* ======================== CHATBOT ======================== */
-#cfab{position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:50%;
-  background:var(--gold);border:none;cursor:pointer;z-index:500;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 18px rgba(212,175,55,.38);transition:transform .2s,box-shadow .2s;color:#0D0F14}
-#cfab:hover{transform:scale(1.09);box-shadow:0 6px 26px rgba(212,175,55,.5)}
-#cfab svg{width:22px;height:22px}
-#cpanel{position:fixed;bottom:90px;right:24px;width:360px;max-width:calc(100vw - 40px);
-  height:490px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
-  display:flex;flex-direction:column;box-shadow:var(--shadow-lg);z-index:490;overflow:hidden;
-  transform:scale(.92) translateY(20px);opacity:0;pointer-events:none;transform-origin:bottom right;
-  transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .25s ease}
-#cpanel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
-.chdr{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:11px;background:var(--bg2)}
-.cava{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--gold));
-  display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-.cname{font-weight:700;font-size:.87rem}
-.cst{font-size:.72rem;color:var(--mint);display:flex;align-items:center;gap:4px}
-.cst::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--mint)}
-.cclse{width:28px;height:28px;border-radius:var(--r-sm);border:1px solid var(--border);
-  background:transparent;cursor:pointer;color:var(--text2);display:flex;align-items:center;
-  justify-content:center;font-size:17px;line-height:1;margin-left:auto;transition:background var(--ease)}
-.cclse:hover{background:var(--bg3)}
-.cbody{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
-.cmsg{max-width:84%;padding:10px 13px;border-radius:16px;font-size:.86rem;line-height:1.5}
-.cmsg.bot{background:var(--bg3);border-radius:4px 16px 16px 16px;align-self:flex-start;color:var(--text)}
-.cmsg.usr{background:var(--gold);color:#0D0F14;border-radius:16px 4px 16px 16px;align-self:flex-end;font-weight:500}
-.cfoot{padding:10px;border-top:1px solid var(--border);display:flex;gap:8px}
-.cinp{flex:1;padding:10px 13px;background:var(--bg3);border:1px solid var(--border);
-  border-radius:var(--r-md);color:var(--text);font-family:inherit;font-size:.86rem;outline:none;
-  transition:border-color var(--ease)}
-.cinp:focus{border-color:var(--gold)}
-.csnd{width:38px;height:38px;border-radius:var(--r-md);background:var(--gold);border:none;
-  cursor:pointer;color:#0D0F14;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.csnd:hover{background:var(--gold2)}
-
-/* ======================== ANIMATIONS ======================== */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
-.reveal.vis{opacity:1;transform:translateY(0)}
-.rg>*{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
-.rg.vis>*:nth-child(1){opacity:1;transform:translateY(0);transition-delay:0s}
-.rg.vis>*:nth-child(2){opacity:1;transform:translateY(0);transition-delay:.08s}
-.rg.vis>*:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.16s}
-.rg.vis>*:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.24s}
-.rg.vis>*:nth-child(5){opacity:1;transform:translateY(0);transition-delay:.32s}
-.rg.vis>*:nth-child(6){opacity:1;transform:translateY(0);transition-delay:.40s}
-
+footer{background:var(–bg2);border-top:1px solid var(–border);padding:36px 0}
+.ft{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px}.ft-brand{font-family:“DM Serif Display”,serif;font-size:1.1rem}.ft-brand span{color:var(–gold)}.ft-copy{color:var(–txt3);font-size:.74rem;margin-top:3px}
+.ft-links{display:flex;flex-wrap:wrap;gap:4px}.ft-links a{color:var(–txt2);text-decoration:none;font-size:.82rem;font-weight:500;padding:6px 10px;border-radius:7px;transition:color var(–ease)}.ft-links a:hover{color:var(–gold)}
+#cfab{position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:50%;background:var(–gold);border:none;cursor:pointer;z-index:500;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(201,162,39,.4);transition:transform .2s,box-shadow .2s;color:#07080D}#cfab:hover{transform:scale(1.1)}
+#cpanel{position:fixed;bottom:90px;right:24px;width:368px;max-width:calc(100vw - 40px);height:500px;background:var(–surf);border:1px solid var(–border-s);border-radius:18px;display:flex;flex-direction:column;z-index:490;overflow:hidden;transform:scale(.9) translateY(24px);opacity:0;pointer-events:none;transform-origin:bottom right;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .24s ease;box-shadow:0 24px 60px rgba(0,0,0,.55)}#cpanel.on{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.c-hdr{padding:14px 16px;border-bottom:1px solid var(–border);display:flex;align-items:center;gap:11px;background:var(–bg2)}.c-ava{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#6366F1,#C9A227);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}.c-nm{font-weight:700;font-size:.86rem}.c-st{font-size:.7rem;color:var(–mint);display:flex;align-items:center;gap:4px}.c-st::before{content:””;width:6px;height:6px;border-radius:50%;background:var(–mint)}.c-x{width:28px;height:28px;border-radius:7px;border:1px solid var(–border);background:transparent;cursor:pointer;color:var(–txt2);display:flex;align-items:center;justify-content:center;font-size:16px;margin-left:auto;transition:background var(–ease)}.c-x:hover{background:var(–bg3)}
+.c-body{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:9px}.cmsg{max-width:85%;padding:10px 13px;border-radius:16px;font-size:.85rem;line-height:1.55}.cmsg.bot{background:var(–bg3);border-radius:4px 16px 16px 16px;align-self:flex-start;color:var(–txt)}.cmsg.usr{background:var(–gold);color:#07080D;border-radius:16px 4px 16px 16px;align-self:flex-end;font-weight:500}
+.c-foot{padding:10px;border-top:1px solid var(–border);display:flex;gap:8px;background:var(–bg2)}.c-inp{flex:1;padding:10px 13px;background:var(–bg3);border:1px solid var(–border);border-radius:11px;color:var(–txt);font-family:inherit;font-size:.85rem;outline:none;transition:border-color var(–ease)}.c-inp:focus{border-color:var(–gold)}.c-snd{width:38px;height:38px;border-radius:10px;background:var(–gold);border:none;cursor:pointer;color:#07080D;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-.mt-6{margin-top:24px}.mt-8{margin-top:32px}
 </style>
+
 </head>
 <body>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="blobs" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div id="mnav" aria-hidden="true"><div class="mnav-hdr"><span class="ft-brand">Anup <span>Rijal</span></span><button class="mnav-close" id="mc"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div><ul class="mnav-links"><li><a href="index.html">🏠 Home</a></li><li><a href="projects.html">🔧 Projects</a></li><li><a href="blog.html">✍️ Blog</a></li><li><a href="ai.html">🤖 AI</a></li><li><a href="testimoni.html">💬 Testimony</a></li></ul><div class="mnav-ft"><a href="mailto:rejalanop55@gmail.com" class="si">@</a><a href="https://github.com/arijal1" target="_blank" rel="noopener" class="si">GH</a><a href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" rel="noopener" class="si">in</a></div></div>
+<header id="nav"><div class="wrap nav-in"><a href="index.html" class="logo">Anup <span>Rijal</span></a><nav class="dnav"><a href="index.html" class="">Home</a><a href="projects.html" class="on">Projects</a><a href="blog.html" class="">Blog</a><a href="ai.html" class="">AI</a><a href="testimoni.html" class="">Testimony</a></nav><div class="nav-r"><button class="tt" id="tt" aria-label="Toggle theme"></button><a href="index.html#contact" class="hire-btn">Hire Me</a><button class="mbtn" id="mo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button></div></div></header>
 
-<div id="pt" aria-hidden="true"></div>
-<div class="bg-mesh" aria-hidden="true"></div>
-<div class="bg-dots" aria-hidden="true"></div>
-
-<!-- Mobile nav overlay -->
-<nav class="mnav" id="mnav" aria-label="Mobile navigation" aria-hidden="true">
-  <div class="mnav-hdr">
-    <span class="brand-txt">Anup <em>Rijal</em></span>
-    <button class="mnav-close" id="mnav-close" aria-label="Close menu">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-  </div>
-  <ul class="mnav-links">
-    <li><a href="/" class="tl"><span class="mni">🏠</span>Home</a></li>
-    <li><a href="projects.html"><span class="mni">🔧</span>Projects</a></li>
-    <li><a href="blog.html" class="tl"><span class="mni">✍️</span>Blogs</a></li>
-    <li><a href="vlogs.html" class="tl"><span class="mni">🎬</span>Vlogs</a></li>
-    <li><a href="testimoni.html" class="tl"><span class="mni">💬</span>Testimony</a></li>
-  </ul>
-  <div class="mnav-ft">
-    <div class="mnav-soc">
-      <a href="mailto:rejalanop55@gmail.com" aria-label="Email">@</a>
-      <a href="https://github.com/arijal1" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
-      <a href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+<section class="ph">
+  <div class="wrap" style="width:100%;padding-top:0">
+    <div style="max-width:640px">
+      <div class="ph-eyebrow" data-aos="fade-up">Portfolio</div>
+      <h1 class="ph-h1" data-aos="fade-up" data-aos-delay="60">Selected <em>Projects</em></h1>
+      <p class="ph-p" data-aos="fade-up" data-aos-delay="120">Infrastructure transitions, automation pipelines, and enterprise deployments — each with measurable outcomes.</p>
     </div>
   </div>
-</nav>
-
-<!-- Header -->
-<header>
-  <div class="container hdr">
-    <a href="/" class="brand tl">
-      <img src="images/logo.png" alt="Anup Rijal" class="brand-logo" onerror="this.style.display='none'"/>
-      <span class="brand-txt">Anup <em>Rijal</em></span>
-    </a>
-    <nav class="dnav" aria-label="Primary navigation">
-      <a href="/" class="tl">Home</a>
-      <a href="projects.html" class="act">Projects</a>
-      <a href="blog.html" class="tl">Blogs</a>
-      <a href="vlogs.html" class="tl">Vlogs</a>
-      <a href="testimoni.html" class="tl">Testimony</a>
-    </nav>
-    <div class="hdr-r">
-      <div class="tt-wrap" title="Toggle dark/light mode">
-        <span class="tt-ico">🌙</span>
-        <button class="tt" id="tt" aria-label="Toggle theme"></button>
-        <span class="tt-ico">☀️</span>
+</section>
+<section class="sec sec-alt">
+  <div class="wrap">
+    <div style="margin-bottom:40px" data-aos="fade-up"><div class="slbl">Recent Work</div><h2 class="stitle">All <span class="gold-t">Projects</span></h2></div>
+    <div class="filter-bar" id="fbar">
+      <button class="fbtn on" data-f="all">All</button>
+      <button class="fbtn" data-f="infra">Infrastructure</button>
+      <button class="fbtn" data-f="auto">Automation</button>
+      <button class="fbtn" data-f="web">Web</button>
+      <button class="fbtn" data-f="self">Self-hosted</button>
+    </div>
+    <div class="proj-grid" id="pgrid">
+      <div class="pcard" data-cat="infra" data-aos="fade-up">
+        <img src="https://raw.githubusercontent.com/arijal1/website/main/images/IMG_0698.jpeg" alt="IT Transition" loading="lazy" class="pc-img" onerror="this.className='pc-ph';this.textContent='🏥'"/>
+        <div class="pc-body"><div class="pc-badge">Infrastructure · 2024</div><div class="pc-title">IT Transition — Opal Healthcare Acquisition</div><div class="pc-desc">Led full infrastructure decommission and re-implementation for newly acquired care community. Designed new floor plan and network architecture, installed ~50 devices including switches, workstations, printers and phones.</div><div class="pc-tags"><span class="pc-tag">Windows Server</span><span class="pc-tag">Active Directory</span><span class="pc-tag">Network Design</span><span class="pc-tag">EUC</span></div><div class="outcome">Zero downtime · Completed in 6 weeks · All 50 devices operational</div></div>
       </div>
-      <button class="mbtn" id="mbtn" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-      </button>
-    </div>
-  </div>
-</header>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="container">
-    <div class="eyebrow">Portfolio</div>
-    <h1>Selected <em style="font-style:italic;color:var(--gold)">Projects</em></h1>
-    <p class="hero-sub">Infrastructure transitions, automation pipelines, self-hosted builds, and enterprise deployments — delivered with zero downtime and full documentation.</p>
-    <div class="fbar">
-      <button class="fbtn act" data-filter="all">All</button>
-      <button class="fbtn" data-filter="infra">Infrastructure</button>
-      <button class="fbtn" data-filter="auto">Automation</button>
-      <button class="fbtn" data-filter="web">Web</button>
-      <button class="fbtn" data-filter="self">Self-hosted</button>
-    </div>
-  </div>
-</section>
-
-<!-- Projects -->
-<section style="padding-top:0">
-  <div class="container">
-    <div class="pgrid rg" id="pgrid">
-
-      <!-- Project 1 -->
-      <article class="pcard" data-cat="infra">
-        <div class="pcard-img-ph">🏥</div>
-        <div class="pcard-body">
-          <div class="pcard-top">
-            <span class="badge infra">Infrastructure</span>
-            <span class="pcard-year">2024</span>
-          </div>
-          <h3>IT Transition — Opal Healthcare</h3>
-          <p>Led full IT infrastructure transition during a care community acquisition. Decommissioned legacy hardware and network, designed new floor plan and network architecture, and installed ~50 devices including switches, workstations, printers, and phones.</p>
-          <div class="outcome">Completed in 6 weeks with zero downtime</div>
-          <div class="pcard-meta">
-            <span class="pill">Windows Server</span>
-            <span class="pill">Active Directory</span>
-            <span class="pill">Network Design</span>
-            <span class="pill">EUC</span>
-          </div>
-          <div class="pcard-acts">
-            <img src="https://raw.githubusercontent.com/arijal1/website/main/images/IMG_0698.jpeg" alt="IT Transition project" loading="lazy" style="width:100%;border-radius:var(--r-sm);object-fit:cover;height:140px;margin-top:4px;" onerror="this.style.display='none'"/>
-          </div>
-        </div>
-      </article>
-
-      <!-- Project 2 -->
-      <article class="pcard" data-cat="infra">
-        <div class="pcard-img-ph">🏨</div>
-        <div class="pcard-body">
-          <div class="pcard-top">
-            <span class="badge infra">Cutover</span>
-            <span class="pcard-year">2024</span>
-          </div>
-          <h3>ICT Cutover — Kew Gardens (Opal)</h3>
-          <p>As ICT Technical Support Specialist L2, delivered a one-week onsite cutover rolling out BestMed iPads, Surface tablets, Workstations-on-Wheels, printers, smartcard readers, and visitor iPads — with full network connectivity and staff training.</p>
-          <div class="outcome">Zero staff disruption, all devices operational Day 1</div>
-          <div class="pcard-meta">
-            <span class="pill">Microsoft Intune</span>
-            <span class="pill">Teams Rooms</span>
-            <span class="pill">Zoom</span>
-            <span class="pill">MDM</span>
-          </div>
-          <div class="pcard-acts">
-            <img src="https://raw.githubusercontent.com/arijal1/website/main/images/IMG_2891.jpeg" alt="Kew Gardens cutover" loading="lazy" style="width:100%;border-radius:var(--r-sm);object-fit:cover;height:140px;margin-top:4px;" onerror="this.style.display='none'"/>
-          </div>
-        </div>
-      </article>
-
-      <!-- Project 3 -->
-      <article class="pcard" data-cat="auto">
-        <div class="pcard-img-ph">⚙️</div>
-        <div class="pcard-body">
-          <div class="pcard-top">
-            <span class="badge auto">Automation</span>
-            <span class="pcard-year">2024</span>
-          </div>
-          <h3>Help Desk Automation — Freshservice</h3>
-          <p>Designed and implemented automated ticket routing by issue category and priority, auto-escalation for aging tickets, email notifications, and knowledge base integration across the service desk.</p>
-          <div class="outcome">25% faster response time · 30% FCR improvement</div>
-          <div class="pcard-meta">
-            <span class="pill">Freshservice</span>
-            <span class="pill">ITSM</span>
-            <span class="pill">Workflow Automation</span>
-          </div>
-          <div class="pcard-acts">
-            <a href="n8n-automation-project.html" class="btn btn-o btn-sm tl">Read Case Study →</a>
-          </div>
-        </div>
-      </article>
-
-      <!-- Project 4 -->
-      <article class="pcard" data-cat="self">
-        <div class="pcard-img-ph">🖥️</div>
-        <div class="pcard-body">
-          <div class="pcard-top">
-            <span class="badge self">Self-hosted</span>
-            <span class="pcard-year">2023–24</span>
-          </div>
-          <h3>Personal Home Lab</h3>
-          <p>Fully self-hosted stack for hands-on sysadmin and security experimentation: Bitwarden for secrets management, Nginx Proxy Manager with SSL termination, Nextcloud for private cloud, RustDesk on Raspberry Pi for remote access, and Pi-hole for network-level ad blocking.</p>
-          <div class="outcome">100% private, on-prem infrastructure</div>
-          <div class="pcard-meta">
-            <span class="pill">Docker</span>
-            <span class="pill">Raspberry Pi</span>
-            <span class="pill">Nginx</span>
-            <span class="pill">SSL/TLS</span>
-            <span class="pill">DNS</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Project 5 -->
-      <article class="pcard" data-cat="web">
-        <div class="pcard-img-ph">🌐</div>
-        <div class="pcard-body">
-          <div class="pcard-top">
-            <span class="badge web">Web</span>
-            <span class="pcard-year">2024–25</span>
-          </div>
-          <h3>AI-Powered Portfolio Website</h3>
-          <p>Built a responsive multi-page personal site using AI assistance. Version-controlled with Git and deployed publicly on GitHub Pages with SSL and CDN via Cloudflare — entirely without backend code or a paid hosting service.</p>
-          <div class="outcome">Live at anuprijal.com · SSL · Cloudflare CDN</div>
-          <div class="pcard-meta">
-            <span class="pill">HTML/CSS/JS</span>
-            <span class="pill">GitHub Pages</span>
-            <span class="pill">Cloudflare</span>
-            <span class="pill">n8n Chatbot</span>
-          </div>
-          <div class="pcard-acts">
-            <a href="https://github.com/arijal1" target="_blank" rel="noopener" class="btn btn-o btn-sm">GitHub →</a>
-          </div>
-        </div>
-      </article>
-
-      <!-- Project 6 -->
-      <article class="pcard" data-cat="auto">
-        <div class="pcard-img-ph">🎬</div>
-        <div class="pcard-body">
-          <div class="pcard-top">
-            <span class="badge auto">Automation</span>
-            <span class="pcard-year">2024</span>
-          </div>
-          <h3>AI Video Automation with n8n</h3>
-          <p>Self-hosted n8n pipeline that generates AI-powered videos from prompts, auto-publishes to YouTube with optimised metadata, and sends instant cross-platform notifications via Telegram, Gmail, and Discord.</p>
-          <div class="outcome">Fully automated content pipeline — 0 manual steps</div>
-          <div class="pcard-meta">
-            <span class="pill">n8n</span>
-            <span class="pill">YouTube API</span>
-            <span class="pill">Telegram</span>
-            <span class="pill">AI</span>
-          </div>
-          <div class="pcard-acts">
-            <a href="n8n-automation-project.html" class="btn btn-o btn-sm tl">Read More →</a>
-          </div>
-        </div>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<!-- Tech Stack -->
-<section style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-  <div class="container">
-    <div class="slabel">Toolkit</div>
-    <h2 class="stitle">Technologies I Work With</h2>
-    <div class="tgrid mt-8 rg">
-      <div class="titem"><span class="ticon">☁️</span><span class="tname">Microsoft 365</span><span class="tcat">Cloud / Productivity</span></div>
-      <div class="titem"><span class="ticon">🔷</span><span class="tname">Azure</span><span class="tcat">Cloud Platform</span></div>
-      <div class="titem"><span class="ticon">🛡️</span><span class="tname">Intune / SCCM</span><span class="tcat">Device Management</span></div>
-      <div class="titem"><span class="ticon">🗂️</span><span class="tname">Active Directory</span><span class="tcat">Identity & Access</span></div>
-      <div class="titem"><span class="ticon">📋</span><span class="tname">Freshservice</span><span class="tcat">ITSM</span></div>
-      <div class="titem"><span class="ticon">⚙️</span><span class="tname">n8n</span><span class="tcat">Automation</span></div>
-      <div class="titem"><span class="ticon">🔌</span><span class="tname">VMware / Hyper-V</span><span class="tcat">Virtualisation</span></div>
-      <div class="titem"><span class="ticon">🐳</span><span class="tname">Docker</span><span class="tcat">Containers</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA Banner -->
-<section>
-  <div class="container">
-    <div class="cta-banner reveal">
-      <div>
-        <h3>Want to work together?</h3>
-        <p>Available for IT roles, infrastructure projects, and automation consulting.</p>
+      <div class="pcard" data-cat="infra" data-aos="fade-up" data-aos-delay="80">
+        <img src="https://raw.githubusercontent.com/arijal1/website/main/images/IMG_2891.jpeg" alt="Kew Gardens cutover" loading="lazy" class="pc-img" onerror="this.className='pc-ph';this.textContent='🏨'"/>
+        <div class="pc-body"><div class="pc-badge">Cutover · 2024</div><div class="pc-title">ICT Cutover — Kew Gardens (Opal)</div><div class="pc-desc">As ICT Technical Support Specialist L2, delivered a one-week onsite cutover rolling out BestMed iPads, Surface tablets, Workstations-on-Wheels, printers, smartcard readers, Teams Room displays and visitor iPads with full staff training.</div><div class="pc-tags"><span class="pc-tag">Intune</span><span class="pc-tag">Teams Rooms</span><span class="pc-tag">MDM</span><span class="pc-tag">Zoom</span></div><div class="outcome">No staff disruption · Full operation Day 1</div></div>
       </div>
-      <div class="cta-acts">
-        <a href="mailto:rejalanop55@gmail.com" class="btn btn-p">Email Me →</a>
-        <a href="/" class="btn btn-o tl">← Back to Home</a>
+      <div class="pcard" data-cat="auto" data-aos="fade-up">
+        <div class="pc-ph">⚙️</div>
+        <div class="pc-body"><div class="pc-badge">Automation · 2024</div><div class="pc-title">Help Desk Automation — Freshservice</div><div class="pc-desc">Designed automated ticket routing by category and priority, auto-escalation for aging tickets, email notifications, and knowledge base integration — measurably improving resolution metrics across the service desk.</div><div class="pc-tags"><span class="pc-tag">Freshservice</span><span class="pc-tag">ITSM</span><span class="pc-tag">Workflow Automation</span></div><div class="outcome">25% faster response time · 30% FCR improvement</div></div>
+      </div>
+      <div class="pcard" data-cat="self" data-aos="fade-up" data-aos-delay="80">
+        <div class="pc-ph">🖥️</div>
+        <div class="pc-body"><div class="pc-badge">Self-hosted · 2023–24</div><div class="pc-title">Personal Home Lab</div><div class="pc-desc">Fully self-hosted lab for hands-on sysadmin exploration: Bitwarden for secrets management, Nginx Proxy Manager with SSL termination, Nextcloud for private cloud, RustDesk on Raspberry Pi, and Pi-hole for network-level DNS filtering.</div><div class="pc-tags"><span class="pc-tag">Docker</span><span class="pc-tag">Raspberry Pi</span><span class="pc-tag">Nginx</span><span class="pc-tag">SSL/TLS</span><span class="pc-tag">DNS</span></div><div class="outcome">100% private · On-prem control</div></div>
+      </div>
+      <div class="pcard" data-cat="web" data-aos="fade-up">
+        <div class="pc-ph">🌐</div>
+        <div class="pc-body"><div class="pc-badge">Web · 2024–25</div><div class="pc-title">AI-Powered Portfolio Website</div><div class="pc-desc">Built a responsive multi-page personal site using AI assistance. Version-controlled with Git, deployed on GitHub Pages with SSL and CDN via Cloudflare — entirely without backend code or paid hosting.</div><div class="pc-tags"><span class="pc-tag">HTML/CSS/JS</span><span class="pc-tag">Tailwind</span><span class="pc-tag">GitHub Pages</span><span class="pc-tag">Cloudflare</span></div><div class="outcome">Live at anuprijal.com · SSL · Cloudflare CDN</div></div>
+      </div>
+      <div class="pcard" data-cat="auto" data-aos="fade-up" data-aos-delay="80">
+        <img src="https://raw.githubusercontent.com/arijal1/website/main/images/IMG_0227.jpeg" alt="n8n automation" loading="lazy" class="pc-img" onerror="this.className='pc-ph';this.textContent='🎬'"/>
+        <div class="pc-body"><div class="pc-badge">Automation · AI · 2024</div><div class="pc-title">AI Video Automation Pipeline — n8n</div><div class="pc-desc">Self-hosted n8n pipeline that generates AI-powered videos from prompts, auto-publishes to YouTube with optimised metadata, and sends instant cross-platform notifications via Telegram, Gmail, and Discord.</div><div class="pc-tags"><span class="pc-tag">n8n</span><span class="pc-tag">YouTube API</span><span class="pc-tag">Telegram</span><span class="pc-tag">AI</span></div><div class="outcome">Fully automated · 0 manual steps end-to-end</div></div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="ftr">
-      <div>
-        <div class="fbrand">Anup <em>Rijal</em></div>
-        <div class="fcopy">© 2025 Anup Rijal. All rights reserved. · Sydney, AU</div>
-      </div>
-      <div class="fsoc">
-        <a href="mailto:rejalanop55@gmail.com" class="fsa" aria-label="Email">@</a>
-        <a href="https://github.com/arijal1" target="_blank" rel="noopener" class="fsa" aria-label="GitHub">GH</a>
-        <a href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" rel="noopener" class="fsa" aria-label="LinkedIn">in</a>
-      </div>
+<section class="sec">
+  <div class="wrap">
+    <div style="margin-bottom:44px" data-aos="fade-up"><div class="slbl">Career</div><h2 class="stitle">Experience <span class="gold-t">Timeline</span></h2></div>
+    <div class="tl-wrap" style="max-width:820px">
+      <div class="tl-line"></div>
+      <div class="tl-item" data-aos="fade-up"><div class="tl-dot">🏥</div><div class="tl-card"><div style="display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px"><div><div class="tl-role">ICT Technical Support Specialist, Level 2 Analyst</div><div class="tl-co">Opal Healthcare</div></div><span class="tl-badge">Current · 🟢</span></div><p class="tl-desc">Leading infrastructure transitions and EUC cutovers across NSW care communities. Promoted to L2 for consistently delivering zero-downtime deployments.</p><div style="display:flex;flex-wrap:wrap;gap:5px"><span style="padding:2px 8px;border-radius:999px;font-size:.65rem;font-weight:600;background:rgba(99,102,241,.1);color:#A5B4FC;border:1px solid rgba(99,102,241,.18)">Intune</span><span style="padding:2px 8px;border-radius:999px;font-size:.65rem;font-weight:600;background:rgba(99,102,241,.1);color:#A5B4FC;border:1px solid rgba(99,102,241,.18)">Active Directory</span><span style="padding:2px 8px;border-radius:999px;font-size:.65rem;font-weight:600;background:rgba(99,102,241,.1);color:#A5B4FC;border:1px solid rgba(99,102,241,.18)">EUC Cutovers</span><span style="padding:2px 8px;border-radius:999px;font-size:.65rem;font-weight:600;background:rgba(99,102,241,.1);color:#A5B4FC;border:1px solid rgba(99,102,241,.18)">Infrastructure</span></div></div></div>
+      <div class="tl-item" data-aos="fade-up" data-aos-delay="60"><div class="tl-dot">🍎</div><div class="tl-card"><div style="margin-bottom:8px"><div class="tl-role">Technical Specialist</div><div class="tl-co">Apple · Sydney, AU</div></div><p class="tl-desc">Hardware diagnostics, macOS/iOS support, and customer-facing technical consultations. Built deep expertise in Apple ecosystem and premium service delivery.</p></div></div>
+      <div class="tl-item" data-aos="fade-up" data-aos-delay="120"><div class="tl-dot">📡</div><div class="tl-card"><div style="margin-bottom:8px"><div class="tl-role">ICT Support Specialist</div><div class="tl-co">Telstra · Sydney, AU</div></div><p class="tl-desc">Telecom systems support across multi-platform environments, customer escalation handling, and network troubleshooting at one of Australia's largest telcos.</p></div></div>
+      <div class="tl-item" data-aos="fade-up" data-aos-delay="180"><div class="tl-dot">👟</div><div class="tl-card"><div style="margin-bottom:8px"><div class="tl-role">Technical Lead — Retail</div><div class="tl-co">Nike · Sydney, AU</div></div><p class="tl-desc">Managed POS systems, retail tech operations, and in-store IT infrastructure — ensuring 100% uptime during peak trading periods.</p></div></div>
     </div>
   </div>
-</footer>
-
-<!-- Chat FAB -->
-<button id="cfab" aria-label="Open chat" aria-expanded="false">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-  </svg>
-</button>
-<div id="cpanel" role="dialog" aria-label="Chat assistant" aria-modal="true">
-  <div class="chdr">
-    <div class="cava">🤖</div>
-    <div><div class="cname">Anup's Assistant</div><div class="cst">Online</div></div>
-    <button class="cclse" id="cclse" aria-label="Close chat">×</button>
-  </div>
-  <div class="cbody" id="cbody">
-    <div class="cmsg bot">👋 Hi! I'm Anup's assistant. How can I help you today?</div>
-  </div>
-  <div class="cfoot">
-    <input type="text" class="cinp" id="cinp" placeholder="Ask me anything…" aria-label="Chat message"/>
-    <button class="csnd" id="csnd" aria-label="Send">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-    </button>
+</section>
+<div style="background:linear-gradient(135deg,rgba(99,102,241,.08),rgba(201,162,39,.06));border-top:1px solid rgba(201,162,39,.16);border-bottom:1px solid rgba(201,162,39,.16);padding:60px 0">
+  <div class="wrap" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px" data-aos="fade-up">
+    <div><h3 style="font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:8px">Interested in working together?</h3><p style="color:var(--txt2);font-size:.95rem">Available for permanent roles, contracts, and automation consulting.</p></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><a href="mailto:rejalanop55@gmail.com" class="btn-p">Email Me →</a><a href="index.html" class="btn-o">← Back to Home</a></div>
   </div>
 </div>
-
 <script>
-/* === PAGE TRANSITION === */
-const pt = document.getElementById('pt');
-window.addEventListener('load', () => setTimeout(() => pt.classList.add('done'), 60));
-document.querySelectorAll('.tl').forEach(a => {
-  a.addEventListener('click', function(e) {
-    const href = this.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('mailto:') || this.target === '_blank') return;
-    e.preventDefault();
-    pt.classList.remove('done');
-    setTimeout(() => { window.location.href = href; }, 360);
-  });
-});
-
-/* === THEME === */
-const html = document.documentElement;
-const tt = document.getElementById('tt');
-const saved = localStorage.getItem('ar-theme') || 'dark';
-html.setAttribute('data-theme', saved);
-tt.addEventListener('click', () => {
-  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  html.setAttribute('data-theme', next);
-  localStorage.setItem('ar-theme', next);
-});
-
-/* === MOBILE NAV === */
-const mbtn = document.getElementById('mbtn');
-const mnav = document.getElementById('mnav');
-const mclose = document.getElementById('mnav-close');
-const openNav = () => { mnav.classList.add('open'); mnav.setAttribute('aria-hidden','false'); mbtn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; };
-const closeNav = () => { mnav.classList.remove('open'); mnav.setAttribute('aria-hidden','true'); mbtn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; };
-mbtn.addEventListener('click', openNav);
-mclose.addEventListener('click', closeNav);
-mnav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
-
-/* === FILTER === */
-document.querySelectorAll('.fbtn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('act'));
-    this.classList.add('act');
-    const f = this.getAttribute('data-filter');
-    document.querySelectorAll('.pcard').forEach(card => {
-      const show = f === 'all' || card.getAttribute('data-cat') === f;
-      card.style.display = show ? 'flex' : 'none';
-    });
-  });
-});
-
-/* === SCROLL REVEAL === */
-const ro = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); ro.unobserve(e.target); } });
-}, { threshold: 0.08 });
-document.querySelectorAll('.reveal, .rg').forEach(el => ro.observe(el));
-
-/* === CHATBOT === */
-const cfab = document.getElementById('cfab');
-const cpanel = document.getElementById('cpanel');
-const cclse = document.getElementById('cclse');
-const cinp = document.getElementById('cinp');
-const csnd = document.getElementById('csnd');
-const cbody = document.getElementById('cbody');
-const WH = 'https://n8n.anuprijal.com.np/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat';
-let chatOpen = false;
-let sid = Math.random().toString(36).slice(2, 18);
-const toggleChat = () => {
-  chatOpen = !chatOpen;
-  cpanel.classList.toggle('open', chatOpen);
-  cfab.setAttribute('aria-expanded', String(chatOpen));
-  if (chatOpen) setTimeout(() => cinp.focus(), 320);
-};
-cfab.addEventListener('click', toggleChat);
-cclse.addEventListener('click', toggleChat);
-const addMsg = (text, type) => {
-  const d = document.createElement('div'); d.className = 'cmsg ' + type; d.textContent = text;
-  cbody.appendChild(d); cbody.scrollTop = cbody.scrollHeight;
-};
-const sendMsg = async () => {
-  const msg = cinp.value.trim(); if (!msg) return;
-  addMsg(msg, 'usr'); cinp.value = ''; addMsg('…', 'bot');
-  try {
-    const r = await fetch(WH, { method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ sessionId: sid, action: 'sendMessage', chatInput: msg }) });
-    const raw = await r.text(); cbody.lastChild.remove();
-    let reply = raw;
-    try { const j = JSON.parse(raw); reply = j.text || j.output || j.message || raw; } catch {}
-    addMsg(reply, 'bot');
-  } catch { cbody.lastChild.remove(); addMsg("Couldn't connect right now — try emailing directly!", 'bot'); }
-};
-csnd.addEventListener('click', sendMsg);
-cinp.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); } });
+document.querySelectorAll("#fbar .fbtn").forEach(btn=>{btn.addEventListener("click",function(){document.querySelectorAll("#fbar .fbtn").forEach(b=>b.classList.remove("on"));this.classList.add("on");const f=this.dataset.f;document.querySelectorAll("#pgrid .pcard").forEach(c=>{c.style.display=(f==="all"||c.dataset.cat===f)?"flex":"none"})})});
 </script>
-</body>
-</html>
+
+<footer><div class="wrap"><div class="ft"><div><div class="ft-brand">Anup <span>Rijal</span></div><div class="ft-copy">© 2025 Anup Rijal · ICT Technical Support Specialist, Level 2 Analyst · Sydney, AU</div></div><nav class="ft-links"><a href="projects.html">Projects</a><a href="blog.html">Blog</a><a href="ai.html">AI</a><a href="testimoni.html">Testimony</a></nav><div style="display:flex;gap:8px"><a href="mailto:rejalanop55@gmail.com" class="si">@</a><a href="https://github.com/arijal1" target="_blank" rel="noopener" class="si">GH</a><a href="https://www.linkedin.com/in/anup-rijal-bb579a131" target="_blank" rel="noopener" class="si">in</a></div></div></div></footer>
+<button id="cfab" aria-label="Chat" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button>
+<div id="cpanel" role="dialog" aria-label="Chat" aria-modal="true"><div class="c-hdr"><div class="c-ava">🤖</div><div><div class="c-nm">Anup's Assistant</div><div class="c-st">Online</div></div><button class="c-x" id="cx">×</button></div><div class="c-body" id="cb"><div class="cmsg bot">👋 Hi! I'm Anup's assistant. Ask me about his experience, projects, or availability.</div></div><div class="c-foot"><input type="text" class="c-inp" id="ci" placeholder="Ask me anything…"/><button class="c-snd" id="cs"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button></div></div>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+AOS.init({{duration:620,easing:"ease-out-cubic",once:true,offset:55}});
+const H=document.documentElement,TK="ar-th";
+if((localStorage.getItem(TK)||"dark")==="light")H.classList.remove("dark");
+document.getElementById("tt").addEventListener("click",()=>{{const d=H.classList.toggle("dark");localStorage.setItem(TK,d?"dark":"light")}});
+const MN=document.getElementById("mnav");
+document.getElementById("mo").addEventListener("click",()=>{{MN.classList.add("on");MN.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}});
+const cN=()=>{{MN.classList.remove("on");MN.setAttribute("aria-hidden","true");document.body.style.overflow=""}};
+document.getElementById("mc").addEventListener("click",cN);MN.querySelectorAll("a").forEach(a=>a.addEventListener("click",cN));document.addEventListener("keydown",e=>{{if(e.key==="Escape")cN()}});
+(function(){{const cv=document.getElementById("scene"),ctx=cv.getContext("2d");let W,H2,pts=[];function resize(){{W=cv.width=window.innerWidth;H2=cv.height=window.innerHeight}}function rand(a,b){{return Math.random()*(b-a)+a}}function init(){{pts=[];const n=window.innerWidth<700?24:48;for(let i=0;i<n;i++)pts.push({{x:rand(0,W),y:rand(0,H2),vx:rand(-.18,.18),vy:rand(-.18,.18),r:rand(.8,2),c:i%5===0?"rgba(201,162,39,":"rgba(99,102,241,"}})}}function draw(){{ctx.clearRect(0,0,W,H2);const dk=document.documentElement.classList.contains("dark");for(let p of pts){{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H2)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c+(dk?.8:.45)+")";ctx.fill()}}for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){{const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d2=dx*dx+dy*dy;if(d2<8100){{const a=(1-Math.sqrt(d2)/90)*(dk?.2:.09);ctx.strokeStyle=`rgba(201,162,39,${{a}})`;ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke()}}}}requestAnimationFrame(draw)}}window.addEventListener("resize",()=>{{resize();init()}});resize();init();draw()}})();
+const WH="http://n8n.anuprijal.com.np:5678/webhook/5a0297eb-22cb-462d-8022-5ec1b43208d4/chat";
+const fab=document.getElementById("cfab"),panel=document.getElementById("cpanel"),cx=document.getElementById("cx"),ci=document.getElementById("ci"),cs=document.getElementById("cs"),cb=document.getElementById("cb");
+let open=false,sid=Math.random().toString(36).slice(2,16);
+const tog=()=>{{open=!open;panel.classList.toggle("on",open);fab.setAttribute("aria-expanded",String(open));if(open)setTimeout(()=>ci.focus(),340)}};
+fab.addEventListener("click",tog);cx.addEventListener("click",tog);
+const addM=(t,tp)=>{{const d=document.createElement("div");d.className="cmsg "+tp;d.textContent=t;cb.appendChild(d);cb.scrollTop=cb.scrollHeight}};
+const send=async()=>{{const m=ci.value.trim();if(!m)return;addM(m,"usr");ci.value="";addM("…","bot");try{{const r=await fetch(WH,{{method:"POST",headers:{{"Content-Type":"application/json"}},body:JSON.stringify({{sessionId:sid,action:"sendMessage",chatInput:m}})}});const raw=await r.text();cb.lastChild.remove();let rep=raw;try{{const j=JSON.parse(raw);rep=j.text||j.output||j.message||raw}}catch{{}}addM(rep,"bot")}}catch{{cb.lastChild.remove();addM("Couldn't connect right now. Email rejalanop55@gmail.com directly.","bot")}}}};
+cs.addEventListener("click",send);ci.addEventListener("keydown",e=>{{if(e.key==="Enter"&&!e.shiftKey){{e.preventDefault();send()}}}});
+</script>
+</body></html>
